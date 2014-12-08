@@ -1,15 +1,22 @@
 var debugInfo=false;
 var people=[];
 var fires=[];
+var ships=[];
+var ports=[];
+ports.push(Eastwatch);
+ports.push(Skagos);
 var miles=new dude();
 miles.equip(legArmorList[Math.floor(Math.random()*legArmorList.length)]);
 miles.equip(chestArmorList[Math.floor(Math.random()*chestArmorList.length)]);
 miles.gun=miles.guns[0];
 people.push(miles);
 
+var betha=new ship();
+ships.push(betha);
+
 var mel=new flame();
-mel.x=miles.x;
-mel.y=miles.y;
+mel.x=124*16;//miles.x;
+mel.y=221*16;//miles.y;
 mel.alive=true;
 fires.push(mel);
 
@@ -36,7 +43,7 @@ function allPoint(guy)
 }
 
 //camera.center(miles);
-camera.follow(miles);
+//camera.follow(miles);
 
 document.body.addEventListener("click", mouseClick, false);
 //document.body.addEventListener("dblclick", mouseDblClick, false);
@@ -813,6 +820,16 @@ function mainDraw() {
 		fires[i].draw(canvas,camera);
 	}
 	
+	for(var i=0;i<ports.length;i++)
+	{
+		ports[i].draw(canvas,camera);
+	}
+	
+	for(var i=0;i<ships.length;i++)
+	{
+		ships[i].draw(canvas,camera);
+	}
+	
 	monsta.draw(canvas,camera);
 
 	/*dingle(0,1);
@@ -836,8 +853,8 @@ function mainUpdate()
 {
 	if(!gamestart) return;
 	controller.update();
-	mel.x=miles.x;
-	mel.y=miles.y-26+miles.headHeight;
+	//mel.x=miles.x;
+	//mel.y=miles.y-26+miles.headHeight;
 	var tick=0;	
     lasttime=milliseconds;
     timestamp = new Date();
@@ -965,10 +982,10 @@ function mainUpdate()
 		platformer=!platformer;
 	}
 	
-	 if(zoomkey.check()) {
-		curMap.zoom=2;
-        curMap.setZoom(camera);
-    }
+	 /*if(zoomkey.check()) {
+		//curMap.zoom=2;
+       // curMap.setZoom(camera);
+    }*/
 	
 	if(outfitkey.check())
 	{
@@ -1018,6 +1035,11 @@ function mainUpdate()
 		fires[i].update();
 	}
 	
+	for(var i=0;i<ships.length;i++)
+	{
+		ships[i].update();
+	}
+	
 	var speeMulti=1;
 	
 		//miles.dongle=false;
@@ -1060,271 +1082,75 @@ function mainUpdate()
 	
 	if(true)
 	{
-		if(!platformer)
-		{
-			if(controller.checkUp())
-			{
-				miles.yV=-4*miles.running;
-				//console.log(miles.running);
-				//camera.y-=miles.speed*speedMulti;
-				//camera.y=miles.y-CANVAS_HEIGHT/2;
-				if(miles.y<0) {miles.y=0;}
-				mapDirty=true;
-			}else if(controller.checkDown())
-			{
-				miles.yV=4*miles.running;;//miles.speed*(miles.speedFactor/10);
-				//camera.y+=miles.speed*speedMulti;
-				//camera.y=miles.y-CANVAS_HEIGHT/2;
-				if(miles.y>curMap.height*tileSize-miles.height) {miles.y=(curMap.height-2)*tileSize}
-				mapDirty=true;
-			}else
-			{
-				miles.yV=0;
 		
-			}
-			if(controller.checkLeft())
-			{
-				miles.xV=-4*miles.running;;//miles.speed*(miles.speedFactor/10);
-				//camera.x-=miles.speed*speedMulti;
-				//camera.x=miles.x-CANVAS_WIDTH/2;
-				if(miles.x<0) {miles.x=0;}
-				mapDirty=true;
-			}else if(controller.checkRight())
-			{
-				
-				miles.xV=4*miles.running;//miles.speed*(miles.speedFactor/10);
-				//camera.x+=miles.speed*speedMulti;
-				//camera.x=miles.x-CANVAS_WIDTH/2;
-				if(miles.x>(curMap.width-5)*tileSize) {miles.x=(curMap.width-5)*tileSize}
-				mapDirty=true;
-			}else
-			{
-				miles.xV=0;
-			}
-		}else//PLATFORMER AIMING DIRECTION CONTROLS
+		if(controller.checkUp())
 		{
-
-			if(miles.aiming)
-			{
-				
-				//miles.arms[0].relax();
-				//miles.arms[1].relax();
-				miles.aimingUp=false;
-				miles.aimingDown=false;
-				/*if(controller.checkUpLeft()) //very strange bug where some things rotate and others dont...put sleeves and gun on angle of arm and not hard angles based on UDLR?
-				{
-					miles.facingLeft=true;
-				}else if(controller.checkUpRight())
-				{
-					miles.facingLeft=false;
-				}else if(controller.checkDownLeft())
-				{
-					miles.facingLeft=true;
-				}else if(controller.checkDownRight())
-				{
-					miles.facingLeft=false;
-				}else */
-				{
-				
-					if(controller.checkUp())
-					{
-							miles.arms[0].relax();
-							miles.arms[1].relax();
-							if(otherControls)
-							{
-							if(miles.facingLeft)
-							{
-								miles.arms[0].backArm.angle=270;
-							}else
-							{
-								miles.arms[1].backArm.angle=270;
-							}
-							miles.aimingUp=true;
-							}else
-							{
-								miles.gun.angleOffset+=aimSpeed;
-							}
-						//what does up do?
-					}else
-					{
-						miles.aimingUp=false;
-					}
-					if(controller.checkDown())
-					{
-						miles.crouching=true;
-						miles.gesturing=false;
-						mapDirty=true;
-						if(otherControls)
-						{
-							if(miles.facingLeft)
-							{
-								miles.arms[0].backArm.angle=90;
-							}else
-							{
-								miles.arms[1].backArm.angle=90;
-							}
-							miles.aimingDown=true;
-						}else
-						{
-							miles.gun.angleOffset-=aimSpeed;
-						}
-			
-					}else
-					{
-						miles.crouching=false;
-						miles.aimingDown=false;
-					}
-					if(controller.checkLeft())
-					{
-						miles.stopGesturing();
-						miles.facingLeft=true;
-						miles.arms[0].backArm.angle=180;
-					}
-					if(controller.checkRight())
-					{	
-						miles.facingLeft=false;
-						miles.stopGesturing();
-						miles.arms[1].backArm.angle=0;
-					}
-				}
-			}else // PLATFORMER MOVEMENT DIRECTIONAL CONTROLS
-			{
-				if(controller.checkUp())
-				{
-					miles.gesturing=false;
-					
-						if(otherControls)
-						{
-						if(miles.facingLeft)
-						{
-							miles.arms[0].backArm.angle=270;
-						}else
-						{
-							miles.arms[1].backArm.angle=270;
-						}
-						miles.aimingUp=true;
-						}else
-						{
-							miles.gun.angleOffset+=aimSpeed;
-					}
-					//what does up do?
-				}else
-				{
-					//miles.aimingUp=false;
-				}
-				if(controller.checkDown())
-				{
-					miles.crouching=true;
-					miles.gesturing=false;
-					mapDirty=true;
-					if(miles.aiming)
-					{
-						if(otherControls)
-						{
-							if(miles.facingLeft)
-							{
-								miles.arms[0].backArm.angle=90;
-							}else
-							{
-								miles.arms[1].backArm.angle=90;
-							}
-							miles.aimingDown=true;
-						}else
-						{
-							miles.gun.angleOffset-=aimSpeed;
-						}
-					}
-				}else
-				{
-					miles.crouching=false;
-					miles.aimingDown=false;
-				}
-				if(controller.checkLeft())
-				{
-					miles.stopGesturing();
-					miles.facingLeft=true;
-					if(!miles.aiming)
-					{
-						if(!miles.lastLeft)
-						{
-							this.xV=0;
-						}
-						
-						if((curMap.walkable(Math.round(miles.x/tileSize),Math.round(miles.y/tileSize))) && (curMap.walkable(Math.round(miles.x/tileSize),Math.round(miles.y/tileSize)+1)))
-						{
-							miles.xV-=0.2*(miles.speedFactor/10);
-							mapDirty=true;
-							if(miles.xV<-miles.maxSpeed*(miles.speedFactor/10))
-							{
-								miles.xV=-miles.maxSpeed*(miles.speedFactor/10);
-							}
-							if(miles.x<0) {miles.x=0;}
-						}else
-						{
-							miles.xV=0;
-						}
-						miles.lastLeft=true;
-					}
-				}
-				if(controller.checkRight())
-				{	
-					miles.facingLeft=false;
-					miles.stopGesturing();
-					if(!miles.aiming)
-					{
-						
-						if(miles.lastLeft)
-						{
-							this.xV=0;
-						}
-						//miles.facingLeft=false;
-						if((curMap.walkable(Math.round(miles.x/tileSize)+1,Math.round(miles.y/tileSize))) && (curMap.walkable(Math.round(miles.x/tileSize)+2,Math.round(miles.y/tileSize)+1)))
-						{
-							miles.xV+=0.2*miles.speedFactor;
-							mapDirty=true;
-							if(miles.xV>miles.maxSpeed*(miles.speedFactor/10))
-							{
-								miles.xV=miles.maxSpeed*(miles.speedFactor/10);
-							}
-							if(miles.x>(curMap.width-5)*tileSize) {miles.x=(curMap.width-5)*tileSize}
-						}else
-						{
-							miles.xV=0;
-						}
-						miles.lastLeft=false;
-					}
-				}
-			}
+			miles.yV=-4*miles.running;
+			//console.log(miles.running);
+			//camera.y-=miles.speed*speedMulti;
+			//camera.y=miles.y-CANVAS_HEIGHT/2;
+			if(miles.y<0) {miles.y=0;}
+			mapDirty=true;
+		}else if(controller.checkDown())
+		{
+			miles.yV=4*miles.running;;//miles.speed*(miles.speedFactor/10);
+			//camera.y+=miles.speed*speedMulti;
+			//camera.y=miles.y-CANVAS_HEIGHT/2;
+			if(miles.y>curMap.height*tileSize-miles.height) {miles.y=(curMap.height-2)*tileSize}
+			mapDirty=true;
+		}else
+		{
+			miles.yV=0;
+	
 		}
-	}
+		if(controller.checkLeft())
+		{
+			miles.xV=-4*miles.running;;//miles.speed*(miles.speedFactor/10);
+			//camera.x-=miles.speed*speedMulti;
+			//camera.x=miles.x-CANVAS_WIDTH/2;
+			if(miles.x<0) {miles.x=0;}
+			mapDirty=true;
+		}else if(controller.checkRight())
+		{
+			
+			miles.xV=4*miles.running;//miles.speed*(miles.speedFactor/10);
+			//camera.x+=miles.speed*speedMulti;
+			//camera.x=miles.x-CANVAS_WIDTH/2;
+			if(miles.x>(curMap.width-5)*tileSize) {miles.x=(curMap.width-5)*tileSize}
+			mapDirty=true;
+		}else
+		{
+			miles.xV=0;
+		}
+	}	
 	if(true)
 	{
 		if(keydown.up)
 		{
-			camera.y-=camera.moveSpeed*camera.zoomMove;
+			camera.tileY-=camera.moveSpeed*camera.zoomMove;
 			camera.update();
 			if(camera.tileY<0) {camera.y=0; camera.tileY=0;}
 			mapDirty=true;
 		}
 		if(keydown.down)
 		{
-			camera.y+=camera.moveSpeed*camera.zoomMove;
+			camera.tileY+=camera.moveSpeed*camera.zoomMove;
 			camera.update();
 			if(camera.tileY>curMap.height-camera.height) {camera.tileY=curMap.height-camera.height;camera.y=camera.tileY;}
 			mapDirty=true;
 		}
 		if(keydown.right)
 		{
-			camera.x+=camera.moveSpeed*camera.zoomMove;
+			camera.tileX+=camera.moveSpeed*camera.zoomMove;
 			camera.update();
 			if(camera.tileX>curMap.width-camera.width) {camera.tileX=curMap.width-camera.width;}
 			mapDirty=true;
 		}
 		if(keydown.left)
 		{
-			camera.x-=camera.moveSpeed*camera.zoomMove;
+			camera.tileX-=camera.moveSpeed*camera.zoomMove;
 			camera.update();
-			if(camera.tileX<0) {camera.tileX=0;}//todo
+			if(camera.tileX<0) {camera.tileX=0; camera.x=0;}//todo
 			mapDirty=true;
 		}
 	}

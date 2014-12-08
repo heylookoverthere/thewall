@@ -1,6 +1,14 @@
+flameTypes=[];
+flameTypes.Campfire=1;
+flameTypes.loose=0;
+flameTypes.Torch=3;
+flameTypes.wallTorch=4;
+
 function flame()
 {
+	this.type=1;
 	this.sprites=[];
+	this.supportSprite=Sprite("campfire");
 	this.x=0;
 	this.y=0;
 	this.xV=0;
@@ -36,6 +44,10 @@ flame.prototype.draw=function(can,cam)
 	can.save();
 	can.globalAlpha=0.6;
 	can.scale(cam.zoom,cam.zoom);
+	if(this.type>0)
+	{
+		this.supportSprite.draw(can, this.x-cam.tileX*tileSize+1,this.y-cam.tileY*tileSize+4);
+	}
 	this.sprites[this.aniTrack].draw(can, this.x-cam.tileX*tileSize,this.y-cam.tileY*tileSize);
 	can.restore();
 };
@@ -422,9 +434,18 @@ function dude(otherdude)
 {	
 	if(!otherdude)
 	{
+	this.path = null;
+	this.bx = 8;
+    this.by = 8;
+    this.dx = 0;
+    this.dy = 0;
+	this.nextMove = null;
+    this.nextTile = {x: this.x, y: this.y};
+    this.inNextTile = false;
+    this.viewRange=50;
 	this.shaking=false;
 	this.bullets=[];
-	
+	this.boat=false;
 	this.shakeTrack=0;
 	this.shakeRate=1;
 	this.shakeFlag=false
@@ -1035,6 +1056,8 @@ dude.prototype.stopGesturing=function()
 	}
 }
 
+
+
 dude.prototype.update=function()
 {	
 	for(var i=0;i<this.bullets.length;i++)
@@ -1392,3 +1415,34 @@ dude.prototype.equip=function(thing)
   }
   //confer bonuses
 };
+
+    dude.prototype.updateNextMove = function() {
+        if( !this.path ) {
+            return;
+        }
+        this.nextMove = this.path.shift();
+        if( !this.nextMove ) {
+			if(this.team==0){
+				var tmpstr=this.name + "reached their destination.";
+				bConsoleStr.push(tmpstr);
+				bConsoleClr.push("white");
+			}else
+			{
+				//todo give enemy squads new destination now.
+			}
+            this.path = null; return;
+        }
+    };
+    dude.prototype.isWalking = function() {
+        return this.path != null;
+    };
+    dude.prototype.clearDestination=function(){
+        this.path=null; this.dx = this.x; this.dy = this.y; this.nextMove = null;
+    };
+    dude.prototype.setDestination = function(x, y, map) {
+		if(!map.walkable(x,y,this)) {return;}
+        this.clearDestination();
+        this.path = map.getPath(this.x, this.y, x, y,this);
+        this.dx=x;
+        this.dy=y;
+    };

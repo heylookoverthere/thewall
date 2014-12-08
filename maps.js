@@ -123,7 +123,7 @@ var camera = {  //represents the camera, aka what part of the map is on screen
 		return false;
 	},
 	update: function(){
-		this.updateTile();
+		//this.updateTile();
 		this.x=this.tileX*tileSize;
 		this.y=this.tileY*tileSize;
 		if (this.following)
@@ -248,17 +248,24 @@ Tile.prototype.draw = function(cam) {
 };
 
 function tileToCost(data, sqd) {
-    if(sqd.getFlightHeight()>2) {return 2;}
-    if(( data == TileType.Mountains ) ||( data == TileType.Ocean )) return 0;
-    if(sqd.getFlightHeight()>1) {return 2;}
-    if(( data == TileType.Water ) && sqd.canSwim()){ return 2;}
-    if( data == TileType.Water ) {return 0;}
-    if((data==TileType.Swamp ) &&(sqd.leader.class==SEEAss.Frog)) {return 2};
-    if( data == TileType.Swamp  ) return 5;
-    if( data == TileType.Forest  ) return 3;
-    if( data == TileType.Sand  ) return 2;
-    if( data == TileType.Road  ) return 1;
-    return 2;
+	if(sqd.boat)
+	{
+		if( data == TileType.Ocean ) return 2;
+		return 0;
+	}else
+	{
+		if(sqd.getFlightHeight()>2) {return 2;}
+		if(( data == TileType.Mountains ) ||( data == TileType.Ocean )) return 0;
+		if(sqd.getFlightHeight()>1) {return 2;}
+		if(( data == TileType.Water ) && sqd.canSwim()){ return 2;}
+		if( data == TileType.Water ) {return 0;}
+		if((data==TileType.Swamp ) &&(sqd.leader.class==SEEAss.Frog)) {return 2};
+		if( data == TileType.Swamp  ) return 5;
+		if( data == TileType.Forest  ) return 3;
+		if( data == TileType.Sand  ) return 2;
+		if( data == TileType.Road  ) return 1;
+		return 2;
+	}
 };
 
 function mapToGraph(map, sqd) { 
@@ -317,9 +324,17 @@ function Map(I) { //map object
         return astar.search(graph.nodes, graph.nodes[startX][startY], graph.nodes[endX][endY]);
     };
 	
-	I.walkable=function(x,y){
-		if((I.tiles[x][y].data!=TileType.Mountains) && (I.tiles[x][y].data!=TileType.Ice)) {return true;}
+	
+	I.sailable=function(x,y){
+		console.log("ffoo");
+		if((I.tiles[x][y].data==TileType.Ocean)) {return true;}
 		return false;
+	}
+	
+	I.walkable=function(x,y){
+		
+			if((I.tiles[x][y].data!=TileType.Mountains) &&(I.tiles[x][y].data!=TileType.IceMountains)&& (I.tiles[x][y].data!=TileType.Ice)&& (I.tiles[x][y].data!=TileType.Ocean)&&(I.tiles[x][y].data!=TileType.Water)) {return true;}
+			return false;
 	}
 	
 	 I.canStand = function (x,y) { //sidemode only
@@ -612,14 +627,15 @@ function Map(I) { //map object
 		  var oceanrgb =[0,0,255,0];
 		  var forestrgb =[0,255,0,0];
 		  var sandrgb =[255,255,0,0];
-		  var roadrgb =[195,195,195,0];
+		  var roadrgb =[195,165,195,0];
 		  var swamprgb =[0,255,64,0];
 		  var plainsrgb =[128,64,64,0];
 		  var snowrgb =[230,230,230,0];
 		  var icergb =[210,220,235,0];
+		  var icemountainrgb=[205,205,205]
 		  var waterrgb =[0,100,255,0];
 		  var lavargb =[255,0,0,0];
-		  var grassrgb=[255,255,255,0];
+		  var grassrgb=[0,165,0,0];
 		  var yPos = Math.floor(i / 4 / MAP_WIDTH);
 		  var xPos = (i / 4) % MAP_WIDTH;
 		if(closeEnough(rgba,mountainrgb)) {
@@ -644,8 +660,12 @@ function Map(I) { //map object
 			I.setTile(xPos, yPos, TileType.Snow);
 		  }else if (closeEnough(rgba,icergb)){
 			I.setTile(xPos, yPos, TileType.Ice);
-		  }else{ //if (closeEnough(rgba,grassrgb)) {
+		  }else if (closeEnough(rgba,icemountainrgb)){
+			I.setTile(xPos, yPos, TileType.IceMountain);
+		  }else if (closeEnough(rgba,grassrgb)) {
 			I.setTile(xPos, yPos, TileType.Grass);
+		  }else{
+			I.setTile(xPos, yPos, TileType.Snow);
 		  }
 		}
 		I.buildRadar();
@@ -703,7 +723,7 @@ function Map(I) { //map object
         }*///todo
 
         canvas.globalAlpha = 0.35;
-		canvas.fillStyle = "white";
+		canvas.fillStyle = "yellow";
         canvas.fillRect(x+cam.tileX, y+cam.tileY, cam.width*I.zoom, cam.height*I.zoom);
 		canvas.globalAlpha=1;
 	   // canvas.restore();
