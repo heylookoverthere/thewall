@@ -51,9 +51,9 @@ function ship()
     this.dx = 0;
     this.dy = 0;
 	this.nextMove = null;
-    this.nextTile = {x: this.x, y: this.y};
+    this.nextTile = {x: this.tileX, y: this.tileY};
     this.inNextTile = false;
-	this.update=function()
+	this.update=function(map)
 	{
 		//goto this.ports[this.portTrack]
 		if(this.bobFlag)
@@ -71,7 +71,7 @@ function ship()
 				this.bobFlag=true;
 			}
 		}
-		this.updateAI();
+		this.updateAI(map);
 	};
 	this.draw=function(can,cam)
 	{
@@ -105,72 +105,72 @@ function ship()
         return this.path != null;
     };
     ship.prototype.clearDestination=function(){
-        this.path=null; this.dx = this.x; this.dy = this.y; this.nextMove = null;
+        this.path=null; this.dx = this.tileX; this.dy = this.tileY; this.nextMove = null;
     };
     ship.prototype.setDestination = function(x, y, map) {
 		if(!map.sailable(x,y,this)) {console.log("invalid dest");return;}
         this.clearDestination();
-        this.path = map.getPath(this.x, this.y, x, y,this);
+        this.path = map.getPath(this.tileX, this.tileY, x, y,this);
         this.dx=x;
         this.dy=y;
     };
 	
-	ship.prototype.updateAI=function()
+	ship.prototype.updateAI=function(map)
 	{
-	if( !this.nextMove )
-	{
-		this.updateNextMove();
-	}
-	if( !this.nextMove ) {
-		return;
-	}
-	var terrain = map.tiles[this.nextTile.x][this.nextTile.y].data;
-	var speed = (terrain == 4 ? 2 : 4);
-	//if (this.leaderless) {speed=3;} //PROBLEM?
-	//if((terrain==4) &&(this.units[0].class==SEEAss.Frog)) {speed=4};
-
-	//speed = speed / Math.pow(2, curMap.zoom-1);
-	var stamp = new Date();
-	var milli=stamp.getTime();
-	//speed=(speed * delta) * (60 / 1000);
-
-	if(milli-this.lastmove>30){
-		if( this.nextMove.x > this.x ) {
-			this.bx += speed;
-			this.encounterCounter++;
-		} else if( this.nextMove.x < this.x ) {
-			this.bx -= speed;
-			this.encounterCounter++;
+		if( !this.nextMove )
+		{
+			this.updateNextMove();
 		}
-		if( this.nextMove.y > this.y ) {
-			this.by += speed;
-			this.encounterCounter++;
-		} else if( this.nextMove.y < this.y ) {
-			this.by -= speed;
-			this.encounterCounter++;
+		if( !this.nextMove ) {
+			return;
 		}
-		this.lastmove=stamp.getTime();
-	}
+		var terrain = map.tiles[this.nextTile.x][this.nextTile.y].data;
+		var speed = (terrain == 4 ? 2 : 4);
+		//if (this.leaderless) {speed=3;} //PROBLEM?
+		//if((terrain==4) &&(this.units[0].class==SEEAss.Frog)) {speed=4};
 
-	if( !this.inNextTile && ( this.bx <= 0 || this.bx >= 16 || this.by <= 0 || this.by >= 16 )) {
-		this.nextTile = {};
-		this.nextTile.x = this.nextMove.x;
-		this.nextTile.y = this.nextMove.y;
-		//           if( this.bx == 0 ) { this.bx = 16 } else if( this.bx == 16 ) { this.bx = 0; } 
-		//           if( this.by == 0 ) { this.by = 16 } else if( this.by == 16 ) { this.by = 0; }          
-		this.inNextTile = true;
+		//speed = speed / Math.pow(2, curMap.zoom-1);
+		var stamp = new Date();
+		var milli=stamp.getTime();
+		//speed=(speed * delta) * (60 / 1000);
 
-	}
-	if(( this.bx >= 24 || this.bx <= -8 ) || ( this.by <= -8 || this.by >= 24 )) {
-		this.bx = this.by = 8;
-		this.inNextTile = false;
-		this.x = this.nextMove.x;
-		this.y = this.nextMove.y;
-		this.nextTile = {x: this.x, y: this.y};
-		this.nextMove = null;
+		if(milli-this.lastmove>30){
+			if( this.nextMove.x > this.tileX ) {
+				this.bx += speed;
+				this.encounterCounter++;
+			} else if( this.nextMove.x < this.tileX ) {
+				this.bx -= speed;
+				this.encounterCounter++;
+			}
+			if( this.nextMove.y > this.tileY ) {
+				this.by += speed;
+				this.encounterCounter++;
+			} else if( this.nextMove.y < this.tileY ) {
+				this.by -= speed;
+				this.encounterCounter++;
+			}
+			this.lastmove=stamp.getTime();
+		}
 
-	}
-};
+		if( !this.inNextTile && ( this.bx <= 0 || this.bx >= 16 || this.by <= 0 || this.by >= 16 )) {
+			this.nextTile = {};
+			this.nextTile.x = this.nextMove.x;
+			this.nextTile.y = this.nextMove.y;
+			//           if( this.bx == 0 ) { this.bx = 16 } else if( this.bx == 16 ) { this.bx = 0; } 
+			//           if( this.by == 0 ) { this.by = 16 } else if( this.by == 16 ) { this.by = 0; }          
+			this.inNextTile = true;
+
+		}
+		if(( this.bx >= 24 || this.bx <= -8 ) || ( this.by <= -8 || this.by >= 24 )) {
+			this.bx = this.by = 8;
+			this.inNextTile = false;
+			this.tileX = this.nextMove.x;
+			this.tileY = this.nextMove.y;
+			this.nextTile = {x: this.tileX, y: this.tileY};
+			this.nextMove = null;
+
+		}
+	};
 };
 
 function watchman()

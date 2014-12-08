@@ -1037,7 +1037,7 @@ function mainUpdate()
 	
 	for(var i=0;i<ships.length;i++)
 	{
-		ships[i].update();
+		ships[i].update(curMap);
 	}
 	
 	var speeMulti=1;
