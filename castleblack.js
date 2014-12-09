@@ -1,3 +1,122 @@
+/*function ligthenGradient(ctx,x, y, radius) {
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    var rnd = 0.05 * Math.sin(1.1 * Date.now() / 1000);
+    radius = radius * (1 + rnd);
+    var radialGradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
+    radialGradient.addColorStop(0.0, '#BB9');
+    radialGradient.addColorStop(0.2 + rnd, '#AA8');
+    radialGradient.addColorStop(0.7 + rnd, '#330');
+    radialGradient.addColorStop(0.90, '#110');
+    radialGradient.addColorStop(1, '#000');
+    ctx.fillStyle = radialGradient;
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, 2 * 3.14);
+    ctx.fill();
+    ctx.restore();
+}*/
+
+function ligthenGradient(ctx,cam,source, radius) {
+	var x=source.x-cam.tileX*tileSize+17; //campfire
+	var y=source.y-cam.tileY*tileSize+23; 
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    var rnd = 0.05 * Math.sin(1.1 * Date.now() / 1000);
+    radius = radius * (1 + rnd);
+    var radialGradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
+    radialGradient.addColorStop(0.0, '#BB9');
+    radialGradient.addColorStop(0.1 + rnd, '#AA8');
+    radialGradient.addColorStop(0.4 + rnd, '#330');
+    radialGradient.addColorStop(0.70, '#110');
+    radialGradient.addColorStop(1, '#000');
+    ctx.fillStyle = radialGradient;
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, 2 * 3.14);
+    ctx.fill();
+    ctx.restore();
+}
+
+function settlement()
+{
+	this.sprite=Sprite("castleblack");
+	this.name="Castle Black";
+	this.tileX=115;
+	this.tileY=229;
+	this.x=this.tileX*tileSize;
+	this.y=this.tileY*tileSize;
+	this.draw=function(can,cam)
+	{
+		/*can.save();
+		can.globalAlpha=0.6;
+		can.scale(cam.zoom,cam.zoom);*/
+		this.sprite.draw(can, this.x-cam.tileX*tileSize,this.y-cam.tileY*tileSize);
+		//mapDirty=true;
+		//can.restore();
+	}
+};
+
+function theTime()
+{
+	this.minutes=50;
+	this.hours=18;
+	this.days=0;
+	this.years=0;
+	this.tick=0;
+
+	theTime.prototype.update=function()
+	{
+		this.tick++;
+		if(this.tick<18)
+		{
+			return;
+		}
+		this.tick=0;
+		this.minutes++;
+		if(this.minutes>59)
+		{
+			this.minutes=0;
+			this.hours++;
+			if(this.hours>23)
+			{
+				this.hours=0;
+				this.days++;
+				if(this.days>365)
+				{
+					this.years++;
+					this.days=0;
+				}
+			}
+		}
+	};
+}
+var LightLevels=new Array();
+LightLevels.push(0.85); //midnight
+LightLevels.push(0.85); //1am
+LightLevels.push(0.85); //2am
+LightLevels.push(0.80); //3am
+LightLevels.push(0.60); //4am
+LightLevels.push(0.45); //5am
+LightLevels.push(0.30); //6am
+LightLevels.push(0.10); //7am
+LightLevels.push(0.00); //8am
+LightLevels.push(0.00); //9am
+LightLevels.push(0.00); //10am
+LightLevels.push(0.00); //11am
+LightLevels.push(0.00); //12pm
+LightLevels.push(0.00); //1pm
+LightLevels.push(0.00); //2pm
+LightLevels.push(0.00); //3pm
+LightLevels.push(0.00); //4pm
+LightLevels.push(0.10); //5pm
+LightLevels.push(0.20); //6pm
+LightLevels.push(0.34); //7pm
+LightLevels.push(0.44); //8pm
+LightLevels.push(0.60); //9pm
+LightLevels.push(0.80); //10pm
+LightLevels.push(0.85); //11pm
+
+
+
 function port(x,y,name)
 {
 	this.name="Legoland";
@@ -58,14 +177,14 @@ function ship()
 		//goto this.ports[this.portTrack]
 		if(this.bobFlag)
 		{
-			this.bobTrack++;
+			this.bobTrack+=2;
 			if(this.bobTrack>60)
 			{
 				this.bobFlag=false;
 			}
 		}else if(!this.bobFlag)
 		{
-			this.bobTrack--;
+			this.bobTrack-=2;
 			if(this.bobTrack<-60)
 			{
 				this.bobFlag=true;
@@ -166,6 +285,8 @@ function ship()
 			this.inNextTile = false;
 			this.tileX = this.nextMove.x;
 			this.tileY = this.nextMove.y;
+			//this.x=this.tileX*16;
+			//this.y=this.tileY*16;
 			this.nextTile = {x: this.tileX, y: this.tileY};
 			this.nextMove = null;
 
@@ -185,18 +306,40 @@ function watchman()
 	this.lName="";
 };
 
-var theWatch=[];
-theWatch.men=new Array(); //array!
-theWatch.gold=1000;
-theWatch.horses=6;
-theWatch.food=1000;
-theWatch.fireWood=1000;
-
-theWatch.calcFoodEaten=function()
-{
-	return men.length;
-};
-
+function theWatch(){
+	this.men=new Array(); //array!
+	this.gold=1000;
+	this.horses=6;
+	this.food=1000;
+	this.fireWood=1000;
+	this.wounded=0;
+	this.mealsPerDay=3;
+	
+	theWatch.prototype.update=function()
+	{
+		
+		//eat!
+		if((thyme.hours==6) && (thyme.minutes==1)&& (thyme.tick==1))
+		{
+			this.food-=1*this.men.length;
+			if(this.food<1) {console.log("Canibalism!");}
+		}
+		if((this.mealsPerDay>1)&&(thyme.hours==12) && (thyme.minutes==1)&& (thyme.tick==1))
+		{
+			this.food-=1*this.men.length;
+		}
+		if((this.mealsPerDay>2)&&(thyme.hours==18) && (thyme.minutes==1)&& (thyme.tick==1))
+		{
+			this.food-=1*this.men.length;
+		}
+		
+	};
+	
+	theWatch.prototype.calcFoodEaten=function()
+	{
+		return men.length;
+	};
+}
 
 function generateRandomDude()
 {

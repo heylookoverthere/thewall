@@ -4,6 +4,8 @@ flameTypes.loose=0;
 flameTypes.Torch=3;
 flameTypes.wallTorch=4;
 
+var torchSprite=Sprite("torch");
+
 function flame()
 {
 	this.type=1;
@@ -149,7 +151,7 @@ gun.prototype.draw=function(can,cam)
 		can.rotate((this.guy.arms[0].backArm.angle)* (Math.PI / 180));
 		this.guy.gunArm=this.guy.arms[0];
 		//flip it.
-		
+		ligthenGradient(can,cam,this, 9)
 		can.scale(1, -1);
 	}else
 	{
@@ -435,12 +437,12 @@ function dude(otherdude)
 	if(!otherdude)
 	{
 	this.path = null;
+	this.torch=true;
 	this.bx = 8;
     this.by = 8;
     this.dx = 0;
     this.dy = 0;
 	this.nextMove = null;
-    this.nextTile = {x: this.x, y: this.y};
     this.inNextTile = false;
     this.viewRange=50;
 	this.shaking=false;
@@ -507,6 +509,7 @@ function dude(otherdude)
 	this.facingLeft=false;
 	this.tileX=Math.floor(this.x/tileSize);
 	this.tileY=Math.floor(this.y/tileSize);
+	this.nextTile = {x: this.tileX, y: this.tileY};
 	this.xV=0;
 	this.yV=0;
 	this.elasticity=.3;
@@ -520,7 +523,7 @@ function dude(otherdude)
 	this.showTail=false;
 	this.tailCount=0;
 	this.tileX=1;
-	this.tileY=1
+	this.tileY=1;
 	this.headHeight=-8;
 	this.headBobTop=-8;
 	this.headBobBottom=-6;
@@ -822,6 +825,20 @@ dude.prototype.draw=function(can,cam) //todo change to draw sprite.
 		this.equipment[EquipSlots.Ring].sprite.draw(can,0,0);
 	}
 	can.restore();
+	/*if(this.torch)
+	{
+		can.save();
+		can.translate((this.x+this.arms[0].backArm.joint2.x-cam.tileX*16)*cam.zoom,(this.y+this.arms[0].backArm.joint2.y-cam.tileY*16)*cam.zoom);
+		can.rotate((this.arms[0].backArm.angle)* (Math.PI / 180));
+		this.gunArm=this.arms[0];
+		//flip it.
+		
+		can.scale(1, -1);
+
+		//can.scale(cam.zoom,cam.zoom);
+		torchSprite.draw(can, 0,0);
+		can.restore();
+	}*/
 	if(this.gun)
 	{
 		this.gun.draw(can,cam);
@@ -1058,7 +1075,7 @@ dude.prototype.stopGesturing=function()
 
 
 
-dude.prototype.update=function()
+dude.prototype.update=function(map)
 {	
 	for(var i=0;i<this.bullets.length;i++)
 	{
@@ -1313,63 +1330,7 @@ dude.prototype.update=function()
 
 
 	
-	if(platformer)
-	{
-
-		
-		
-		if((curMap.canStand(Math.round(this.x/tileSize)+1,Math.round(this.y/tileSize)+2)) || (curMap.canStand(Math.round(this.x/tileSize)+1,Math.round(this.y/tileSize)+2)))//problem, getting stuck in ground.
-		{
-			this.falling=false;
-			this.pounding=false;
-			this.jumpTrack=0;
-			this.yV=-this.yV*this.elasticity;
-			if(Math.abs(this.yV)<0.05)
-			{
-				this.yV=0;
-			}
-			this.showTail=false;
-		}else
-		{
-			if(this.wingsOut)
-			{
-				this.yV+=.06;
-			}else
-			{
-				this.yV+=.3;
-			}
-		}
-		
-		if(this.y>curMap.height*16-33)
-		{
-			this.y=curMap.height*16-33;
-			this.falling=false;
-			this.pounding=false;
-			this.jumpTrack=0;
-			this.yV=-this.yV*this.elasticity;
-			if(Math.abs(this.yV)<0.5)
-			{
-				this.yV=0;
-			}
-			this.showTail=false;
-		}
-		//friction
-		if(this.xV>0)
-		{
-			this.xV-=friction;
-			this.xV-=this.friction;
-		}else if(this.xV<0)
-		{
-			this.xV+=friction;
-			this.xV+=this.friction;
-		}
-		if(Math.abs(this.xV)<0.05)
-		{
-			this.xV=0;
-		}
-
-		mapDirty=true;
-	}
+	
 
 	
 	/*this.x=Math.floor(this.x);
@@ -1397,6 +1358,8 @@ dude.prototype.update=function()
 			
 		}
 	}
+	
+	//this.updateAI(map);
 };	
 
 dude.prototype.equip=function(thing)
@@ -1437,12 +1400,77 @@ dude.prototype.equip=function(thing)
         return this.path != null;
     };
     dude.prototype.clearDestination=function(){
-        this.path=null; this.dx = this.x; this.dy = this.y; this.nextMove = null;
+		this.tileX=Math.floor(this.x/tileSize);
+		this.tileY=Math.floor(this.y/tileSize);
+        this.path=null; this.dx = this.tileX; this.dy = this.tileY; this.nextMove = null;
     };
     dude.prototype.setDestination = function(x, y, map) {
+		this.tileX=Math.floor(this.x/tileSize);
+		this.tileY=Math.floor(this.y/tileSize);
 		if(!map.walkable(x,y,this)) {return;}
         this.clearDestination();
-        this.path = map.getPath(this.x, this.y, x, y,this);
+        this.path = map.getPath(this.tileX, this.tileY, x, y,this);
         this.dx=x;
         this.dy=y;
     };
+	
+	dude.prototype.updateAI=function(map)
+	{
+		this.tileX=Math.floor(this.x/tileSize);
+		this.tileY=Math.floor(this.y/tileSize);
+		if( !this.nextMove )
+		{
+			this.updateNextMove();
+		}
+		if( !this.nextMove ) {
+			return;
+		}
+		var terrain = map.tiles[this.nextTile.x][this.nextTile.y].data;
+		var speed = (terrain == 4 ? 2 : 4);
+		//if (this.leaderless) {speed=3;} //PROBLEM?
+		//if((terrain==4) &&(this.units[0].class==SEEAss.Frog)) {speed=4};
+
+		//speed = speed / Math.pow(2, curMap.zoom-1);
+		var stamp = new Date();
+		var milli=stamp.getTime();
+		//speed=(speed * delta) * (60 / 1000);
+
+		if(milli-this.lastmove>30){
+			if( this.nextMove.x > this.tileX ) {
+				this.bx += speed;
+				this.encounterCounter++;
+			} else if( this.nextMove.x < this.tileX ) {
+				this.bx -= speed;
+				this.encounterCounter++;
+			}
+			if( this.nextMove.y > this.tileY ) {
+				this.by += speed;
+				this.encounterCounter++;
+			} else if( this.nextMove.y < this.tileY ) {
+				this.by -= speed;
+				this.encounterCounter++;
+			}
+			this.lastmove=stamp.getTime();
+		}
+
+		if( !this.inNextTile && ( this.bx <= 0 || this.bx >= 16 || this.by <= 0 || this.by >= 16 )) {
+			this.nextTile = {};
+			this.nextTile.x = this.nextMove.x;
+			this.nextTile.y = this.nextMove.y;
+			//           if( this.bx == 0 ) { this.bx = 16 } else if( this.bx == 16 ) { this.bx = 0; } 
+			//           if( this.by == 0 ) { this.by = 16 } else if( this.by == 16 ) { this.by = 0; }          
+			this.inNextTile = true;
+
+		}
+		if(( this.bx >= 24 || this.bx <= -8 ) || ( this.by <= -8 || this.by >= 24 )) {
+			this.bx = this.by = 8;
+			this.inNextTile = false;
+			this.tileX = this.nextMove.x;
+			this.tileY = this.nextMove.y;
+			//this.x=this.tileX*16;
+			//this.y=this.tileY*16;
+			this.nextTile = {x: this.tileX, y: this.tileY};
+			this.nextMove = null;
+
+		}
+	};

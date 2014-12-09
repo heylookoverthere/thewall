@@ -3,6 +3,24 @@ var people=[];
 var fires=[];
 var ships=[];
 var ports=[];
+var settlements=[];
+var nightsWatch=new theWatch();
+settlements.push(new settlement());
+eastwatch=new settlement();
+eastwatch.x=160*16;
+eastwatch.y=230*16;
+eastwatch.name="Eastwatch";
+eastwatch.sprite=Sprite("eastwatch");
+
+shadowtower=new settlement();
+shadowtower.x=52*16;
+shadowtower.y=229*16;
+shadowtower.name="shadowtower";
+shadowtower.sprite=Sprite("shadowtower");
+settlements.push(eastwatch);
+settlements.push(shadowtower);
+
+
 ports.push(Eastwatch);
 ports.push(Skagos);
 var miles=new dude();
@@ -10,6 +28,7 @@ miles.equip(legArmorList[Math.floor(Math.random()*legArmorList.length)]);
 miles.equip(chestArmorList[Math.floor(Math.random()*chestArmorList.length)]);
 miles.gun=miles.guns[0];
 people.push(miles);
+nightsWatch.men.push(miles);
 
 var betha=new ship();
 ships.push(betha);
@@ -20,16 +39,19 @@ mel.y=221*16;//miles.y;
 mel.alive=true;
 fires.push(mel);
 
+var thyme=new theTime();
+
 for(var i=0;i<24;i++)
 {
 	var giles=new dude();
-	giles.x=Math.random()*219*16;
+	giles.x=Math.random()*116*16;
 	giles.y=10;
 	//giles.doGesture(GestureTypes.Dance,100000);
 	giles.equip(legArmorList[Math.floor(Math.random()*legArmorList.length)]);
 	giles.equip(chestArmorList[Math.floor(Math.random()*chestArmorList.length)]);
 	giles.equip(helmetList[Math.floor(Math.random()*helmetList.length)]);
 	people.push(giles);
+	nightsWatch.men.push(miles);
 }
 
 function allPoint(guy)
@@ -44,6 +66,8 @@ function allPoint(guy)
 
 //camera.center(miles);
 //camera.follow(miles);
+//camera.tileX=1472;
+//camera.tileY=3360;
 
 document.body.addEventListener("click", mouseClick, false);
 //document.body.addEventListener("dblclick", mouseDblClick, false);
@@ -586,11 +610,11 @@ function drawGUI(can)
 	can.fillStyle="blue";
 	canvas.fillRect(22,6,220,90);
 	can.fillStyle="yellow";
-	can.fillText("Men: "+miles.x+","+miles.y,25,25);
-	can.fillText("Fighting Men: "+miles.tileX+","+miles.tileY,25,41);
-	can.fillText("Gold: "+camera.x+","+camera.y,25,57);
-	can.fillText("Food: "+camera.tileX+","+camera.tileY,25,73);
-	can.fillText("Firewood: "+miles.hp+"/"+miles.maxHp ,25,91);
+	can.fillText("Men: "+nightsWatch.men.length,25,25);
+	can.fillText("Fighting Men: "+(nightsWatch.men.length-nightsWatch.wounded),25,41);
+	can.fillText("Gold: "+nightsWatch.gold,25,57);//+camera.x+","+camera.y,25,57);
+	can.fillText("Food: "+nightsWatch.food,25,73);
+	can.fillText(thyme.days+ " days, "+thyme.hours+":"+thyme.minutes ,25,91);
 	//can.fillText(": "+Math.floor(miles.numJumps-miles.jumpTrack),755,55);
 	can.globalAlpha=1;
 }
@@ -672,7 +696,7 @@ function mainMenuDraw(){
 		canvas.fillText("-",78,665);
 
 	}
-	monsta.draw(canvas,camera);
+	//monsta.draw(canvas,camera);
 	//canvas.fillText("Particles: "+ monsta.particles.length,460,550);
 };
 
@@ -693,6 +717,9 @@ function startGame()
 	mode=1;	
 	gamestart=true;
 	curMap.buildMap("map");
+	camera.tileX=1472/16;
+	camera.tileY=3328/16;
+	monsta.snow(5000,4,1);
 }
 
 function troopScreenUpdate(){
@@ -830,6 +857,11 @@ function mainDraw() {
 		ships[i].draw(canvas,camera);
 	}
 	
+	for(var i=0;i<settlements.length;i++)
+	{
+		settlements[i].draw(canvas,camera);
+	}
+	
 	monsta.draw(canvas,camera);
 
 	/*dingle(0,1);
@@ -838,10 +870,43 @@ function mainDraw() {
 	dingle(1,1);*/
 	
 	//canvas.fillRect(miles.tileX+camera.x,miles.tileY+camera.y,16,16);
-	
+
+	canvas.globalAlpha=LightLevels[thyme.hours];
+	canvas.fillStyle="black";
+	canvas.fillRect(0,0,CANVAS_WIDTH, CANVAS_HEIGHT);
+	ligthenGradient(canvas,camera,fires[0], 24)
+	var torcha=[];
+	var torchb=[];
+	torcha.x=115*16+8;
+	torcha.y=234*16;
+	torchb.x=122*16+7;
+	torchb.y=234*16+15;
+	ligthenGradient(canvas,camera,torcha, 9)
+	ligthenGradient(canvas,camera,torchb, 10)
+	for(var i=0;i<people.length;i++)
+	{
+		if(people[i].torch)
+		{
+			if(!people[i].aiming)
+			{
+				var tehg=[];
+				//console.log(people[i].y+people[i].arms[0].backArm.joint2.y);
+				tehg.x=people[i].x+5;//people[i].arms[0].backArm.joint2.x;
+				tehg.y=people[i].y+2;//people[i].arms[0].backArm.joint2.y;
+				ligthenGradient(canvas,camera,tehg, 40);
+			}else{
+				var tehg=[];
+				//console.log(people[i].y+people[i].arms[0].backArm.joint2.y);
+				tehg.x=people[i].x+13;//people[i].arms[0].backArm.joint2.x;
+				tehg.y=people[i].y-8;//people[i].arms[0].backArm.joint2.y;
+				ligthenGradient(canvas,camera,tehg, 40);
+			}
+		}
+	}
+	mapDirty=true;
 	canvas.globalAlpha=1;//0.4;
 	curMap.drawRadar(camera,665,475);
-	canvas.globalAlpha=1;
+	//canvas.globalAlpha=1;
 	if(true)//debugInfo)
 	{
 		drawGUI(canvas);
@@ -860,6 +925,8 @@ function mainUpdate()
     timestamp = new Date();
     milliseconds = timestamp.getTime();
     tick++;
+	thyme.update();
+	nightsWatch.update();
 	gamepad = navigator.getGamepads && navigator.getGamepads()[0];
 	
 	for(var i=0;i<people.length;i++)
@@ -975,7 +1042,13 @@ function mainUpdate()
 		//debugInfo=!debugInfo;
 		//allPoint(miles);
 		//miles.equip(helmetList[Math.floor(Math.random()*helmetList.length)]);
-		mode=2;
+		/*for(var i=0;i<people.length;i++)
+		{
+			people[i].setDestination(75,26,curMap);
+		}*/
+		//mode=2;
+		//monsta.startOrbit(40000,Math.floor(Math.random()*CANVAS_WIDTH),Math.floor(Math.random()*CANVAS_HEIGHT),60);
+		monsta.snow(10000,4,1);
 	}
 	if(controller.buttons[6].check())
 	{
@@ -1027,7 +1100,7 @@ function mainUpdate()
 	monsta.update();
 	for(var i=0;i<people.length;i++)
 	{
-		people[i].update();
+		people[i].update(curMap);
 	}
 	
 	for(var i=0;i<fires.length;i++)

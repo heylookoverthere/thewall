@@ -51,7 +51,19 @@ particle.prototype.checkCollision=function(thing)
 particle.prototype.update=function(){
 		var stamp = new Date();
 		var tim=stamp.getTime();
-		if(tim-this.startTime>this.durTime) {this.alive=false;}
+		if(this.looper)
+		{
+			if((this.x>220*16) || (this.y>280*16))
+			{
+				this.y=0;
+				this.x=Math.random()*(220*16);
+				this.startTime=tim;
+			}
+		}else{
+			if(tim-this.startTime>this.durTime) {
+				this.alive=false;
+			}
+		}
 		if(tim-this.lastUpdateTime<this.updateRate) { return;}
 		if(this.orbiting)
 		{
@@ -128,7 +140,7 @@ particleSystem.prototype.start=function(dur,x,y,xv,yv,color,gravity,exploader){
 		tod.durTime=dur;
 		this.particles.push(tod);
 	};
-particleSystem.prototype.startSmall=function(dur,x,y,xv,yv,color,gravity,exploader){
+particleSystem.prototype.startSmall=function(dur,x,y,xv,yv,color,gravity,exploader,looper){
 		var tod=new particle();
 		if(!exploader) {exploader=false;}
 		tod.x=x;
@@ -145,6 +157,7 @@ particleSystem.prototype.startSmall=function(dur,x,y,xv,yv,color,gravity,expload
 		var stamp = new Date();
 		tod.startTime=stamp.getTime();
 		tod.durTime=dur;
+		tod.looper=looper;
 		this.particles.push(tod);
 	};
 particleSystem.prototype.startTextured=function(dur,x,y,xv,yv,color,gravity,exploader,spt){
@@ -213,17 +226,20 @@ particleSystem.prototype.draw=function(can,cam){
 		{
 			if((this.particles[i].alive) && (cam.isOn(this.particles[i])))
 			{
-				if (true){//this.particles[i].color!=c){
-					can.fillStyle = this.particles[i].color;
-					c= this.particles[i].color;
-				}
+				
+					
+				//can.fillStyle = this.particles[i].color;
+				//c= this.particles[i].color;
 				if(this.particles[i].textured)
 				{
 					this.particles[i].sprite.draw(can, this.particles[i].x-cam.tileX*tileSize,this.particles[i].y-cam.tileY*tileSize);
 				}else
 				{
+					c=can.fillStyle;
+					can.fillStyle = this.particles[i].color;
 					//can.fillStyle="red";
 					can.fillRect(this.particles[i].x-cam.tileX*tileSize, this.particles[i].y-cam.tileY*tileSize, this.particles[i].size*cam.zoom, this.particles[i].size*cam.zoom);
+					can.fillStyle=c;
 				}
 			}
 		}
@@ -332,3 +348,11 @@ particleSystem.prototype.colonyCollapse=function(){
 			}
 		}
 	};
+	
+particleSystem.prototype.snow=function(density,intensity,wind){
+
+	for(var i=0;i<density;i++)
+	{
+		this.startSmall(100000,Math.random()*(220*16)-600,Math.random()*(280*16)-600,Math.random()*wind,(Math.random()*6)/4+intensity,"white",false,true,true);
+	}
+}
