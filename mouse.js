@@ -27,7 +27,26 @@ function mouseWheel(e){
 	mX = e.pageX - canvasElement.get(0).offsetLeft;
 	mY = e.pageY - canvasElement.get(0).offsetTop;
 	//if (delta)
-	
+	if((mode==1))
+	{ //&& (!isMenu)){
+		if(curMap.zoom>3) {curMap.zoom=3;}
+		if(curMap.zoom<1) {curMap.zoom=1;}
+		if(delta<0)
+		{
+			curMap.setZoom(camera);
+			camera.check();
+		}else if(delta>0){
+			console.log("yar");
+			curMap.minusZoom(camera);
+			var blob=[];
+			blob.x=Math.floor(mX/16) * Math.pow(2, curMap.zoom-1)+camera.tileX;
+			blob.y=Math.floor(mY/16) * Math.pow(2, curMap.zoom-1)+camera.tileY;
+			//camera.center(blob);
+			camera.check();
+		}
+
+		
+	}
 	if (e.preventDefault)
 			e.preventDefault();
 	e.returnValue = false;
