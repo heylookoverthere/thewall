@@ -3,12 +3,28 @@ flameTypes.Campfire=1;
 flameTypes.loose=0;
 flameTypes.Torch=3;
 flameTypes.wallTorch=4;
+flameTypes.Wildfire=5;
 
 var torchSprite=Sprite("torch");
 
-function flame()
+function flame(lightlist,type)
 {
 	this.type=1;
+	this.luminosity=12;
+	var offx=0;
+	var offy=0;
+	if(this.type==flameTypes.Campfire)
+	{
+		this.luminosity=70;
+		offx=17;
+		offy=23;
+	}else if((this.type==flameTypes.Torch) || (this.type==flameTypes.Torch))
+	{
+		this.luminosity=10;
+	}else if(this.type==flameTypes.Wildfire)
+	{
+		this.luminosity=440;
+	}
 	this.sprites=[];
 	this.supportSprite=Sprite("campfire");
 	this.x=0;
@@ -23,6 +39,9 @@ function flame()
 	this.sprites.push(Sprite("fire1"));
 	this.sprites.push(Sprite("fire2"));
 	this.sprites.push(Sprite("fire3"));
+	this.flare=new light(offx,offy,this.luminosity,this);
+	lightlist.push(this.flare);
+	
 }
 
 flame.prototype.update=function()

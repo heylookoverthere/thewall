@@ -16,25 +16,7 @@
     ctx.restore();
 }*/
 
-function ligthenGradient(ctx,cam,source, radius) {
-	var x=source.x-cam.tileX*tileSize+17; //campfire
-	var y=source.y-cam.tileY*tileSize+23; 
-    ctx.save();
-    ctx.globalCompositeOperation = 'lighter';
-    var rnd = 0.05 * Math.sin(1.1 * Date.now() / 1000);
-    radius = radius * (1 + rnd);
-    var radialGradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
-    radialGradient.addColorStop(0.0, '#BB9');
-    radialGradient.addColorStop(0.1 + rnd, '#AA8');
-    radialGradient.addColorStop(0.4 + rnd, '#330');
-    radialGradient.addColorStop(0.70, '#110');
-    radialGradient.addColorStop(1, '#000');
-    ctx.fillStyle = radialGradient;
-    ctx.beginPath();
-    ctx.arc(x, y, radius, 0, 2 * 3.14);
-    ctx.fill();
-    ctx.restore();
-}
+
 
 function settlement()
 {

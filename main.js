@@ -3,6 +3,7 @@ var people=[];
 var fires=[];
 var ships=[];
 var ports=[];
+var lights=[];
 var settlements=[];
 var nightsWatch=new theWatch();
 settlements.push(new settlement());
@@ -21,6 +22,10 @@ settlements.push(eastwatch);
 settlements.push(shadowtower);
 
 
+lights.push(new light(1865,3760,9));
+lights.push(new light(1976,3777,9));
+
+
 ports.push(Eastwatch);
 ports.push(Skagos);
 var miles=new dude();
@@ -30,10 +35,18 @@ miles.gun=miles.guns[0];
 people.push(miles);
 nightsWatch.men.push(miles);
 
+
+var booop=new light(0,0,32,miles);//.arms[0].joint2));
+booop.offSetX=6;
+booop.offSetY=23;
+
+lights.push(booop);
+
+
 var betha=new ship();
 ships.push(betha);
 
-var mel=new flame();
+var mel=new flame(lights);
 mel.x=124*16;//miles.x;
 mel.y=221*16;//miles.y;
 mel.alive=true;
@@ -45,13 +58,16 @@ for(var i=0;i<24;i++)
 {
 	var giles=new dude();
 	giles.x=Math.random()*116*16;
-	giles.y=10;
+	giles.y=Math.random()*128+10;
 	//giles.doGesture(GestureTypes.Dance,100000);
 	giles.equip(legArmorList[Math.floor(Math.random()*legArmorList.length)]);
 	giles.equip(chestArmorList[Math.floor(Math.random()*chestArmorList.length)]);
 	giles.equip(helmetList[Math.floor(Math.random()*helmetList.length)]);
 	people.push(giles);
-	nightsWatch.men.push(miles);
+	var boop=new light(0,0,32,giles);
+	boop.offSetX=6;
+	boop.offSetY=23;
+	lights.push(boop)
 }
 
 function allPoint(guy)
@@ -874,16 +890,14 @@ function mainDraw() {
 	canvas.globalAlpha=LightLevels[thyme.hours];
 	canvas.fillStyle="black";
 	canvas.fillRect(0,0,CANVAS_WIDTH, CANVAS_HEIGHT);
-	ligthenGradient(canvas,camera,fires[0], 24)
-	var torcha=[];
-	var torchb=[];
-	torcha.x=115*16+8;
-	torcha.y=234*16;
-	torchb.x=122*16+7;
-	torchb.y=234*16+15;
-	ligthenGradient(canvas,camera,torcha, 9)
-	ligthenGradient(canvas,camera,torchb, 10)
-	for(var i=0;i<people.length;i++)
+	//ligthenGradient(canvas,camera,fires[0], 24)
+
+	for(var i=0;i<lights.length;i++)
+	{
+		//lights[i].draw(canvas,camera);
+		ligthenGradient(canvas,camera,lights[i], lights[i].radius)
+	}
+	/*for(var i=0;i<people.length;i++)
 	{
 		if(people[i].torch)
 		{
@@ -902,7 +916,7 @@ function mainDraw() {
 				ligthenGradient(canvas,camera,tehg, 40);
 			}
 		}
-	}
+	}*/
 	mapDirty=true;
 	canvas.globalAlpha=1;//0.4;
 	curMap.drawRadar(camera,665,475);
@@ -1111,6 +1125,11 @@ function mainUpdate()
 	for(var i=0;i<ships.length;i++)
 	{
 		ships[i].update(curMap);
+	}
+	
+	for(var i=0;i<lights.length;i++)
+	{
+		lights[i].update();
 	}
 	
 	var speeMulti=1;
