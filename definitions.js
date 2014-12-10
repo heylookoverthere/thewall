@@ -211,8 +211,6 @@ function textbox()
 }
 
 
-var monsta= new particleSystem();
-
 var TileType={};
 TileType.Grass=0;
 TileType.Plains=1;

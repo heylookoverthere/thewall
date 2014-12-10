@@ -122,7 +122,7 @@ function particleSystem(){
 	this.lastUpdate=0;
 }
 
-particleSystem.prototype.start=function(dur,x,y,xv,yv,color,gravity,exploader){
+particleSystem.prototype.start=function(dur,x,y,xv,yv,color,gravity,exploader,alight,lradius){
 		var tod=new particle();
 		if(!exploader) {exploader=false;}
 		tod.x=x;
@@ -138,6 +138,9 @@ particleSystem.prototype.start=function(dur,x,y,xv,yv,color,gravity,exploader){
 		var stamp = new Date();
 		tod.startTime=stamp.getTime();
 		tod.durTime=dur;
+		if(alight){
+			lights.push(new light(0,0,lradius,tod));
+		}
 		this.particles.push(tod);
 	};
 particleSystem.prototype.startSmall=function(dur,x,y,xv,yv,color,gravity,exploader,looper,alight,lradius){
@@ -255,17 +258,17 @@ particleSystem.prototype.update=function(){
 			{
 				if(this.particles[i].exploader)
 				{
-					this.explosion(6,this.particles[i].x,this.particles[i].y,4);
+					this.explosion(6,this.particles[i].x,this.particles[i].y,4,this.exploaderLight,9);
 				}	
 				this.particles.splice(i,1);
 			}
 		}
 	};
-particleSystem.prototype.explosion=function(num,x,y,force){
+particleSystem.prototype.explosion=function(num,x,y,force,alight,lradius){
 		for( var i = 0; i < num;i++) {
 			var ang = Math.random()*360;
 			var vel = Math.random() * 15 + 8;
-			this.start(700, x, y, Math.cos(ang* (Math.PI / 180))*vel, Math.sin(ang*(Math.PI / 180))*vel,bColors[Math.floor(Math.random()*8)],true);
+			this.start(700, x, y, Math.cos(ang* (Math.PI / 180))*vel, Math.sin(ang*(Math.PI / 180))*vel,bColors[Math.floor(Math.random()*8)],true,alight,lradius);
 		}
 	};
 particleSystem.prototype.explosionTextured=function(num,x,y,force,txt){
@@ -291,7 +294,7 @@ particleSystem.prototype.shootTextured=function(x,y,ang,vel,tex){
 		this.startTextured(1000, x, y, Math.cos(ang* (Math.PI / 180))*vel, Math.sin(ang*(Math.PI / 180))*vel,bColors[Math.floor(Math.random()*8)],true,false,tex);
 
 	};
-particleSystem.prototype.startOrbit=function(dur,x,y,diam){
+particleSystem.prototype.startOrbit=function(dur,x,y,diam,alight,lradius){
 		var tod=new particle();
 		//if(!exploader) {exploader=false;}
 		tod.x=x;
@@ -311,9 +314,13 @@ particleSystem.prototype.startOrbit=function(dur,x,y,diam){
 		tod.color="white";
 		tod.gravity=false;
 		tod.exploader=true;
+		tod.exploaderLight=true;
 		var stamp = new Date();
 		tod.startTime=stamp.getTime();
 		tod.durTime=dur;
+		if(alight){
+			lights.push(new light(8,8,lradius,tod));
+		}
 		this.particles.push(tod);
 	};
 particleSystem.prototype.swarm=function(x,y){
@@ -359,3 +366,6 @@ particleSystem.prototype.snow=function(density,intensity,wind){
 		this.startSmall(100000,Math.random()*(220*16)-600,Math.random()*(280*16)-600,Math.random()*wind,(Math.random()*6)/4+intensity,"white",false,true,true);
 	}
 }
+
+
+var monsta= new particleSystem();

@@ -31,7 +31,7 @@ function flame(lightlist,type)
 	this.y=0;
 	this.xV=0;
 	this.yV=0;
-	this.alive=false;
+	this.alive=true;
 	this.aniRate=5;
 	this.aniTrack=0;
 	this.aniCount=0;

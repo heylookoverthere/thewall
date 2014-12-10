@@ -1,6 +1,7 @@
 var lights=[];
 
 function ligthenGradient(ctx,cam,source, radius) {
+	if(!source.on) {return;}
 	var x=source.x-cam.tileX*tileSize+source.offSetX;//17; //campfire
 	var y=source.y-cam.tileY*tileSize+source.offSetY;//23; 
     ctx.save();
@@ -35,6 +36,7 @@ function light(x,y,rad,obj)
 	this.object=null;
 	if(obj)
 	{	
+
 		this.object=obj;
 		this.offSetX=x;
 		this.offSetY=y;
@@ -46,6 +48,11 @@ light.prototype.update=function()
 {
 	if(this.object)
 	{
+		if(!this.object.alive)
+		{
+			this.on=false;
+			this.alive=false;
+		}
 		this.x=this.object.x;//+this.offSetX
 		this.y=this.object.y;//+this.offSetY;
 	}

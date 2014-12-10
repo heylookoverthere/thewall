@@ -1,4 +1,4 @@
-var debugInfo=false;
+var debugInfo=true;
 var people=[];
 var fires=[];
 var ships=[];
@@ -641,6 +641,22 @@ function drawGUI(can)
 	can.globalAlpha=1;
 }
 
+function drawDebug(can)
+{
+	if(!debugInfo) {return;}
+	can.globalAlpha=0.75;
+	can.fillStyle="blue";
+	canvas.fillRect(672,6,220,90);
+	can.fillStyle="yellow";
+	can.fillText("Particles: "+monsta.particles.length,675,25);
+	can.fillText("Lights: "+lights.length,675,41);
+	can.fillText("FPS?: yar.",675,57);//+camera.x+","+camera.y,25,57);
+	can.fillText("Make rain later.",675,73);
+	can.fillText(thyme.days+ " days, "+thyme.hours+":"+thyme.minutes ,675,91);
+	//can.fillText(": "+Math.floor(miles.numJumps-miles.jumpTrack),755,55);
+	can.globalAlpha=1;
+}
+
 function merp() {
 requestAnimationFrame(merp,canvas);
 	if(mode==0){
@@ -741,7 +757,7 @@ function startGame()
 	curMap.buildMap("maap");
 	camera.tileX=1472/16;
 	camera.tileY=3328/16;
-	monsta.snow(3000,4,1);
+	monsta.snow(1500,4,1);
 }
 
 function troopScreenUpdate(){
@@ -927,10 +943,9 @@ function mainDraw() {
 	canvas.globalAlpha=1;//0.4;
 	curMap.drawRadar(camera,665,475);
 	//canvas.globalAlpha=1;
-	if(true)//debugInfo)
-	{
-		drawGUI(canvas);
-	}
+	drawGUI(canvas);
+	drawDebug(canvas);
+
 	
 };
 //------------MAIN LOOP-----------------------------------------
@@ -1140,6 +1155,11 @@ function mainUpdate()
 	for(var i=0;i<lights.length;i++)
 	{
 		lights[i].update();
+		if(lights[i].alive)
+		{
+			lights.splice(i,1);
+			i--;
+		}
 	}
 	
 	var speeMulti=1;

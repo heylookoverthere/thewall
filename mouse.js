@@ -1,14 +1,15 @@
 //Mouse stuff.
 $(document).bind("contextmenu",function(e){
 	
-	if(mode==1)
+	if(true)//(mode==1)
 	{
 		mX = e.pageX - canvasElement.get(0).offsetLeft;
 		mY = e.pageY - canvasElement.get(0).offsetTop;
-		lights.push(new light(mX+camera.x,mY+camera.y,80));
-		for (var p=0;p<400;p++) //why isn't this happening?
+		//lights.push(new light(mX+camera.x,mY+camera.y,80));
+		
+		for (var p=0;p<4;p++) //why isn't this mapdirtying.
 		{
-					monsta.startOrbit(40000,mX+camera.x,mY+camera.y,60);
+					monsta.startOrbit(40000,mX+camera.x,mY+camera.y,60,true,12);
 		}
 	}
     return false;
@@ -46,7 +47,7 @@ function mouseClick(e) {  //represents the mouse
 		{
 			case 1:
 				//alert('Left mouse button pressed');
-				console.log(mX+camera.x,mY+camera.y);
+				//console.log(mX+camera.x,mY+camera.y);
 				lights.push(new light(mX+camera.x,mY+camera.y,12));
 			    break;
 			case 2:
