@@ -1,3 +1,5 @@
+var lights=[];
+
 function ligthenGradient(ctx,cam,source, radius) {
 	var x=source.x-cam.tileX*tileSize+source.offSetX;//17; //campfire
 	var y=source.y-cam.tileY*tileSize+source.offSetY;//23; 

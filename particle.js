@@ -140,7 +140,7 @@ particleSystem.prototype.start=function(dur,x,y,xv,yv,color,gravity,exploader){
 		tod.durTime=dur;
 		this.particles.push(tod);
 	};
-particleSystem.prototype.startSmall=function(dur,x,y,xv,yv,color,gravity,exploader,looper){
+particleSystem.prototype.startSmall=function(dur,x,y,xv,yv,color,gravity,exploader,looper,alight,lradius){
 		var tod=new particle();
 		if(!exploader) {exploader=false;}
 		tod.x=x;
@@ -158,6 +158,9 @@ particleSystem.prototype.startSmall=function(dur,x,y,xv,yv,color,gravity,expload
 		tod.startTime=stamp.getTime();
 		tod.durTime=dur;
 		tod.looper=looper;
+		if(alight){
+			lights.push(new light(0,0,lradius,tod));
+		}
 		this.particles.push(tod);
 	};
 particleSystem.prototype.startTextured=function(dur,x,y,xv,yv,color,gravity,exploader,spt){

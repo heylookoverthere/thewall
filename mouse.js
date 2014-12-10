@@ -1,13 +1,14 @@
 //Mouse stuff.
 $(document).bind("contextmenu",function(e){
 	
-	if(mode==0)
+	if(mode==1)
 	{
 		mX = e.pageX - canvasElement.get(0).offsetLeft;
 		mY = e.pageY - canvasElement.get(0).offsetTop;
-		for (var p=0;p<400;p++)
+		lights.push(new light(mX+camera.x,mY+camera.y,80));
+		for (var p=0;p<400;p++) //why isn't this happening?
 		{
-					monsta.startOrbit(40000,Math.floor(Math.random()*CANVAS_WIDTH),Math.floor(Math.random()*CANVAS_HEIGHT),60);
+					monsta.startOrbit(40000,mX+camera.x,mY+camera.y,60);
 		}
 	}
     return false;
@@ -45,13 +46,16 @@ function mouseClick(e) {  //represents the mouse
 		{
 			case 1:
 				//alert('Left mouse button pressed');
-				console.log(mX,mY);
+				console.log(mX+camera.x,mY+camera.y);
+				lights.push(new light(mX+camera.x,mY+camera.y,12));
 			    break;
 			case 2:
-				//alert('Middle mouse button pressed');
+			console.log("fuclhole");
+				lights.push(new light(mX+camera.x,mY+camera.y,80));
 				break;
 			case 3:
 				//alert('Right mouse button pressed');
+				lights.push(new light(mX+camera.x,mY+camera.y,80));
 				break;
 			default:
 				//alert('You have a strange mouse');

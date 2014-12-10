@@ -72,8 +72,8 @@ function theTime()
 	};
 }
 var LightLevels=new Array();
-LightLevels.push(0.85); //midnight
-LightLevels.push(0.85); //1am
+LightLevels.push(0.90); //midnight
+LightLevels.push(0.80); //1am
 LightLevels.push(0.85); //2am
 LightLevels.push(0.80); //3am
 LightLevels.push(0.60); //4am
@@ -88,11 +88,11 @@ LightLevels.push(0.00); //12pm
 LightLevels.push(0.00); //1pm
 LightLevels.push(0.00); //2pm
 LightLevels.push(0.00); //3pm
-LightLevels.push(0.00); //4pm
-LightLevels.push(0.10); //5pm
-LightLevels.push(0.20); //6pm
+LightLevels.push(0.10); //4pm
+LightLevels.push(0.20); //5pm
+LightLevels.push(0.30); //6pm
 LightLevels.push(0.34); //7pm
-LightLevels.push(0.44); //8pm
+LightLevels.push(0.50); //8pm
 LightLevels.push(0.60); //9pm
 LightLevels.push(0.80); //10pm
 LightLevels.push(0.85); //11pm
@@ -123,7 +123,7 @@ function port(x,y,name)
 };
 
 var Eastwatch=new port();
-var Skagos=new port(194,207,"Skagos");
+var Skagos=new port(196,207,"Skagos");
 
 
 function ship()

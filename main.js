@@ -3,7 +3,7 @@ var people=[];
 var fires=[];
 var ships=[];
 var ports=[];
-var lights=[];
+
 var settlements=[];
 var nightsWatch=new theWatch();
 settlements.push(new settlement());
@@ -22,8 +22,8 @@ settlements.push(eastwatch);
 settlements.push(shadowtower);
 
 
-lights.push(new light(1865,3760,9));
-lights.push(new light(1976,3777,9));
+lights.push(new light(1865,3760,14));
+lights.push(new light(1976,3777,14));
 
 
 ports.push(Eastwatch);
@@ -32,6 +32,8 @@ var miles=new dude();
 miles.equip(legArmorList[Math.floor(Math.random()*legArmorList.length)]);
 miles.equip(chestArmorList[Math.floor(Math.random()*chestArmorList.length)]);
 miles.gun=miles.guns[0];
+miles.tileX=221;
+miles.y=221*tileSize;
 people.push(miles);
 nightsWatch.men.push(miles);
 
@@ -81,7 +83,7 @@ function allPoint(guy)
 }
 
 //camera.center(miles);
-//camera.follow(miles);
+camera.follow(miles);
 //camera.tileX=1472;
 //camera.tileY=3360;
 
@@ -536,6 +538,10 @@ pausekey.desc="Pause";
 edskeys.push(pausekey);
 var debugkey=new akey("l");
 debugkey.desc="Debug key";
+
+var troopskey=new akey("t");
+troopskey.desc="Debug key";
+
 edskeys.push(debugkey);
 var escapekey=new akey("esc");
 escapekey.desc="Pause and bring up menu";
@@ -732,10 +738,10 @@ function startGame()
 {
 	mode=1;	
 	gamestart=true;
-	curMap.buildMap("map");
+	curMap.buildMap("maap");
 	camera.tileX=1472/16;
 	camera.tileY=3328/16;
-	monsta.snow(5000,4,1);
+	monsta.snow(3000,4,1);
 }
 
 function troopScreenUpdate(){
@@ -1050,6 +1056,10 @@ function mainUpdate()
 			
 		}
 	}
+	if(troopskey.check())
+	{
+		mode=2;
+	}
 	if(debugkey.check())
 	{
 		//platformer=!platformer;
@@ -1062,7 +1072,7 @@ function mainUpdate()
 		}*/
 		//mode=2;
 		//monsta.startOrbit(40000,Math.floor(Math.random()*CANVAS_WIDTH),Math.floor(Math.random()*CANVAS_HEIGHT),60);
-		monsta.snow(10000,4,1);
+		//monsta.snow(10000,4,1);
 	}
 	if(controller.buttons[6].check())
 	{
@@ -1177,6 +1187,7 @@ function mainUpdate()
 		
 		if(controller.checkUp())
 		{
+			camera.follow(miles);
 			miles.yV=-4*miles.running;
 			//console.log(miles.running);
 			//camera.y-=miles.speed*speedMulti;
@@ -1185,6 +1196,7 @@ function mainUpdate()
 			mapDirty=true;
 		}else if(controller.checkDown())
 		{
+			camera.follow(miles);
 			miles.yV=4*miles.running;;//miles.speed*(miles.speedFactor/10);
 			//camera.y+=miles.speed*speedMulti;
 			//camera.y=miles.y-CANVAS_HEIGHT/2;
@@ -1197,6 +1209,7 @@ function mainUpdate()
 		}
 		if(controller.checkLeft())
 		{
+			camera.follow(miles);
 			miles.xV=-4*miles.running;;//miles.speed*(miles.speedFactor/10);
 			//camera.x-=miles.speed*speedMulti;
 			//camera.x=miles.x-CANVAS_WIDTH/2;
@@ -1204,7 +1217,7 @@ function mainUpdate()
 			mapDirty=true;
 		}else if(controller.checkRight())
 		{
-			
+			camera.follow(miles);
 			miles.xV=4*miles.running;//miles.speed*(miles.speedFactor/10);
 			//camera.x+=miles.speed*speedMulti;
 			//camera.x=miles.x-CANVAS_WIDTH/2;
@@ -1219,6 +1232,7 @@ function mainUpdate()
 	{
 		if(keydown.up)
 		{
+			camera.unFollow();
 			camera.tileY-=camera.moveSpeed*camera.zoomMove;
 			camera.update();
 			if(camera.tileY<0) {camera.y=0; camera.tileY=0;}
@@ -1226,6 +1240,7 @@ function mainUpdate()
 		}
 		if(keydown.down)
 		{
+			camera.unFollow();
 			camera.tileY+=camera.moveSpeed*camera.zoomMove;
 			camera.update();
 			if(camera.tileY>curMap.height-camera.height) {camera.tileY=curMap.height-camera.height;camera.y=camera.tileY;}
@@ -1233,6 +1248,7 @@ function mainUpdate()
 		}
 		if(keydown.right)
 		{
+			camera.unFollow();
 			camera.tileX+=camera.moveSpeed*camera.zoomMove;
 			camera.update();
 			if(camera.tileX>curMap.width-camera.width) {camera.tileX=curMap.width-camera.width;}
@@ -1240,6 +1256,7 @@ function mainUpdate()
 		}
 		if(keydown.left)
 		{
+			camera.unFollow();
 			camera.tileX-=camera.moveSpeed*camera.zoomMove;
 			camera.update();
 			if(camera.tileX<0) {camera.tileX=0; camera.x=0;}//todo
