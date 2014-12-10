@@ -630,13 +630,13 @@ function drawGUI(can)
 {
 	can.globalAlpha=0.75;
 	can.fillStyle="blue";
-	canvas.fillRect(22,6,220,90);
+	canvas.fillRect(6,6,220,90);
 	can.fillStyle="yellow";
-	can.fillText("Men: "+nightsWatch.men.length,25,25);
-	can.fillText("Fighting Men: "+(nightsWatch.men.length-nightsWatch.wounded),25,41);
-	can.fillText("Gold: "+nightsWatch.gold,25,57);//+camera.x+","+camera.y,25,57);
-	can.fillText("Food: "+nightsWatch.food,25,73);
-	can.fillText(thyme.days+ " days, "+thyme.hours+":"+thyme.minutes ,25,91);
+	can.fillText("Men: "+nightsWatch.men.length,8,25);
+	can.fillText("Fighting Men: "+(nightsWatch.men.length-nightsWatch.wounded),8,41);
+	can.fillText("Gold: "+nightsWatch.gold,8,57);//+camera.x+","+camera.y,25,57);
+	can.fillText("Food: "+nightsWatch.food,8,73);
+	can.fillText(thyme.days+ " days, "+thyme.hours+":"+thyme.minutes ,8,91);
 	//can.fillText(": "+Math.floor(miles.numJumps-miles.jumpTrack),755,55);
 	can.globalAlpha=1;
 }
@@ -809,9 +809,7 @@ function mainMenuUpdate(){
 	if(controller.buttons[7].check())
 	{
 		startGame();
-	}
-		
-	if(startkey.check()){
+	}else if(startkey.check()){
 		startGame();
 	}
 	if(downkey.check()){
