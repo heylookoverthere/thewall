@@ -363,7 +363,7 @@ particleSystem.prototype.snow=function(density,intensity,wind){
 
 	for(var i=0;i<density;i++)
 	{
-		this.startSmall(100000,Math.random()*(220*16)-600,Math.random()*(280*16)-600,Math.random()*wind,(Math.random()*6)/4+intensity,"white",false,true,true);
+		this.startSmall(100000,Math.random()*(220*16)-600,Math.random()*(280*16)-600,Math.random()*wind,(Math.random()*6)/4+intensity,"white",false,true,true,false,50);
 	}
 }
 

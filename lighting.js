@@ -1,4 +1,5 @@
 var lights=[];
+var COCKS=false;
 //TODO give each light it's own gradient track.
 function ligthenGradient(ctx,cam,source, radius) {
 	if(!source.on) {return;}
@@ -6,14 +7,23 @@ function ligthenGradient(ctx,cam,source, radius) {
 	var y=source.y-cam.tileY*tileSize+source.offSetY;//23; 
     ctx.save();
     ctx.globalCompositeOperation = 'lighter';
-    var rnd = 0.05 * Math.sin(1.1 * Date.now() / 1000);
+    var rnd = 0.05 * Math.sin(1.1 * (Math.random()*1000+(Date.now() / 1000)));
     radius = radius * (1 + rnd);
     var radialGradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
-    radialGradient.addColorStop(0.0, '#BB9');
+	if(COCKS)
+	{
+    radialGradient.addColorStop(0.0, '#AB9');
     radialGradient.addColorStop(0.1 + rnd, '#AA8');
     radialGradient.addColorStop(0.4 + rnd, '#330');
     radialGradient.addColorStop(0.70, '#110');
     radialGradient.addColorStop(1, '#000');
+	}else{
+	    radialGradient.addColorStop(0.0, '#BB9');
+		radialGradient.addColorStop(0.1 + rnd, '#AA8');
+		radialGradient.addColorStop(0.4 + rnd, '#330');
+		radialGradient.addColorStop(0.70, '#110');
+		radialGradient.addColorStop(1, '#000');
+	}
     ctx.fillStyle = radialGradient;
     ctx.beginPath();
     ctx.arc(x, y, radius, 0, 2 * 3.14);
@@ -31,6 +41,7 @@ function light(x,y,rad,obj)
 	this.offSetY=0;
 	this.color="white";
 	this.on=true;
+	this.alive=true;
 	this.nightTimer=false; //turn on when dark.
 	this.radius=rad||9;
 	this.object=null;

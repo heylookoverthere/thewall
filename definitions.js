@@ -280,6 +280,7 @@ function rectOverlap(r1,r2){
 	return true;
 };
 
+var FPS=0;
 var numMapPoints=6;
 var mmcur=false;
 var bConsoleStr=new Array();

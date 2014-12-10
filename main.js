@@ -650,7 +650,7 @@ function drawDebug(can)
 	can.fillStyle="yellow";
 	can.fillText("Particles: "+monsta.particles.length,675,25);
 	can.fillText("Lights: "+lights.length,675,41);
-	can.fillText("FPS?: yar.",675,57);//+camera.x+","+camera.y,25,57);
+	can.fillText("FPS:"+FPS,675,57);//+camera.x+","+camera.y,25,57);
 	can.fillText("Make rain later.",675,73);
 	can.fillText(thyme.days+ " days, "+thyme.hours+":"+thyme.minutes ,675,91);
 	//can.fillText(": "+Math.floor(miles.numJumps-miles.jumpTrack),755,55);
@@ -659,6 +659,8 @@ function drawDebug(can)
 
 function merp() {
 requestAnimationFrame(merp,canvas);
+
+FPS=countFPS();
 	if(mode==0){
 		mainMenuUpdate();
 		mainMenuDraw();
@@ -1153,7 +1155,7 @@ function mainUpdate()
 	for(var i=0;i<lights.length;i++)
 	{
 		lights[i].update();
-		if(lights[i].alive)
+		if(!lights[i].alive)
 		{
 			lights.splice(i,1);
 			i--;

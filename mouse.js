@@ -5,7 +5,7 @@ $(document).bind("contextmenu",function(e){
 	{
 		mX = e.pageX - canvasElement.get(0).offsetLeft;
 		mY = e.pageY - canvasElement.get(0).offsetTop;
-		//lights.push(new light(mX+camera.x,mY+camera.y,80));
+		lights.push(new light(mX+camera.x,mY+camera.y,80));
 		
 		for (var p=0;p<4;p++) //why isn't this mapdirtying.
 		{
