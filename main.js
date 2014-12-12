@@ -656,7 +656,7 @@ function drawDebug(can)
 	//can.fillText(": "+Math.floor(miles.numJumps-miles.jumpTrack),755,55);
 	can.globalAlpha=1;
 }
-
+startGame();
 function merp() {
 requestAnimationFrame(merp,canvas);
 
