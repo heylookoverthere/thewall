@@ -166,19 +166,25 @@ gun.prototype.draw=function(can,cam)
 	can.save();
 	if(this.guy.facingLeft)
 	{
-		can.translate((this.guy.x+this.guy.arms[0].backArm.joint2.x-cam.tileX*16)*cam.zoom,(this.guy.y+this.guy.arms[0].backArm.joint2.y-cam.tileY*16)*cam.zoom);
-		can.rotate((this.guy.arms[0].backArm.angle)* (Math.PI / 180));
+		can.translate((this.guy.x-16+this.guy.arms[0].backArm.joint2.x-cam.tileX*16)*cam.zoom,(this.guy.y-10+this.guy.arms[0].backArm.joint2.y-cam.tileY*16)*cam.zoom);
+		can.rotate((this.guy.arms[0].backArm.angle)* (Math.PI / 180));	
+	
 		this.guy.gunArm=this.guy.arms[0];
 		//flip it.
 		ligthenGradient(can,cam,this, 9)
-		can.scale(1, -1);
+		//can.scale(1, -1);
+
 	}else
 	{
-		can.translate((this.guy.x+this.guy.arms[1].backArm.joint2.x-cam.tileX*16)*cam.zoom,(this.guy.y+this.guy.arms[1].backArm.joint2.y-cam.tileY*16)*cam.zoom);
+		can.translate((this.guy.x-16+this.guy.arms[1].backArm.joint2.x-cam.tileX*16)*cam.zoom,(this.guy.y-10+this.guy.arms[1].backArm.joint2.y-cam.tileY*16)*cam.zoom);
 		can.rotate((this.guy.arms[1].backArm.angle)* (Math.PI / 180));
 		this.guy.gunArm=this.guy.arms[1];
 	}
 	//can.scale(cam.zoom,cam.zoom);
+		if(this.guy.small)
+		{
+			can.scale(0.5,0.5);
+			}
 	this.sprite.draw(can, this.xOffset,this.yOffset);
 	can.restore();
 
@@ -430,7 +436,9 @@ function arm(that,side)
 	this.backArm.joint2.x=8;//this.body.x+6;
 	this.backArm.joint2.y=0+this.body.crouchAdj;//this.body.y;
 	var ax=	this.backArm.joint1.x+Math.cos(Math.radians(this.backArm.angle))*this.backArm.length;
-	var ay= this.backArm.joint1.y+Math.sin(Math.radians(this.backArm.angle))*this.backArm.length;
+	var ay=	this.backArm.joint1.y+Math.sin(Math.radians(this.backArm.angle))*this.backArm.length;
+	//var ay= this.backArm.joint1.y+Math.sin(Math.radians(this.backArm.angle))*this.backArm.length;
+	//var ay= 5;
 	this.backArm.joint2.x=ax
 	this.backArm.joint2.y=ay;
  };
@@ -455,6 +463,10 @@ function dude(otherdude)
 {	
 	if(!otherdude)
 	{
+	this.small=true;
+	this.crouchAdj=0;
+	this.torchPoint=new point();
+	this.torchPoint.alive=true;
 	this.path = null;
 	this.torch=true;
 	this.bx = 8;
@@ -525,6 +537,8 @@ function dude(otherdude)
 	this.sleeveColor="#404040"
 	this.x=120*tileSize;//this seems to be straight X, camera uses tile X
 	this.y=170*tileSize;
+	this.torchPoint.x=this.x;//+this.arms[0].backArm.joint2.x;
+	this.torchPoint.y=this.y;//+this.arms[0].backArm.joint2.y;
 	this.facingLeft=false;
 	this.tileX=Math.floor(this.x/tileSize);
 	this.tileY=Math.floor(this.y/tileSize);
@@ -683,6 +697,7 @@ function dude(otherdude)
 		this.equipment=otherdude.eqipment;*/
 
 	}
+	
 }
 
 dude.prototype.equipOutfit=function(w)
@@ -789,6 +804,7 @@ dude.prototype.draw=function(can,cam) //todo change to draw sprite.
 	//can.translate(CANVAS_WIDTH/2,CANVAS_HEIGHT/2);
 	can.translate((this.x-cam.tileX*16)*cam.zoom+this.shakeOffset,(this.y-cam.tileY*16)*cam.zoom);
 	can.scale(cam.zoom,cam.zoom);
+	if(this.small){	can.scale(.5,.5);}
 	this.legSprites[this.facing].draw(can, 0,0);
 	this.chestSprites[this.facing].draw(can, 0,this.bodyHeight+this.crouchAdj-this.heightOffset);
 
@@ -860,7 +876,9 @@ dude.prototype.draw=function(can,cam) //todo change to draw sprite.
 	}*/
 	if(this.gun)
 	{
+		
 		this.gun.draw(can,cam);
+	
 	}
 	
 	
@@ -878,6 +896,7 @@ dude.prototype.drawTail=function(can,cam) //todo change to draw sprite.
 		can.translate((this.tail[i].x-cam.tileX*16)*cam.zoom,(this.tail[i].y-cam.tileY*16)*cam.zoom);
 		//can.translate(CANVAS_WIDTH/2+this.tail[i].x,CANVAS_HEIGHT/2+this.tail[i].y);
 		can.scale(cam.zoom,cam.zoom);
+		can.scale(0.5,0.5);
 		this.legSprites[this.facing].draw(can, 0,0);
 		this.chestSprites[this.facing].draw(can, 0,this.bodyHeight+this.crouchAdj);
 
@@ -1379,6 +1398,11 @@ dude.prototype.update=function(map)
 	}
 	
 	//this.updateAI(map);
+	this.torchPoint.x=this.x+16-this.arms[0].backArm.joint2.x;
+	this.torchPoint.y=this.y+16+8-this.arms[0].backArm.joint2.y;
+	//console.log(this.y+this.arms[0].backArm.joint2.y);
+	//this.torchPoint.y=this.y+this.arms[0].backArm.joint2.y;
+	//this.torchPoint.alive=true;
 };	
 
 dude.prototype.equip=function(thing)

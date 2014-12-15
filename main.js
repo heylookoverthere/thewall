@@ -32,17 +32,20 @@ var miles=new dude();
 miles.equip(legArmorList[Math.floor(Math.random()*legArmorList.length)]);
 miles.equip(chestArmorList[Math.floor(Math.random()*chestArmorList.length)]);
 miles.gun=miles.guns[0];
-miles.tileX=221;
-miles.y=221*tileSize;
+console.log(miles.torchPoint);
+//miles.tileX=221;
+//miles.y=221*tileSize;
+
 people.push(miles);
 nightsWatch.men.push(miles);
 
-
-var booop=new light(0,0,32,miles);//.arms[0].joint2));
+console.log(miles.torchPoint);
+var booop=new light(0,0,32,miles.torchPoint);//.arms[0].joint2));
 booop.offSetX=6;
-booop.offSetY=23;
+booop.offSetY=6;
 
 lights.push(booop);
+console.log(booop);
 
 
 var betha=new ship();
@@ -66,9 +69,9 @@ for(var i=0;i<24;i++)
 	giles.equip(chestArmorList[Math.floor(Math.random()*chestArmorList.length)]);
 	giles.equip(helmetList[Math.floor(Math.random()*helmetList.length)]);
 	people.push(giles);
-	var boop=new light(0,0,32,giles);
+	var boop=new light(0,0,32,giles.torchPoint);
 	boop.offSetX=6;
-	boop.offSetY=23;
+	boop.offSetY=6;
 	lights.push(boop)
 }
 
