@@ -1480,8 +1480,6 @@ dude.prototype.equip=function(thing)
 		if(!map.walkable(x,y,this)) {console.log("not walkable!"+" "+map.tiles[x][y].data);return;}
         this.clearDestination();
         this.path = map.getPath(this.tileX, this.tileY, x, y,this);
-		//console.log(this.path);
-		console.log(" so they have a path during set destinantion");
         this.dx=x;
         this.dy=y;
     };
@@ -1501,7 +1499,7 @@ dude.prototype.equip=function(thing)
 			return;
 		}
 		var terrain = map.tiles[this.nextTile.x][this.nextTile.y].data;
-		var speed = (terrain == 4 ? 2 : 4);
+		var speed = (terrain == 4 ? 1 : 2);
 		//if (this.leaderless) {speed=3;} //PROBLEM?
 		//if((terrain==4) &&(this.units[0].class==SEEAss.Frog)) {speed=4};
 
@@ -1510,7 +1508,7 @@ dude.prototype.equip=function(thing)
 		var milli=stamp.getTime();
 		//speed=(speed * delta) * (60 / 1000);
 
-		if(milli-this.lastmove>300){
+		if(milli-this.lastmove>100){
 			if( this.nextMove.x > this.tileX ) {
 				this.x += speed;
 				this.bx += speed;

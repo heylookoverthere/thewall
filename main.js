@@ -764,7 +764,7 @@ function startGame()
 	curMap.buildMap("maap");
 	camera.tileX=1472/16;
 	camera.tileY=3328/16;
-	monsta.snow(1500,4,1);
+	monsta.snow(2500,8,1);
 }
 
 function troopScreenUpdate(){
