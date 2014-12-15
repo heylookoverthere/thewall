@@ -29,9 +29,11 @@ lights.push(new light(1976,3777,14));
 ports.push(Eastwatch);
 ports.push(Skagos);
 var miles=new dude();
+miles.AI=false;
 miles.equip(legArmorList[Math.floor(Math.random()*legArmorList.length)]);
 miles.equip(chestArmorList[Math.floor(Math.random()*chestArmorList.length)]);
 miles.gun=miles.guns[0];
+miles.torchHand=1;
 console.log(miles.torchPoint);
 //miles.tileX=221;
 //miles.y=221*tileSize;
@@ -64,7 +66,7 @@ for(var i=0;i<24;i++)
 	var giles=new dude();
 	giles.x=Math.random()*116*16;
 	giles.y=Math.random()*128+10;
-	giles.doGesture(GestureTypes.Dance,100000);
+	giles.doGesture(Math.floor(Math.random()*8),100000,miles);
 	giles.equip(legArmorList[Math.floor(Math.random()*legArmorList.length)]);
 	giles.equip(chestArmorList[Math.floor(Math.random()*chestArmorList.length)]);
 	giles.equip(helmetList[Math.floor(Math.random()*helmetList.length)]);
@@ -1023,12 +1025,17 @@ function mainUpdate()
 			if(controller.buttons[0].checkDown())//A
 			{
 				//miles.equip(noHelmet);
+				console.log("frog");
 				miles.arms[0].backArm.angle=195;
 				miles.arms[1].backArm.angle=345;
+				miles.arms[0].update();
+				miles.arms[1].update();
 			}else
 			{
 				miles.arms[0].backArm.angle=90;
 				miles.arms[1].backArm.angle=90;
+				miles.arms[0].update();
+				miles.arms[1].update();
 			}
 		}else
 		{
@@ -1288,3 +1295,4 @@ function mainUpdate()
 	}
 };
 merp();
+startGame();

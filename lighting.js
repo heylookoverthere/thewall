@@ -73,6 +73,7 @@ light.prototype.draw=function(ctx,cam) {
 	var x=this.x-cam.tileX*tileSize+17; //campfire
 	var y=this.y.y-cam.tileY*tileSize+23; 
     ctx.save();
+	//ctx.scale(-cam.zoom,-cam.zoom);
     ctx.globalCompositeOperation = 'lighter';
     var rnd = 0.05 * Math.sin(1.1 * Date.now() / 1000);
     radius = this.radius * (1 + rnd);

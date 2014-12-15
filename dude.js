@@ -137,7 +137,7 @@ function gun(guy,type)
 	this.angleOffset=0;
 	if(type==0)
 	{	
-		this.sprite=Sprite("gun0");
+		this.sprite=Sprite("gun01");
 		this.bothArms=false;
 		this.xOffset=-3;
 		this.yOffset=-3;
@@ -166,7 +166,7 @@ gun.prototype.draw=function(can,cam)
 	can.save();
 	if(this.guy.facingLeft)
 	{
-		can.translate((this.guy.x-16+this.guy.arms[0].backArm.joint2.x-cam.tileX*16)*cam.zoom,(this.guy.y-10+this.guy.arms[0].backArm.joint2.y-cam.tileY*16)*cam.zoom);
+		can.translate((this.guy.x+this.guy.arms[0].backArm.joint2.x-cam.tileX*16)*cam.zoom,(this.guy.y-8+this.guy.arms[0].backArm.joint2.y-cam.tileY*16)*cam.zoom);
 		can.rotate((this.guy.arms[0].backArm.angle)* (Math.PI / 180));	
 	
 		this.guy.gunArm=this.guy.arms[0];
@@ -185,7 +185,19 @@ gun.prototype.draw=function(can,cam)
 		{
 			can.scale(0.5,0.5);
 			}
-	this.sprite.draw(can, this.xOffset,this.yOffset);
+	if(this.guy.aiming){
+		this.sprite.draw(can, this.xOffset,this.yOffset);
+	}else
+	{
+		if(this.guy.facingLeft)
+		{
+			this.sprite.draw(can, -8,8);
+		}else
+		{
+			this.sprite.draw(can, -8,-8);
+		}
+	}
+		
 	can.restore();
 
 }
@@ -437,13 +449,10 @@ function arm(that,side)
 	this.backArm.joint2.y=0+this.body.crouchAdj;//this.body.y;
 	var ax=	this.backArm.joint1.x+Math.cos(Math.radians(this.backArm.angle))*this.backArm.length;
 	var ay=	this.backArm.joint1.y+Math.sin(Math.radians(this.backArm.angle))*this.backArm.length;
-	//var ay= this.backArm.joint1.y+Math.sin(Math.radians(this.backArm.angle))*this.backArm.length;
-	//var ay= 5;
+
 	this.backArm.joint2.x=ax
 	this.backArm.joint2.y=ay;
-	this.body.torchPoint.x=this.body.x-24+this.backArm.joint2.x;
-	this.body.torchPoint.x=this.body.x-24+this.backArm.joint2.x;
-	this.body.torchPoint.y=this.body.y-16+this.backArm.joint2.y;
+
  };
 arm.prototype.draw=function(can,cam)
 {
@@ -474,6 +483,7 @@ function dude(otherdude)
 	this.torch=true;
 	this.bx = 8;
     this.by = 8;
+	this.AI=true;
     this.dx = 0;
     this.dy = 0;
 	this.nextMove = null;
@@ -538,6 +548,7 @@ function dude(otherdude)
 		this.skinColor="#7F3300";
 	}
 	this.sleeveColor="#404040"
+	this.torchHand=0;
 	this.x=120*tileSize;//this seems to be straight X, camera uses tile X
 	this.y=170*tileSize;
 	this.torchPoint.x=this.x;//+this.arms[0].backArm.joint2.x;
@@ -806,7 +817,7 @@ dude.prototype.draw=function(can,cam) //todo change to draw sprite.
 	//can.translate((this.x+cam.tileX)*cam.zoom,(this.y+cam.tileY)*cam.zoom);
 	//can.translate(CANVAS_WIDTH/2,CANVAS_HEIGHT/2);
 	can.translate((this.x-cam.tileX*16)*cam.zoom+this.shakeOffset,(this.y-cam.tileY*16)*cam.zoom);
-	can.scale(cam.zoom,cam.zoom);
+	//can.scale(cam.zoom,cam.zoom);
 	if(this.small){	can.scale(.5,.5);}
 	this.legSprites[this.facing].draw(can, 0,0);
 	this.chestSprites[this.facing].draw(can, 0,this.bodyHeight+this.crouchAdj-this.heightOffset);
@@ -1281,6 +1292,8 @@ dude.prototype.update=function(map)
 		{
 			this.arms[0].backArm.angle=195;
 			this.arms[1].backArm.angle=345;
+			this.arms[1].update();
+			this.arms[0].update();
 		}else
 		{
 			this.arms[0].relax();
@@ -1290,6 +1303,15 @@ dude.prototype.update=function(map)
 	for(var i=0;i<this.arms.length;i++)
 	{
 		this.arms[i].update();
+	}
+	if(this.torchHand==0)
+	{
+		this.torchPoint.x=this.x-16+this.arms[this.torchHand].backArm.joint2.x;
+		this.torchPoint.y=this.y-16+this.arms[this.torchHand].backArm.joint2.y;
+	}else
+	{
+		this.torchPoint.x=this.x-16+this.arms[this.torchHand].backArm.joint2.x;
+		this.torchPoint.y=this.y-16+this.arms[this.torchHand].backArm.joint2.y;
 	}
 	this.tailCount++;
 	if(true)//(this.tailCount>this.tailRate)
@@ -1400,9 +1422,8 @@ dude.prototype.update=function(map)
 		}
 	}
 	
-	//this.updateAI(map);
-	//this.torchPoint.x=this.x+16-this.arms[0].backArm.joint2.x;
-	//this.torchPoint.y=this.y+16-this.arms[0].backArm.joint2.y;
+	if(this.AI);
+	this.updateAI(map);
 
 };	
 
