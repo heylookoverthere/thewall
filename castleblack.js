@@ -203,6 +203,7 @@ function ship()
 	
 	  ship.prototype.updateNextMove = function() {
         if( !this.path ) {
+			//console.log(this.name+ " boat has no path");
             return;
         }
         this.nextMove = this.path.shift();
@@ -225,7 +226,7 @@ function ship()
         this.path=null; this.dx = this.tileX; this.dy = this.tileY; this.nextMove = null;
     };
     ship.prototype.setDestination = function(x, y, map) {
-		if(!map.sailable(x,y,this)) {console.log("invalid dest");return;}
+		if(!map.sailable(x,y)) {console.log("invalid dest");return;}
         this.clearDestination();
         this.path = map.getPath(this.tileX, this.tileY, x, y,this);
         this.dx=x;

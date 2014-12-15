@@ -326,13 +326,13 @@ function Map(I) { //map object
 	
 	
 	I.sailable=function(x,y){
-		console.log("ffoo");
 		if((I.tiles[x][y].data==TileType.Ocean)) {return true;}
 		return false;
 	}
 	
 	I.walkable=function(x,y){
 		
+			//console.log(I.tiles[x][y].data);
 			if((I.tiles[x][y].data!=TileType.Mountains) &&(I.tiles[x][y].data!=TileType.IceMountains)&& (I.tiles[x][y].data!=TileType.Ice)&& (I.tiles[x][y].data!=TileType.Ocean)&&(I.tiles[x][y].data!=TileType.Water)) {return true;}
 			return false;
 	}

@@ -61,7 +61,7 @@ fires.push(mel);
 
 var thyme=new theTime();
 
-for(var i=0;i<24;i++)
+for(var i=0;i<2;i++)
 {
 	var giles=new dude();
 	giles.x=Math.random()*116*16;
@@ -1098,6 +1098,15 @@ function mainUpdate()
 		//mode=2;
 		//monsta.startOrbit(40000,Math.floor(Math.random()*CANVAS_WIDTH),Math.floor(Math.random()*CANVAS_HEIGHT),60);
 		//monsta.snow(10000,4,1);
+		//console.log(Math.floor(ships[0].x/16),Math.floor(ships[0].y/16));
+		//console.log(curMap.tiles[69][11].data);
+		ships[0].setDestination(Math.floor(Skagos.x/16),Math.floor(Skagos.y/16),curMap);
+		for(var i=1;i<people.length;i++)
+		{
+		
+			people[i].setDestination(settlements[0].tileX,settlements[0].tileY-5,curMap);
+		}
+
 	}
 	if(controller.buttons[6].check())
 	{
@@ -1296,3 +1305,4 @@ function mainUpdate()
 };
 merp();
 startGame();
+//console.log(curMap.tiles[Skagos.x/16][Skagos.y/16].data);

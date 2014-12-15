@@ -1446,7 +1446,9 @@ dude.prototype.equip=function(thing)
 
     dude.prototype.updateNextMove = function() {
         if( !this.path ) {
+			console.log("no path");
             return;
+			
         }
         this.nextMove = this.path.shift();
         if( !this.nextMove ) {
@@ -1472,7 +1474,7 @@ dude.prototype.equip=function(thing)
     dude.prototype.setDestination = function(x, y, map) {
 		this.tileX=Math.floor(this.x/tileSize);
 		this.tileY=Math.floor(this.y/tileSize);
-		if(!map.walkable(x,y,this)) {return;}
+		if(!map.walkable(x,y,this)) {console.log("not walkable!"+" "+map.tiles[x][y].data);return;}
         this.clearDestination();
         this.path = map.getPath(this.tileX, this.tileY, x, y,this);
         this.dx=x;
@@ -1486,6 +1488,7 @@ dude.prototype.equip=function(thing)
 		if( !this.nextMove )
 		{
 			this.updateNextMove();
+			//console.log("fooog");
 		}
 		if( !this.nextMove ) {
 			return;
