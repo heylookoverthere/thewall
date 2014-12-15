@@ -441,6 +441,9 @@ function arm(that,side)
 	//var ay= 5;
 	this.backArm.joint2.x=ax
 	this.backArm.joint2.y=ay;
+	this.body.torchPoint.x=this.body.x-24+this.backArm.joint2.x;
+	this.body.torchPoint.x=this.body.x-24+this.backArm.joint2.x;
+	this.body.torchPoint.y=this.body.y-16+this.backArm.joint2.y;
  };
 arm.prototype.draw=function(can,cam)
 {
@@ -1398,11 +1401,9 @@ dude.prototype.update=function(map)
 	}
 	
 	//this.updateAI(map);
-	this.torchPoint.x=this.x+16-this.arms[0].backArm.joint2.x;
-	this.torchPoint.y=this.y+16+8-this.arms[0].backArm.joint2.y;
-	//console.log(this.y+this.arms[0].backArm.joint2.y);
-	//this.torchPoint.y=this.y+this.arms[0].backArm.joint2.y;
-	//this.torchPoint.alive=true;
+	//this.torchPoint.x=this.x+16-this.arms[0].backArm.joint2.x;
+	//this.torchPoint.y=this.y+16-this.arms[0].backArm.joint2.y;
+
 };	
 
 dude.prototype.equip=function(thing)
