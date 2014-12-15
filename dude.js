@@ -486,6 +486,7 @@ function dude(otherdude)
 	this.AI=true;
     this.dx = 0;
     this.dy = 0;
+	this.lastmove=0;
 	this.nextMove = null;
     this.inNextTile = false;
     this.viewRange=50;
@@ -1422,8 +1423,9 @@ dude.prototype.update=function(map)
 		}
 	}
 	
-	if(this.AI);
-	this.updateAI(map);
+	if(this.AI){
+		this.updateAI(map);
+	}
 
 };	
 
@@ -1446,12 +1448,13 @@ dude.prototype.equip=function(thing)
 
     dude.prototype.updateNextMove = function() {
         if( !this.path ) {
-			console.log("no path");
+			//console.log("no path"+" "+this.path);
             return;
 			
         }
         this.nextMove = this.path.shift();
-        if( !this.nextMove ) {
+		//console.log(this.nextMove);
+		if( !this.nextMove ) {
 			if(this.team==0){
 				var tmpstr=this.name + "reached their destination.";
 				bConsoleStr.push(tmpstr);
@@ -1477,6 +1480,8 @@ dude.prototype.equip=function(thing)
 		if(!map.walkable(x,y,this)) {console.log("not walkable!"+" "+map.tiles[x][y].data);return;}
         this.clearDestination();
         this.path = map.getPath(this.tileX, this.tileY, x, y,this);
+		//console.log(this.path);
+		console.log(" so they have a path during set destinantion");
         this.dx=x;
         this.dy=y;
     };
@@ -1485,6 +1490,8 @@ dude.prototype.equip=function(thing)
 	{
 		this.tileX=Math.floor(this.x/tileSize);
 		this.tileY=Math.floor(this.y/tileSize);
+		//console.log(this.nextMove);
+		//console.log(this.path);
 		if( !this.nextMove )
 		{
 			this.updateNextMove();
@@ -1503,18 +1510,22 @@ dude.prototype.equip=function(thing)
 		var milli=stamp.getTime();
 		//speed=(speed * delta) * (60 / 1000);
 
-		if(milli-this.lastmove>30){
+		if(milli-this.lastmove>300){
 			if( this.nextMove.x > this.tileX ) {
+				this.x += speed;
 				this.bx += speed;
 				this.encounterCounter++;
 			} else if( this.nextMove.x < this.tileX ) {
+				this.x -= speed;
 				this.bx -= speed;
 				this.encounterCounter++;
 			}
 			if( this.nextMove.y > this.tileY ) {
+				this.y += speed;
 				this.by += speed;
 				this.encounterCounter++;
 			} else if( this.nextMove.y < this.tileY ) {
+				this.y -= speed;
 				this.by -= speed;
 				this.encounterCounter++;
 			}

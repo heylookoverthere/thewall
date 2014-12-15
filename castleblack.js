@@ -15,6 +15,7 @@
     ctx.fill();
     ctx.restore();
 }*/
+var bees=true;
 
 countFPS = (function () {
   var lastLoop = (new Date()).getMilliseconds();
@@ -138,7 +139,7 @@ function port(x,y,name)
 	}
 };
 
-var Eastwatch=new port();
+var Eastwatch=new port(166,231,"Eastwatch");
 var Skagos=new port(196,207,"Skagos");
 
 
@@ -146,6 +147,7 @@ function ship()
 {
 	this.ports=new Array();
 	this.boat=true;
+	this.lastmove=0;
 	this.ports.push(Eastwatch);
 	this.ports.push(Skagos);
 	this.homeport=this.ports[0];
@@ -202,8 +204,16 @@ function ship()
 	}
 	
 	  ship.prototype.updateNextMove = function() {
+		if(!bees) {return;}
         if( !this.path ) {
-			//console.log(this.name+ " boat has no path");
+			console.log(this.name+ " has reached "+this.ports[this.portTrack].name);
+			//todo TRADE!
+			this.portTrack++;
+			if(this.portTrack>this.ports.length-1)
+			{
+				this.portTrack=0;
+			}
+			this.setDestination(this.ports[this.portTrack].tileX,this.ports[this.portTrack].tileY,curMap);
             return;
         }
         this.nextMove = this.path.shift();
@@ -242,8 +252,8 @@ function ship()
 		if( !this.nextMove ) {
 			return;
 		}
-		var terrain = map.tiles[this.nextTile.x][this.nextTile.y].data;
-		var speed = (terrain == 4 ? 2 : 4);
+		//var terrain = map.tiles[this.nextTile.x][this.nextTile.y].data;
+		var speed = 2;
 		//if (this.leaderless) {speed=3;} //PROBLEM?
 		//if((terrain==4) &&(this.units[0].class==SEEAss.Frog)) {speed=4};
 
@@ -252,20 +262,20 @@ function ship()
 		var milli=stamp.getTime();
 		//speed=(speed * delta) * (60 / 1000);
 
-		if(milli-this.lastmove>30){
+		if(milli-this.lastmove>100){
 			if( this.nextMove.x > this.tileX ) {
 				this.bx += speed;
-				this.encounterCounter++;
+				this.x += speed;
 			} else if( this.nextMove.x < this.tileX ) {
 				this.bx -= speed;
-				this.encounterCounter++;
+				this.x -= speed;
 			}
-			if( this.nextMove.y > this.tileY ) {
+			if( this.nextMove.y > this.tileY) {
 				this.by += speed;
-				this.encounterCounter++;
-			} else if( this.nextMove.y < this.tileY ) {
+				this.y += speed;
+			} else if( this.nextMove.y < this.tileY) {
 				this.by -= speed;
-				this.encounterCounter++;
+				this.y -= speed;
 			}
 			this.lastmove=stamp.getTime();
 		}
@@ -284,8 +294,8 @@ function ship()
 			this.inNextTile = false;
 			this.tileX = this.nextMove.x;
 			this.tileY = this.nextMove.y;
-			//this.x=this.tileX*16;
-			//this.y=this.tileY*16;
+			this.x=this.tileX*16;
+			this.y=this.tileY*16;
 			this.nextTile = {x: this.tileX, y: this.tileY};
 			this.nextMove = null;
 

@@ -1100,13 +1100,13 @@ function mainUpdate()
 		//monsta.snow(10000,4,1);
 		//console.log(Math.floor(ships[0].x/16),Math.floor(ships[0].y/16));
 		//console.log(curMap.tiles[69][11].data);
-		ships[0].setDestination(Math.floor(Skagos.x/16),Math.floor(Skagos.y/16),curMap);
+		//ships[0].setDestination(Math.floor(Skagos.x/16),Math.floor(Skagos.y/16),curMap);
 		for(var i=1;i<people.length;i++)
 		{
 		
 			people[i].setDestination(settlements[0].tileX,settlements[0].tileY-5,curMap);
 		}
-
+		bees=true;
 	}
 	if(controller.buttons[6].check())
 	{
