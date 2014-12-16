@@ -340,7 +340,7 @@ function ship()
 				}
 				nightsWatch.gold-=cost;
 				var zed=new commodity(this.ports[this.portTrack].resources[goods].id,amt)
-				console.log(zed,cost);
+//				console.log(zed,cost);
 				this.cargo.push(zed);
 			}
 			this.portTrack++;
@@ -475,7 +475,7 @@ function theWatch(){
 		{
 			if(this.stores[i].id==res.id)
 			{
-				console.log(this.stores[i].id,res.id);
+				//console.log(this.stores[i].id,res.id);
 				this.stores[i].combine(res);
 			}
 		}

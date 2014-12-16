@@ -5,11 +5,11 @@ $(document).bind("contextmenu",function(e){
 	{
 		mX = e.pageX - canvasElement.get(0).offsetLeft;
 		mY = e.pageY - canvasElement.get(0).offsetTop;
-		lights.push(new light(mX+camera.x,mY+camera.y,80));
+		//lights.push(new light(mX+camera.x,mY+camera.y,80));
 		
-		for (var p=0;p<4;p++) //why isn't this mapdirtying.
+		for (var p=0;p<1;p++) //why isn't this mapdirtying.
 		{
-					monsta.startOrbit(40000,mX+camera.x,mY+camera.y,60,true,12);
+					monsta.startOrbit(40000,mX+camera.x,mY+camera.y,60,8,false,12);
 		}
 	}
     return false;

@@ -1,6 +1,10 @@
 function particle(){
 	this.shooter=null;
 	this.alive=false;
+	this.animated=false;
+	this.aniTrack=0;
+	this.aniCount=0;
+	this.aniRate=2;
 	this.x=0;
 	this.y=0;
 	this.damage=0;
@@ -65,6 +69,20 @@ particle.prototype.update=function(){
 			}
 		}
 		if(tim-this.lastUpdateTime<this.updateRate) { return;}
+		if(this.animated)
+		{
+			this.aniCount++;
+			if(this.aniCount>this.aniRate)
+			{
+				this.aniCount=0;
+				this.aniTrack++;
+				if(this.aniTrack>this.sprites.length-1)
+				{
+					this.aniTrack=0;
+				}
+			}
+			
+		}
 		if(this.orbiting)
 		{
 			this.orbitTrack+=this.orbitSpeed;
@@ -238,7 +256,13 @@ particleSystem.prototype.draw=function(can,cam){
 				//c= this.particles[i].color;
 				if(this.particles[i].textured)
 				{
-					this.particles[i].sprite.draw(can, this.particles[i].x-cam.tileX*tileSize,this.particles[i].y-cam.tileY*tileSize);
+					if(this.particles[i].animated)
+					{
+						this.particles[i].sprites[this.particles[i].aniTrack].draw(can, this.particles[i].x-cam.tileX*tileSize,this.particles[i].y-cam.tileY*tileSize);
+					}else
+					{
+						this.particles[i].sprite.draw(can, this.particles[i].x-cam.tileX*tileSize,this.particles[i].y-cam.tileY*tileSize);
+					}
 				}else
 				{
 					c=can.fillStyle;
@@ -294,7 +318,38 @@ particleSystem.prototype.shootTextured=function(x,y,ang,vel,tex){
 		this.startTextured(1000, x, y, Math.cos(ang* (Math.PI / 180))*vel, Math.sin(ang*(Math.PI / 180))*vel,bColors[Math.floor(Math.random()*8)],true,false,tex);
 
 	};
-particleSystem.prototype.startOrbit=function(dur,x,y,diam,alight,lradius){
+particleSystem.prototype.flyTo=function(source,dest,vel,alight,lradius){
+		var tod=new particle();
+		//if(!exploader) {exploader=false;}
+		//compute angle from source to dest (see space!), set it up so no dur, dies on arrival. flip sprite if flying left. pre-launch sequence? fly up.
+		//set up target object. of targeting, update angle in update. 
+		tod.x=source.x;
+		tod.y=source.y;
+		tod.xv=0;
+		tod.yv=0;
+		tod.animated=true;
+		tod.shrinking=true;
+		tod.alive=true;
+		tod.textured=true;
+		tod.sprite=Sprite("bee");
+		tod.sprites=new Array();
+		tod.sprites.push(Sprite("raven0"));
+		tod.sprites.push(Sprite("raven1"));
+		tod.counter=dur;
+		tod.color="white";
+		tod.gravity=false;
+		tod.exploader=false;
+		tod.exploaderLight=false;
+		var stamp = new Date();
+		tod.startTime=stamp.getTime();
+		tod.durTime=dur;
+		if(alight){
+			lights.push(new light(8,8,lradius,tod));
+		}
+		this.particles.push(tod);
+
+	};	
+particleSystem.prototype.startOrbit=function(dur,x,y,diam,spd,alight,lradius){
 		var tod=new particle();
 		//if(!exploader) {exploader=false;}
 		tod.x=x;
@@ -305,16 +360,20 @@ particleSystem.prototype.startOrbit=function(dur,x,y,diam,alight,lradius){
 		tod.orbitDiameter=diam;
 		tod.xv=0;
 		tod.yv=0;
+		tod.animated=true;
 		tod.shrinking=true;
 		tod.alive=true;
-		tod.orbitSpeed=(Math.random()*8)+1;
+		tod.orbitSpeed=spd
 		tod.textured=true;
 		tod.sprite=Sprite("bee");
+		tod.sprites=new Array();
+		tod.sprites.push(Sprite("raven0"));
+		tod.sprites.push(Sprite("raven1"));
 		tod.counter=dur;
 		tod.color="white";
 		tod.gravity=false;
-		tod.exploader=true;
-		tod.exploaderLight=true;
+		tod.exploader=false;
+		tod.exploaderLight=false;
 		var stamp = new Date();
 		tod.startTime=stamp.getTime();
 		tod.durTime=dur;
