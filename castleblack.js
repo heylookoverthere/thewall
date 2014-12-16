@@ -15,7 +15,7 @@
     ctx.fill();
     ctx.restore();
 }*/
-var bees=true;
+var bees=false;
 
 countFPS = (function () {
   var lastLoop = (new Date()).getMilliseconds();
@@ -225,12 +225,36 @@ function commodity(id,amt)
 		this.cost=1;
 		this.description ="...is that a finger?";
 		this.unit=" Pieces of ";
+	}else if(id==CommIDs.SaltFish)
+	{
+		this.name="Salt Fish"
+		this.cost=2;
+		this.description ="Yummy fish.";
+		this.unit=" Pieces of ";
 	}else if(id==CommIDs.UnicornHorn)
 	{
 		this.unit=" Pieces of ";
 		this.name="Unicorn Horn"
 		this.cost=15;
 		this.description ="Includes certificate of authenticity.";
+	}else if(id==CommIDs.Capon)
+	{
+		this.unit=" Pieces of ";
+		this.name="Capon"
+		this.cost=15;
+		this.description ="It's a tiny bird.";
+	}else if(id==CommIDs.Steel)
+	{
+		this.unit=" Pieces of ";
+		this.name="Steel Ignot";
+		this.cost=15;
+		this.description ="decent steel";
+	}else if(id==CommIDs.Obsidian)
+	{
+		this.unit=" Pieces of ";
+		this.name=Obsidian";
+		this.cost=5;
+		this.description ="Dragonglass";
 	}
 	commodity.prototype.combine=function(cmb)
 	{
@@ -266,29 +290,42 @@ function port(x,y,name)
 	}
 };
 
-var Eastwatch=new port(166,231,"Eastwatch");
+var Eastwatch=new port(167,231,"Eastwatch");
 Eastwatch.resources.push(new commodity(CommIDs.OakWood,99));
-var Skagos=new port(196,207,"Skagos");
+var Skagos=new port(226,200,"Skagos");
 Skagos.resources.push(new commodity(CommIDs.WeirWood,99));
 Skagos.resources.push(new commodity(CommIDs.MysteryMeat,99));
 Skagos.resources.push(new commodity(CommIDs.UnicornHorn,99));
+Skagos.resources.push(new commodity(CommIDs.Obsidian,99));
+var WhiteHarbor=new port(80,546,"White Harbor");
+WhiteHarbor.resources.push(new commodity(CommIDs.SaltFish,99));
+WhiteHarbor.resources.push(new commodity(CommIDs.Capon,99));
+WhiteHarbor.resources.push(new commodity(CommIDs.Steel,99));
+var Braavos=new port(669,564,"Braavos");
+Braavos.resources.push(new commodity(CommIDs.SaltFish,99));
 
 
 function ship()
 {
 	this.ports=new Array();
+	this.alive=true;
+	this.lights=new Array();
+	
 	this.forSale=new Array();
 	this.crew=new Array();
 	var lyle=new dude();
 	//lyle.name="aaa";
-	console.log(lyle);
+	//console.log(lyle);
 	this.crew.push(lyle);
 	this.boat=true;
 	this.lastmove=0;
+	//this.ports.push(Braavos);
 	this.ports.push(Eastwatch);
 	this.ports.push(Skagos);
+	this.ports.push(WhiteHarbor);
+	this.ports.push(Braavos);
 	this.homeport=this.ports[0];
-	this.portTrack=1;
+	this.portTrack=0;
 	this.bobTrack=-4;
 	this.bobflag=false;
 	this.tileX=this.homeport.tileX;
@@ -296,11 +333,11 @@ function ship()
 	this.hp=100;
 	this.sprite=Sprite("smallboat");
 	this.alive=true;
-	this.x=this.tileX*tileSize
-	this.y=this.tileY*tileSize
+	this.x=this.tileX*tileSize;
+	this.y=this.tileY*tileSize;
 	this.name="Black Betha";
 	this.cargo=new Array();
-	this.speed=1;
+	this.speed=4;//1;
 	this.speedTrack=0;
 	this.path = null;
 	this.bx = 8;
@@ -310,6 +347,7 @@ function ship()
 	this.nextMove = null;
     this.nextTile = {x: this.tileX, y: this.tileY};
     this.inNextTile = false;
+	this.lights.push(new light(16,18,12,this));
 	this.update=function(map)
 	{
 		//goto this.ports[this.portTrack]
@@ -345,7 +383,11 @@ function ship()
 		if(!bees) {return;}
         if( !this.path ) {
 			
-			if(this.portTrack==0)
+			
+			if(this.portTrack<0)
+			{
+			
+			}else if(this.portTrack<1)
 			{
 				//unload all cargo to watch. 
 				console.log(this.name+ " has reached "+this.ports[this.portTrack].name + " and unloaded their cargo.");

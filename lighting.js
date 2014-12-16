@@ -47,8 +47,9 @@ function light(x,y,rad,obj)
 	this.object=null;
 	if(obj)
 	{	
-
 		this.object=obj;
+		this.x=this.object.x//+x;
+		this.y=this.object.y//+y;
 		this.offSetX=x;
 		this.offSetY=y;
 	}

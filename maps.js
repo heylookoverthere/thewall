@@ -668,11 +668,50 @@ function Map(I) { //map object
 			I.setTile(xPos, yPos, TileType.Snow);
 		  }
 		}
-		I.buildRadar();
+				I.buildRadar();
 
       };
 	imageObj.src = "images/"+name+".png";
 
+    };
+	
+		I.oldbuildRoamingRadar=function(obj)
+	{
+		for (var i=0;i<236; i++){
+            for (j=0;j<296; j++){
+                radarCanvas.fillStyle = tileColors[I.tiles[obj.tileX-110+i][obj.tileY-140+j].data];
+                radarCanvas.fillRect(i, j, 2, 2);
+            }
+        }
+		radarCanvas.fillStyle = "white";
+        radarCanvas.fillRect(obj.tileX, obj.tileY, 2, 2);
+        radarBitmap = radarCanvas.getImageData(0, 0, MAP_WIDTH, MAP_HEIGHT);
+		var idata = radarBitmap.data;
+		for (var i = 0; i < idata.length; i += 4) 
+		{
+			idata[i+3] = 255;
+		}
+	};
+	
+	I.buildRoamingRadar=function(obj)
+	{
+		radarBitmap = radarCanvas.getImageData(obj.tileX-110, obj.tileY-140, 220, 280);
+		var idata = radarBitmap.data;
+		for (var i = 0; i < idata.length; i += 4) 
+		{
+			idata[i+3] = 255;
+		}
+	};
+	
+	  
+    I.rebuildRadar= function(){
+
+        radarBitmap = radarCanvas.getImageData(0, 0, MAP_WIDTH, MAP_HEIGHT);
+		var idata = radarBitmap.data;
+		for (var i = 0; i < idata.length; i += 4) 
+		{
+			idata[i+3] = 255;
+		}
     };
 	
     I.buildRadar= function(){
@@ -700,6 +739,14 @@ function Map(I) { //map object
         cam.check();
         //canvas.save();
         //canvas.globalAlpha = 0.55;
+
+		if(cam.following)
+		{
+			this.buildRoamingRadar(cam.following);
+		}else
+		{
+			this.rebuildRadar();
+		}
         canvas.putImageData(radarBitmap,x,y);
 		//canvas.drawImage(radarCanvas,x,y);
         
@@ -721,11 +768,19 @@ function Map(I) { //map object
             canvas.fillStyle = "red";
             canvas.fillRect(x+arm[1].squads[i].x, y+arm[1].squads[i].y, 4, 4);
         }*///todo
-
-        canvas.globalAlpha = 0.35;
-		canvas.fillStyle = "yellow";
-        canvas.fillRect(x+cam.tileX, y+cam.tileY, cam.width*I.zoom, cam.height*I.zoom);
-		canvas.globalAlpha=1;
+		if(!cam.following)
+		{
+			canvas.globalAlpha = 0.35;
+			canvas.fillStyle = "yellow";
+			canvas.fillRect(x+cam.tileX, y+cam.tileY, cam.width*I.zoom, cam.height*I.zoom);
+			canvas.globalAlpha=1;
+		}else
+		{
+			canvas.globalAlpha = 0.35;
+			canvas.fillStyle = "yellow";
+			canvas.fillRect(x+110-cam.width/2, y+140-cam.height/2, cam.width*I.zoom, cam.height*I.zoom);
+			canvas.globalAlpha=1;
+		}
 	   // canvas.restore();
     };
     return I;

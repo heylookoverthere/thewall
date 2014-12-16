@@ -28,6 +28,8 @@ lights.push(new light(1976,3777,14));
 
 ports.push(Eastwatch);
 ports.push(Skagos);
+ports.push(WhiteHarbor);
+ports.push(Braavos);
 var miles=new dude();
 miles.AI=false;
 miles.equip(legArmorList[Math.floor(Math.random()*legArmorList.length)]);
@@ -47,11 +49,12 @@ booop.offSetX=6;
 booop.offSetY=6;
 
 lights.push(booop);
-console.log(booop);
+
 
 
 var betha=new ship();
 ships.push(betha);
+lights.push(betha.lights[0]);
 nightsWatch.ships.push(betha);
 
 var mel=new flame(lights);
@@ -89,7 +92,7 @@ function allPoint(guy)
 }
 
 //camera.center(miles);
-camera.follow(miles);
+camera.follow(ships[0]);
 //camera.tileX=1472;
 //camera.tileY=3360;
 
@@ -636,7 +639,7 @@ function drawGUI(can)
 {
 	can.globalAlpha=0.75;
 	can.fillStyle="blue";
-	canvas.fillRect(6,6,220,90);
+	canvas.fillRect(6,6,221,90);
 	can.fillStyle="yellow";
 	can.fillText("Men: "+nightsWatch.men.length,8,25);
 	can.fillText("Fighting Men: "+(nightsWatch.men.length-nightsWatch.wounded),8,41);
@@ -652,7 +655,7 @@ function drawDebug(can)
 	if(!debugInfo) {return;}
 	can.globalAlpha=0.75;
 	can.fillStyle="blue";
-	canvas.fillRect(672,6,220,90);
+	canvas.fillRect(672,6,221,90);
 	can.fillStyle="yellow";
 	can.fillText("Particles: "+monsta.particles.length,675,25);
 	can.fillText("Lights: "+lights.length,675,41);
@@ -762,7 +765,7 @@ function startGame()
 {
 	mode=1;	
 	gamestart=true;
-	curMap.buildMap("maap");
+	curMap.buildMap("map");
 	camera.tileX=1472/16;
 	camera.tileY=3328/16;
 	monsta.snow(2500,8,1);
@@ -992,7 +995,7 @@ function mainUpdate()
 	{
 		if(controller.buttons[7].check())
 		{
-			miles.x=220;
+			miles.x=221;
 			miles.y=170;
 		}
 	
@@ -1105,9 +1108,10 @@ function mainUpdate()
 		for(var i=1;i<people.length;i++)
 		{
 		
-			people[i].setDestination(settlements[0].tileX,settlements[0].tileY-5,curMap);
+			//people[i].setDestination(settlements[0].tileX,settlements[0].tileY-5,curMap);
 		}
 		bees=true;
+		camera.follow(ships[0]);
 	}
 	if(controller.buttons[6].check())
 	{

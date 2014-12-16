@@ -57,10 +57,10 @@ particle.prototype.update=function(){
 		var tim=stamp.getTime();
 		if(this.looper)
 		{
-			if((this.x>220*16) || (this.y>280*16))
+			if((this.x>MAP_WIDTH*16) || (this.y>MAP_HEIGHT*16))
 			{
 				this.y=0;
-				this.x=Math.random()*(220*16);
+				this.x=Math.random()*(MAP_WIDTH*16);
 				this.startTime=tim;
 			}
 		}else{
