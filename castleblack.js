@@ -54,18 +54,40 @@ function settlement()
 	}
 };
 
+function leapYear(year)
+{
+	var lr=true;
+	if (year%4!=0) {
+		return false;
+	}else
+	{
+		if (year%100!=0) 
+		{
+			return true;
+		}else
+		{
+			if (year%400!=0)
+			{
+				return false;
+			}else{
+				return true;
+			}
+		}
+	}
+}
+
 function theTime()
 {
 	this.minutes=50;
 	this.hours=18;
 	this.days=0;
-	this.years=0;
+	this.years=298;
 	this.tick=0;
 
 	theTime.prototype.update=function()
 	{
 		this.tick++;
-		if(this.tick<18)
+		if(this.tick<2)
 		{
 			return;
 		}
@@ -79,10 +101,16 @@ function theTime()
 			{
 				this.hours=0;
 				this.days++;
-				if(this.days>365)
+				var cxup=363;
+				if(leapYear(this.years))
+				{
+					cxup=364;
+				}
+				if(this.days>cxup)
 				{
 					this.years++;
 					this.days=0;
+					nightsWatch.collectTribute();
 				}
 			}
 		}
@@ -471,7 +499,15 @@ function theWatch(){
 	
 	theWatch.prototype.getFood=function() //go through stores and compute numerical value of food. do one for wood also. 
 	{
-	
+		var funt=0;
+		for(var i=0;i<this.stores.length;i++)
+		{
+			if((this.stores[i].id>20) && (this.stores[i].id<40))
+			{
+				funt+=this.stores[i].amount;
+			}
+		}
+		return funt;
 	};
 	
 	theWatch.prototype.insertResource=function(res)
@@ -514,6 +550,32 @@ function theWatch(){
 		}
 	};
 	
+	theWatch.prototype.firstFood=function()
+	{
+		var duf=null;
+		for(var i=0;i<this.stores.length;i++)
+		{
+			if((this.stores[i].id>19) && (this.stores[i].id<40))
+			{
+				return this.stores[i]; //how am I eating this thing. change the amt later I guessg? 
+			}
+		}
+		return duf;
+	};
+	
+	
+	theWatch.prototype.feed=function()
+	{
+		var fed=this.firstFood()
+		if(!fed)
+		{
+			//starvation
+			return false;
+		}
+		fed.amount-=this.men.length*this.mealsPerDay;
+		return true;
+	};
+	
 	theWatch.prototype.logStores=function()
 	{
 		console.log("Your supplies:");
@@ -542,16 +604,16 @@ function theWatch(){
 		//eat!
 		if((thyme.hours==6) && (thyme.minutes==1)&& (thyme.tick==1))
 		{
-			this.food-=1*this.men.length;
-			if(this.food<1) {console.log("Canibalism!");}
+			
+			if(!this.feed() ) {console.log("Canibalism!");}
 		}
 		if((this.mealsPerDay>1)&&(thyme.hours==12) && (thyme.minutes==1)&& (thyme.tick==1))
 		{
-			this.food-=1*this.men.length;
+			if(!this.feed() ) {console.log("Canibalism!");}
 		}
 		if((this.mealsPerDay>2)&&(thyme.hours==18) && (thyme.minutes==1)&& (thyme.tick==1))
 		{
-			this.food-=1*this.men.length;
+			if(!this.feed() ) {console.log("Canibalism!");}
 		}
 		
 	};
@@ -559,6 +621,21 @@ function theWatch(){
 	theWatch.prototype.calcFoodEaten=function()
 	{
 		return men.length;
+	};
+	
+	theWatch.prototype.collectTribute=function()
+	{
+		//eventually randomize from various castles?
+		var gil=Math.floor(Math.random()*170)+60;
+		this.gold+=gil;
+		var mens=gil=Math.floor(Math.random()*3)+3;
+		for(var i=0;i<mens;i++)
+		{
+			this.men.push(new dude());
+		}
+		console.log("Happy New Year! ");
+		console.log("Recived annual tribute from Winterfell.");
+		console.log(mens+" Recruits and "+gil+" Gold");
 	};
 }
 

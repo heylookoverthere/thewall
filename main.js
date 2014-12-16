@@ -641,8 +641,8 @@ function drawGUI(can)
 	can.fillText("Men: "+nightsWatch.men.length,8,25);
 	can.fillText("Fighting Men: "+(nightsWatch.men.length-nightsWatch.wounded),8,41);
 	can.fillText("Gold: "+nightsWatch.gold,8,57);//+camera.x+","+camera.y,25,57);
-	can.fillText("Food: "+nightsWatch.food,8,73);
-	can.fillText(thyme.days+ " days, "+thyme.hours+":"+thyme.minutes ,8,91);
+	can.fillText("Food: "+nightsWatch.getFood(),8,73);
+	can.fillText(+thyme.years+" AC "+thyme.days+ " days, "+thyme.hours+":"+thyme.minutes ,8,91);
 	//can.fillText(": "+Math.floor(miles.numJumps-miles.jumpTrack),755,55);
 	can.globalAlpha=1;
 }
