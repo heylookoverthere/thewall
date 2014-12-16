@@ -250,6 +250,11 @@ function ship()
 {
 	this.ports=new Array();
 	this.forSale=new Array();
+	this.crew=new Array();
+	var lyle=new dude();
+	//lyle.name="aaa";
+	console.log(lyle);
+	this.crew.push(lyle);
 	this.boat=true;
 	this.lastmove=0;
 	this.ports.push(Eastwatch);
@@ -452,6 +457,7 @@ function watchman()
 
 function theWatch(){
 	this.men=new Array(); //array!
+	this.ships=new Array();
 	this.gold=1000;
 	this.horses=6;
 	this.food=1000;
@@ -481,6 +487,52 @@ function theWatch(){
 		}
 		if(res.amount>0) {
 			this.stores.push(res);
+		}
+	};
+	
+	theWatch.prototype.logShips=function()
+	{
+		console.log("Ships of the Watch:");
+		for(var i=0;i<this.ships.length;i++)
+		{
+			console.log("  "+this.ships[i].name);
+			//console.log("  "+this.ships[i].captain.name);
+			console.log("   Home: "+this.ships[i].ports[0].name);
+			console.log("   Dest: "+this.ships[i].ports[this.ships[i].portTrack].name);
+			
+			console.log("   Crew: ");
+			for(var j=0;j<this.ships[i].crew.length;j++)
+			{
+				console.log("    "+this.ships[i].crew[j].name);
+			}
+			
+			console.log("   Cargo: ");
+			for(var j=0;j<this.ships[i].cargo.length;j++)
+			{
+				console.log("    "+this.ships[i].cargo[j].amount+" "+this.ships[i].cargo[j].name);
+			}
+		}
+	};
+	
+	theWatch.prototype.logStores=function()
+	{
+		console.log("Your supplies:");
+		for(var i=0;i<this.stores.length;i++)
+		{
+			console.log("  "+this.stores[i].amount+" "+this.stores[i].name);
+		}
+		if(this.stores.length==0)
+		{
+			console.log("  Nothing");
+		}
+		console.log("Earmarked for pick up:");
+		for(var i=0;i<this.forSale.length;i++)
+		{
+			console.log("  "+this.forSale[i].amount+" "+this.forSale[i].name);
+		}
+		if(this.forSale.length==0)
+		{
+			console.log("  Nothing");
 		}
 	};
 	

@@ -52,6 +52,7 @@ console.log(booop);
 
 var betha=new ship();
 ships.push(betha);
+nightsWatch.ships.push(betha);
 
 var mel=new flame(lights);
 mel.x=124*16;//miles.x;
