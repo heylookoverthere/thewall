@@ -611,8 +611,8 @@ function Map(I) { //map object
 		return true;
 	};
 
-	I.buildMap= function(name){
-        
+	I.buildMap= function(name,callback){
+       // setTimeout(function() {
 		var imageObj = new Image();
 		imageObj.onload = function() {
 				mapCanvas.drawImage(imageObj, 0, 0);
@@ -672,7 +672,7 @@ function Map(I) { //map object
 
       };
 	imageObj.src = "images/"+name+".png";
-
+		//}, 2000);
     };
 	
 		I.oldbuildRoamingRadar=function(obj)
@@ -704,9 +704,9 @@ function Map(I) { //map object
 	};
 	
 	  
-    I.rebuildRadar= function(){
+    I.rebuildRadar= function(obj){
 
-        radarBitmap = radarCanvas.getImageData(0, 0, MAP_WIDTH, MAP_HEIGHT);
+        radarBitmap = radarCanvas.getImageData(obj.tileX-110, obj.tileY-140, 220, 280);
 		var idata = radarBitmap.data;
 		for (var i = 0; i < idata.length; i += 4) 
 		{
@@ -732,6 +732,51 @@ function Map(I) { //map object
 		}
     };
 
+	I.drawMap= function (cam,x,y,arm) {
+		
+		//if(mode<1){return;}
+		//if(!starting) {return;}
+        cam.check();
+        //canvas.save();
+        //canvas.globalAlpha = 0.55;
+
+		canvas.putImageData(mapBitmap,x,y);
+		//canvas.drawImage(radarCanvas,x,y);
+        
+        /*for(var i=0;i<maps[mapSelected].numTowns;i++)
+        {
+            canvas.fillStyle = "blue";
+            if(towns[i].team==1){ canvas.fillStyle = "#FF2C85";}
+            canvas.fillRect(x+towns[i].x, y+towns[i].y, 8, 8);
+        }
+        
+        for(var i=0;i<arm[0].numSquads;i++){
+            
+            canvas.fillStyle = "#FFD700";
+            canvas.fillRect(x+arm[0].squads[i].x, y+arm[0].squads[i].y, 4, 4);
+        }
+        
+        for(var i=0;i<arm[1].numSquads;i++){
+            
+            canvas.fillStyle = "red";
+            canvas.fillRect(x+arm[1].squads[i].x, y+arm[1].squads[i].y, 4, 4);
+        }*///todo
+		if(false)//\!cam.following)
+		{
+			canvas.globalAlpha = 0.35;
+			canvas.fillStyle = "yellow";
+			canvas.fillRect(x+cam.tileX, y+cam.tileY, cam.width*I.zoom, cam.height*I.zoom);
+			canvas.globalAlpha=1;
+		}else if (false)
+		{
+			canvas.globalAlpha = 0.35;
+			canvas.fillStyle = "yellow";
+			canvas.fillRect(x+110-cam.width/2, y+140-cam.height/2, cam.width*I.zoom, cam.height*I.zoom);
+			canvas.globalAlpha=1;
+		}
+	   // canvas.restore();
+    };
+	
     I.drawRadar= function (cam,x,y,arm) {
 		
 		//if(mode<1){return;}
@@ -745,7 +790,7 @@ function Map(I) { //map object
 			this.buildRoamingRadar(cam.following);
 		}else
 		{
-			this.rebuildRadar();
+			this.rebuildRadar(cam);
 		}
         canvas.putImageData(radarBitmap,x,y);
 		//canvas.drawImage(radarCanvas,x,y);
@@ -768,7 +813,7 @@ function Map(I) { //map object
             canvas.fillStyle = "red";
             canvas.fillRect(x+arm[1].squads[i].x, y+arm[1].squads[i].y, 4, 4);
         }*///todo
-		if(!cam.following)
+		if(false)//\!cam.following)
 		{
 			canvas.globalAlpha = 0.35;
 			canvas.fillStyle = "yellow";

@@ -206,8 +206,13 @@ function commodity(id,amt)
 		this.cost=2;
 		this.description ="Edible.";
 		this.unit=" Pounds of ";
-	}
-	if(id==CommIDs.WeirWood)
+	}else if(id==CommIDs.LemonCakes)
+	{
+		this.name="Lemon cakes"
+		this.cost=8;
+		this.description ="Lemony.";
+		this.unit=" Pieces of ";
+	}else if(id==CommIDs.WeirWood)
 	{
 		this.name="Weirwood"
 		this.cost=10;
@@ -288,6 +293,22 @@ function port(x,y,name)
 		//mapDirty=true;
 		//can.restore();
 	}
+	port.prototype.insertResource=function(res)
+	{
+		//search for existing instance of res.id in stores. add to, or put at end if none found. 
+		for(var i=0;i<this.resources.length;i++)
+		{
+			if(this.resources[i].id==res.id)
+			{
+				//console.log(this.stores[i].id,res.id);
+				this.resources[i].combine(res);
+			}
+		}
+		if(res.amount>0) {
+			this.resources.push(res);
+		}
+	};
+	
 };
 
 var Eastwatch=new port(167,231,"Eastwatch");
@@ -307,7 +328,8 @@ var Braavos=new port(669,564,"Braavos");
 Braavos.resources.push(new commodity(CommIDs.SaltFish,99));
 var Lorath=new port(771,558,"Lorath");
 Lorath.resources.push(new commodity(CommIDs.SaltFish,99));
-
+var Pentos=new port(699,871,"Pentos");
+Pentos.resources.push(new commodity(CommIDs.SaltFish,99));
 
 function ship(pt)
 {
@@ -316,7 +338,7 @@ function ship(pt)
 	this.lights=new Array();
 	this.type=0;
 	this.cargoCapacity=1000;
-	this.forSale=new Array();
+	this.resources=new Array();
 	this.crew=new Array();
 	var lyle=new dude();
 	//lyle.name="aaa";
@@ -417,12 +439,19 @@ function ship(pt)
 						nightsWatch.insertResource(this.cargo[i]);
 						//this.cargo.splice(i,1);
 					}
+				}else
+				{
+					for(var i=0;i<this.cargo.length;i++)
+					{
+						this.homeport.insertResource(this.cargo[i]);
+						//this.cargo.splice(i,1);
+					}
 				}
 				this.cargo=[];
 				//Take items you have for sale if you know you're going to a port that wants them. for now just take them no matter what.
-				while(nightsWatch.forSale.length>0)
+				while(nightsWatch.resources.length>0)
 				{
-					this.forSale.push(nightsWatch.forSale.pop());
+					this.resources.push(nightsWatch.resources.pop());
 				}
 			}else
 			{
@@ -431,12 +460,16 @@ function ship(pt)
 				var cost=amt*this.ports[this.portTrack].resources[goods].cost;
 				console.log(this.name+ " has reached "+this.ports[this.portTrack].name+" and picked up "+amt+" "+this.ports[this.portTrack].resources[goods].name);
 				//todo TRADE before using gold!
-				//if(this.ports[this.portTrack].desiredComodities) contains anything from this.forSale
+				//if(this.ports[this.portTrack].desiredComodities) contains anything from this.resources
 				{
 					//give them as close to cost worth of sale item without going over cost. spend difference in gold.
 				}
-				nightsWatch.gold-=cost;
+				if(this.watch)
+				{
+					nightsWatch.gold-=cost;
+				}
 				var zed=new commodity(this.ports[this.portTrack].resources[goods].id,amt)
+				this.ports[this.portTrack].resources[goods].amount-=amt;
 //				console.log(zed,cost);
 				this.cargo.push(zed);
 			}
@@ -561,12 +594,12 @@ function theWatch(){
 	this.wounded=0;
 	this.mealsPerDay=3;
 	this.stores=new Array();
-	this.forSale=new Array();
-	this.stores.push(new commodity(CommIDs.SaltBeef,1));
-	this.stores.push(new commodity(CommIDs.SaltFish,1));
+	this.resources=new Array();
+	this.stores.push(new commodity(CommIDs.SaltBeef,41));
+	this.stores.push(new commodity(CommIDs.SaltFish,51));
 	this.stores.push(new commodity(CommIDs.Capon,3));
 	this.stores.push(new commodity(CommIDs.LemonCakes,11));
-	this.forSale.push(new commodity(CommIDs.OakWood,9));
+	this.resources.push(new commodity(CommIDs.OakWood,9));
 	
 	theWatch.prototype.getFood=function() //go through stores and compute numerical value of food. do one for wood also. 
 	{
@@ -691,11 +724,11 @@ function theWatch(){
 			console.log("  Nothing");
 		}
 		console.log("Earmarked for pick up:");
-		for(var i=0;i<this.forSale.length;i++)
+		for(var i=0;i<this.resources.length;i++)
 		{
-			console.log("  "+this.forSale[i].amount+" "+this.forSale[i].name);
+			console.log("  "+this.resources[i].amount+" "+this.resources[i].name);
 		}
-		if(this.forSale.length==0)
+		if(this.resources.length==0)
 		{
 			console.log("  Nothing");
 		}

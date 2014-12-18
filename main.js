@@ -4,6 +4,10 @@ var fires=[];
 var ships=[];
 var ports=[];
 
+var showMap=false;
+
+var trackShip=0;
+
 var settlements=[];
 var nightsWatch=new theWatch();
 settlements.push(new settlement());
@@ -32,6 +36,7 @@ ports.push(WhiteHarbor);
 ports.push(Gulltown);
 ports.push(Braavos);
 ports.push(Lorath);
+ports.push(Pentos);
 var miles=new dude();
 miles.AI=false;
 miles.equip(legArmorList[Math.floor(Math.random()*legArmorList.length)]);
@@ -64,9 +69,23 @@ ships.push(betha);
 lights.push(betha.lights[0]);
 nightsWatch.ships.push(betha);
 
-var brightfish=new ship(Eastwatch);
+var treasure=new ship(Pentos);
+treasure.name="Treasure";
+treasure.ports.push(Braavos);
+treasure.ports.push(WhiteHarbor);
+ships.push(treasure);
+
+var merlinking=new ship(WhiteHarbor);
+merlinking.name="Meling King";
+merlinking.ports.push(Gulltown);
+merlinking.ports.push(Braavos);
+merlinking.speed=4;
+merlinking.upgrade();
+ships.push(merlinking);
+
+var brightfish=new ship(Braavos);
 brightfish.name="Brightfish";
-brightfish.ports.push(Braavos);
+brightfish.ports.push(Eastwatch);
 brightfish.speed=4;
 //brightfish.ports=[];
 //brightfish.ports.push(Braavos);
@@ -294,6 +313,8 @@ function virtualGamePad()
 			this.buttons[6].desc="Toggle platformer mode";
 			this.buttons.push(new akey("return"));
 			this.buttons[7].desc="Respawn";
+			this.buttons.push(new akey("tab"));
+			this.buttons[8].desc="Cycle through ships";
 			console.log("No controller detected, use keyboard.");
 		}
 	
@@ -319,6 +340,8 @@ virtualGamePad.prototype.switchToKeyboard=function()
 	this.buttons[6].desc="Toggle platformer mode";
 	this.buttons.push(new akey("return"));
 	this.buttons[7].desc="Respawn";
+	this.buttons[8]=new akey("tab");
+	this.buttons[8].desc="Cycle through your ships";
 	console.log("controller no longer detected, switching to keyboard controls");
 };
 
@@ -782,8 +805,8 @@ function troopScreenDraw(){
 function startGame()
 {
 	mode=1;	
-	gamestart=true;
-	curMap.buildMap("map");
+
+	curMap.buildMap("maaap",starter());
 	camera.tileX=1472/16;
 	camera.tileY=3328/16;
 	monsta.snow(2500,8,1);
@@ -791,6 +814,12 @@ function startGame()
 	{
 		nightsWatch.men.push(new dude());
 	}
+}
+
+function starter()
+{	
+	gamestart=true;	
+	console.log("started");
 }
 
 function troopScreenUpdate(){
@@ -971,12 +1000,19 @@ function mainDraw() {
 		}
 	}*/
 	mapDirty=true;
-	canvas.globalAlpha=1;//0.4;
-	curMap.drawRadar(camera,665,475);
+	
 	//canvas.globalAlpha=1;
+	if(showMap)
+	{
+		curMap.drawMap(camera,0,0);
+	}else
+	{
+		canvas.globalAlpha=1;//0.4;
+		curMap.drawRadar(camera,665,475);
+	}
 	drawGUI(canvas);
 	drawDebug(canvas);
-
+	
 	
 };
 //------------MAIN LOOP-----------------------------------------
@@ -1019,6 +1055,15 @@ function mainUpdate()
 		{
 			miles.x=221;
 			miles.y=170;
+		}
+		if(controller.buttons[8].check())
+		{
+			trackShip++;
+			if(trackShip>ships.length-1)
+			{
+				trackShip=0;
+			}
+			camera.follow(ships[trackShip]);
 		}
 	
 		if(controller.buttons[1].check())
@@ -1096,10 +1141,10 @@ function mainUpdate()
 		if(controller.buttons[5].checkDown())//R
 		{
 			//miles.expression=Math.floor(Math.random()*numfaces);
-			miles.aiming=true;
+			showMap=true;
 		}else
 		{
-			miles.aiming=false;
+			showMap=false;
 		}
 		if(controller.buttons[4].check()) //X
 		{
@@ -1137,7 +1182,8 @@ function mainUpdate()
 	}
 	if(controller.buttons[6].check())
 	{
-		platformer=!platformer;
+		//platformer=!platformer;
+		thyme.hours=6;
 	}
 	
 	 /*if(zoomkey.check()) {
