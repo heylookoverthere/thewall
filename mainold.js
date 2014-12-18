@@ -53,27 +53,10 @@ lights.push(booop);
 
 
 
-var betha=new ship(Eastwatch);
-betha.ports.push(Skagos);
-betha.ports.push(WhiteHarbor);
-betha.ports.push(Gulltown);
-betha.ports.push(Braavos);
-betha.ports.push(Lorath);
-betha.watch=true;
+var betha=new ship();
 ships.push(betha);
 lights.push(betha.lights[0]);
 nightsWatch.ships.push(betha);
-
-var brightfish=new ship(Eastwatch);
-brightfish.name="Brightfish";
-brightfish.ports.push(Braavos);
-brightfish.speed=4;
-//brightfish.ports=[];
-//brightfish.ports.push(Braavos);
-//brightfish.ports.push(Eastwatch);
-brightfish.watch=false;
-brightfish.upgrade();
-ships.push(brightfish);
 
 var mel=new flame(lights);
 mel.x=124*16;//miles.x;

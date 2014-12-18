@@ -309,10 +309,11 @@ var Lorath=new port(771,558,"Lorath");
 Lorath.resources.push(new commodity(CommIDs.SaltFish,99));
 
 
-function ship(pt)
+function ship(port)
 {
 	this.ports=new Array();
 	this.alive=true;
+	this.watch=true;
 	this.lights=new Array();
 	this.type=0;
 	this.cargoCapacity=1000;
@@ -324,8 +325,13 @@ function ship(pt)
 	this.crew.push(lyle);
 	this.boat=true;
 	this.lastmove=0;
-	this.ports.push(pt);
-	this.watch=false;
+	//this.ports.push(Braavos);
+	this.ports.push(port);
+	this.ports.push(Skagos);
+	this.ports.push(WhiteHarbor);
+	this.ports.push(Gulltown);
+	this.ports.push(Braavos);
+	this.ports.push(Lorath);
 	this.homeport=this.ports[0];
 	this.portTrack=0;
 	this.bobTrack=-4;
@@ -345,7 +351,7 @@ function ship(pt)
 	this.y=this.tileY*tileSize;
 	this.name="Black Betha";
 	this.cargo=new Array();
-	this.speed=2;//1;
+	this.speed=4;//1;
 	this.speedTrack=0;
 	this.path = null;
 	this.bx = 8;
@@ -403,27 +409,31 @@ function ship(pt)
         if( !this.path ) {
 			
 			
-			if(this.portTrack<0)
+			if(this.portTrack==0) 
 			{
-			
-			}else if(this.portTrack==0)
-			{
-				//unload all cargo to watch. 
-				console.log(this.name+ " has reached "+this.ports[this.portTrack].name + " and unloaded their cargo.");
-				if(this.watch)
+				if(this.homeport.name=="Eastwatch")
 				{
+					//unload all cargo to watch. 
+					console.log(this.name+ " has reached "+this.ports[this.portTrack].name + " and unloaded their cargo.");
 					for(var i=0;i<this.cargo.length;i++)
 					{
 						nightsWatch.insertResource(this.cargo[i]);
 						//this.cargo.splice(i,1);
 					}
+					console.log("wan");
+					while(nightsWatch.forSale.length>0)
+					{
+						//this.forSale.push(nightsWatch.forSale.pop());
+					}
+					
+				}
+				else
+				{
+					console.log(this.name+ " has reached "+this.ports[this.portTrack].name + " and unloaded their cargo.");
 				}
 				this.cargo=[];
 				//Take items you have for sale if you know you're going to a port that wants them. for now just take them no matter what.
-				while(nightsWatch.forSale.length>0)
-				{
-					this.forSale.push(nightsWatch.forSale.pop());
-				}
+		
 			}else
 			{
 				var goods=Math.floor(Math.random()*(this.ports[this.portTrack].resources.length));
@@ -435,7 +445,10 @@ function ship(pt)
 				{
 					//give them as close to cost worth of sale item without going over cost. spend difference in gold.
 				}
-				nightsWatch.gold-=cost;
+				if(this.watch)
+				{
+					nightsWatch.gold-=cost;
+				}
 				var zed=new commodity(this.ports[this.portTrack].resources[goods].id,amt)
 //				console.log(zed,cost);
 				this.cargo.push(zed);
@@ -485,7 +498,7 @@ function ship(pt)
 			return;
 		}
 		//var terrain = map.tiles[this.nextTile.x][this.nextTile.y].data;
-		var speed = this.speed;
+		var speed = 2;
 		//if (this.leaderless) {speed=3;} //PROBLEM?
 		//if((terrain==4) &&(this.units[0].class==SEEAss.Frog)) {speed=4};
 
