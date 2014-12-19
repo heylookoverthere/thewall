@@ -29,22 +29,35 @@ function mouseWheel(e){
 	//if (delta)
 	if((mode==1))
 	{ //&& (!isMenu)){
-		if(curMap.zoom>3) {curMap.zoom=3;}
-		if(curMap.zoom<1) {curMap.zoom=1;}
-		if(delta<0)
+	
+		var targ=bConsoleBox;
+		if((mX>CANVAS_WIDTH) && (mX<(CANVAS_WIDTH+400)) )//&&(mY>targ.y) &&(mY<(targ.y+targ.height))) 
 		{
-			curMap.setZoom(camera);
-			camera.check();
-		}else if(delta>0){
-			console.log("yar");
-			curMap.minusZoom(camera);
-			var blob=[];
-			blob.x=Math.floor(mX/16) * Math.pow(2, curMap.zoom-1)+camera.tileX;
-			blob.y=Math.floor(mY/16) * Math.pow(2, curMap.zoom-1)+camera.tileY;
-			//camera.center(blob);
-			camera.check();
-		}
+			if(delta>0)
+				bConsoleBox.scroll--;
+			if(delta<0)
+				bConsoleBox.scroll++;
 
+				if(bConsoleBox.scroll<0) {bConsoleBox.scroll=0;}
+				if(bConsoleBox.scroll>bConsoleBox.msg.length) {bConsoleBox.scroll=bConsoleBox.msg.length-1;}
+		}else
+		{
+			if(curMap.zoom>3) {curMap.zoom=3;}
+			if(curMap.zoom<1) {curMap.zoom=1;}
+			if(delta<0)
+			{
+				curMap.setZoom(camera);
+				camera.check();
+			}else if(delta>0){
+				bConsoleBox.log("Best not to try and zoom yet.");
+				curMap.minusZoom(camera);
+				var blob=[];
+				blob.x=Math.floor(mX/16) * Math.pow(2, curMap.zoom-1)+camera.tileX;
+				blob.y=Math.floor(mY/16) * Math.pow(2, curMap.zoom-1)+camera.tileY;
+				//camera.center(blob);
+				camera.check();
+			}
+		}
 		
 	}
 	if (e.preventDefault)
@@ -70,7 +83,6 @@ function mouseClick(e) {  //represents the mouse
 				lights.push(new light(mX+camera.x,mY+camera.y,12));
 			    break;
 			case 2:
-			console.log("fuclhole");
 				lights.push(new light(mX+camera.x,mY+camera.y,80));
 				break;
 			case 3:

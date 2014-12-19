@@ -1071,7 +1071,6 @@ dude.prototype.onSurface=function()
 
 dude.prototype.shoot=function()
 {
-	//console.log("boom");
 	var damage=15;
 	if(this.gun.shotsPer>1)
 	{
@@ -1458,7 +1457,6 @@ dude.prototype.equip=function(thing)
 
     dude.prototype.updateNextMove = function() {
         if( !this.path ) {
-			//console.log("no path"+" "+this.path);
             return;
 			
         }
@@ -1467,8 +1465,7 @@ dude.prototype.equip=function(thing)
 		if( !this.nextMove ) {
 			if(this.team==0){
 				var tmpstr=this.name + "reached their destination.";
-				bConsoleStr.push(tmpstr);
-				bConsoleClr.push("white");
+				bConsoleBox.log(tmpstr);
 			}else
 			{
 				//todo give enemy squads new destination now.
@@ -1487,7 +1484,7 @@ dude.prototype.equip=function(thing)
     dude.prototype.setDestination = function(x, y, map) {
 		this.tileX=Math.floor(this.x/tileSize);
 		this.tileY=Math.floor(this.y/tileSize);
-		if(!map.walkable(x,y,this)) {console.log("not walkable!"+" "+map.tiles[x][y].data);return;}
+		if(!map.walkable(x,y,this)) {bConsoleBox.log("not walkable!"+" "+map.tiles[x][y].data);return;}
         this.clearDestination();
         this.path = map.getPath(this.tileX, this.tileY, x, y,this);
         this.dx=x;

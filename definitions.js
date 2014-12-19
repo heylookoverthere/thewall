@@ -3,6 +3,7 @@ var tabbed=false;
 var keydown={};
 var multiplayer=false;
 var holdInput=false;
+var customConsole=true;
 
 var tileSize=16;
 // Prevent the backspace key from navigating back.
@@ -100,6 +101,7 @@ function textbox()
 	this.y=370;
 	this.scroll=0;
 	this.width=600;
+	this.textLim=66;
 	this.label=false;
 	this.height=55;
 	this.options=2;
@@ -109,6 +111,7 @@ function textbox()
 	this.optionTrack=0;//draw the liitle -
 	this.colors=[];
 	this.msg=[];
+	this.displayMsg=[];
 	this.optionOne=function(object,target)
 	{
 		holdEverything=false;
@@ -127,23 +130,41 @@ function textbox()
 	{
 		console.log("CONSEQUENCES HAVE HAPPENED");
 	};
-	this.addText=function(text)
+	this.log=function(text)
 	{
-		this.msg.push(text);
-		this.colors.push("white");
+		//this.textLim=Math.floor(this.width/6);
+		if(customConsole)
+		{
+			if(text.length>this.textLim)
+			{
+				var fext=text.substring(0,this.textLim);
+				var dext=text.substring(this.textLim,text.length);
+				this.msg.push(fext);
+				this.colors.push("white");
+				this.log(dext);
+			}else
+			{
+				this.msg.push(text);
+				this.colors.push("white");
+			}
+		}else
+		{
+			console.log(text);
+		}
 	};
 	
 	this.setup=function(firsttext,x,y)
 	{
-		this.msg.push(firsttext);
+		//this.msg.push(firsttext);
 		this.exists=true;
 		holdEverything=true;
-		this.colors.push("white");
+		//this.colors.push("white");
 		this.x=x;
 		this.y=y;
 	};
 	this.update=function()
 	{
+		return;
 		if(upkey.check())
 		{
 			if(this.optionTrack>this.choicesStart)
@@ -185,7 +206,7 @@ function textbox()
 		can.fillStyle = "#483D8B ";
 		can.fillRect(this.x,this.y,this.width-10,this.height-10+hight);
 		
-		can.font = "16pt Calibri";
+		can.font = "10pt Calibri";
 		can.textAlign = "left";
 		can.textBaseline = "middle";
 		can.fillStyle = "white";
@@ -195,14 +216,16 @@ function textbox()
 		{
 			can.fillText(this.label,this.x+4,this.y+9);
 		}
-		for(var i=0;i<this.msg.length;i++)
+		
+		this.displayMsg=this.msg.slice(this.scroll, this.msg.length);
+		for(var i=0;i<this.displayMsg.length;i++)
 		{
 			//if (i>bConsoleStr.length) {break;}
 			can.fillStyle=this.colors[i];
-			can.fillText(this.msg[i], this.x+16,this.y+12+(18*(i+1)));
+			can.fillText(this.displayMsg[i], this.x+6,this.y+2+(18*(i+1)));
 			if((this.options>0) && (this.optionTrack==i))
 			{
-				can.fillText("-", this.x+17,this.y+12+(18*(i+1)));
+				//can.fillText("-", this.x+17,this.y+12+(18*(i+1)));
 			}
 		}	
 		
@@ -283,20 +306,12 @@ function rectOverlap(r1,r2){
 var FPS=0;
 var numMapPoints=6;
 var mmcur=false;
-var bConsoleStr=new Array();
+//var bConsoleStr=new Array();
 var bConsoleClr=new Array();
 var bConsoleBox;
 var bMenuBox;
 var lastExplosion=0;
 var EXPLOSION_RATE=500;
-bConsoleStr.push("");
-bConsoleStr.push("");
-bConsoleStr.push("");
-bConsoleStr.push("Game Start!");
-bConsoleClr.push("white");
-bConsoleClr.push("white");
-bConsoleClr.push("white");
-bConsoleClr.push("white");
 var radarBitmap=[];
 var mapBitmap=[];
 var CANVAS_WIDTH = 900;

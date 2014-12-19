@@ -611,7 +611,7 @@ function Map(I) { //map object
 		return true;
 	};
 
-	I.buildMap= function(name,callback){
+	I.buildMap= function(name){
        // setTimeout(function() {
 		var imageObj = new Image();
 		imageObj.onload = function() {

@@ -164,6 +164,13 @@ var radarCanvas = radarElement.get(0).getContext("2d");
 var mapCanvasElement = $("<canvas width='" + MAP_WIDTH + "' height='" + MAP_HEIGHT + "'></canvas");
 var mapCanvas = mapCanvasElement.get(0).getContext("2d");
 
+var concanvasElement = $("<canvas width='" + 432 + "' height='" + CANVAS_HEIGHT + "'></canvas");
+var concanvas = concanvasElement.get(0).getContext("2d");
+
+//concanvas.style.left=CANVAS_WIDTH;
+//concanvasElement.css("position", "absolute").css("z-index", "2");
+concanvasElement.css("position", "absolute").css("z-index", "2").css("top", canvasElement.position().top).css("left", CANVAS_WIDTH);
+concanvasElement.appendTo('body');
 canvasElement.css("position", "absolute").css("z-index", "1");
 canvasElement.appendTo('body');
 canvasElement.css("position", "absolute").css("z-index", "0").css("top", canvasElement.position().top).css("left", canvasElement.position().left);
@@ -307,7 +314,7 @@ function virtualGamePad()
 			this.buttons[3].desc="Run / Pound the ground";
 			this.buttons.push(new akey("n"));
 			this.buttons[4].desc="Change hair";
-			this.buttons.push(new akey("m"));
+			this.buttons.push(new akey("h"));
 			this.buttons[5].desc="Change face";
 			this.buttons.push(new akey("j"));
 			this.buttons[6].desc="Toggle platformer mode";
@@ -589,6 +596,15 @@ edskeys.push(pausekey);
 var debugkey=new akey("l");
 debugkey.desc="Debug key";
 
+var logstoreskey=new akey("i");
+debugkey.desc="Log Supplies";
+
+var logshipskey=new akey("s");
+debugkey.desc="Log Sships";
+
+var logmenkey=new akey("m");
+debugkey.desc="Log Men";
+
 var troopskey=new akey("t");
 troopskey.desc="Debug key";
 
@@ -627,6 +643,10 @@ edskeys.push(zoomkey);
 var helpkey=new akey("h");
 helpkey.desc="You just pressed it."
 edskeys.push(helpkey);
+
+var consolekey=new akey("c");
+consolekey.desc="Toggle custom console.";
+edskeys.push(consolekey);
 
 var outfitkey=new akey("o");
 outfitkey.desc="change into a random outfit."
@@ -752,15 +772,16 @@ function menuDraw()
 }
 
 	bConsoleBox=new textbox();
-	bConsoleBox.width=460;
-	bConsoleBox.height=90;
+	bConsoleBox.width=400;
+	bConsoleBox.height=CANVAS_HEIGHT-12;
+	bConsoleBox.log("Loading...");
 	
-	bConsoleBox.msg[0]=bConsoleStr[0+bConsoleBox.scroll];//[bConsoleStr.length-4];
+	/*bConsoleBox.msg[0]=bConsoleStr[0+bConsoleBox.scroll];//[bConsoleStr.length-4];
 	bConsoleBox.msg[1]=bConsoleStr[1+bConsoleBox.scroll];//[bConsoleStr.length-3];
 	bConsoleBox.msg[2]=bConsoleStr[2+bConsoleBox.scroll];//[bConsoleStr.length-2];
-	bConsoleBox.msg[3]=bConsoleStr[3+bConsoleBox.scroll];//[bConsoleStr.length-1];
-	bConsoleBox.y=15;
-	bConsoleBox.x=30;
+	bConsoleBox.msg[3]=bConsoleStr[3+bConsoleBox.scroll];//[bConsoleStr.length-1];*/
+	bConsoleBox.y=18;
+	bConsoleBox.x=18;
 	bConsoleBox.lines=4;
 	
 
@@ -778,12 +799,12 @@ function mainMenuDraw(){
 	//canvas.fillText("Press Enter",200,500);
 	canvas.fillText("  New Game",80,640);
 	canvas.fillStyle = "grey";
-	canvas.fillText("  Load Game",80,665);
+	//canvas.fillText("  Load Game",80,665);
 
 	if(mmcur){
-		canvas.fillText("-",78,640);
+		//canvas.fillText("-",78,640);
 	}else	{
-		canvas.fillText("-",78,665);
+		//canvas.fillText("-",78,665);
 
 	}
 	//monsta.draw(canvas,camera);
@@ -805,8 +826,8 @@ function troopScreenDraw(){
 function startGame()
 {
 	mode=1;	
-
-	curMap.buildMap("maaap",starter());
+	setTimeout(starter,1000);
+	curMap.buildMap("maaap");
 	camera.tileX=1472/16;
 	camera.tileY=3328/16;
 	monsta.snow(2500,8,1);
@@ -819,7 +840,8 @@ function startGame()
 function starter()
 {	
 	gamestart=true;	
-	console.log("started");
+	bees=true;
+	bConsoleBox.log("started");
 }
 
 function troopScreenUpdate(){
@@ -928,7 +950,16 @@ function dingle(x,y)
 
 //------------MAIN DRAW-----------------------------------------
 function mainDraw() {
+	
 	curMap.draw(camera);
+	if(customConsole)
+	{
+		bConsoleBox.draw(concanvas);
+	}else
+	{
+		concanvas.clearRect(0,0,432,CANVAS_HEIGHT);
+	}
+	if(!gamestart) {return;}
 	/*canvas.fillStyle="white";
 	canvas.fillRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);*/
 	for(var i=0;i<people.length;i++)
@@ -1000,6 +1031,9 @@ function mainDraw() {
 		}
 	}*/
 	mapDirty=true;
+
+	
+
 	
 	//canvas.globalAlpha=1;
 	if(showMap)
@@ -1155,6 +1189,23 @@ function mainUpdate()
 	if(troopskey.check())
 	{
 		mode=2;
+	}
+	if(logstoreskey.check())
+	{
+		nightsWatch.logStores();
+	}
+	if(logshipskey.check())
+	{
+		nightsWatch.logShips();
+	}
+	
+	if(logmenkey.check())
+	{
+		nightsWatch.logMen();
+	}
+	if(consolekey.check())
+	{
+		customConsole=!customConsole;
 	}
 	if(debugkey.check())
 	{

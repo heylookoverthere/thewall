@@ -17,6 +17,20 @@
 }*/
 var bees=false;
 
+//var bConsoleStr=new Array();
+var bConsoleClr=new Array();
+var bConsoleBox;
+var bMenuBox;
+
+/*bConsoleStr.push("");
+bConsoleStr.push("");
+bConsoleStr.push("");
+bConsoleStr.push("Game Start!");
+bConsoleClr.push("white");
+bConsoleClr.push("white");
+bConsoleClr.push("white");
+bConsoleClr.push("white");*/
+
 countFPS = (function () {
   var lastLoop = (new Date()).getMilliseconds();
   var count = 1;
@@ -79,7 +93,7 @@ function leapYear(year)
 function theTime()
 {
 	this.minutes=50;
-	this.hours=18;
+	this.hours=0;
 	this.days=0;
 	this.years=298;
 	this.tick=0;
@@ -431,7 +445,7 @@ function ship(pt)
 			}else if(this.portTrack==0)
 			{
 				//unload all cargo to watch. 
-				console.log(this.name+ " has reached "+this.ports[this.portTrack].name + " and unloaded their cargo.");
+				bConsoleBox.log(this.name+ " has reached "+this.ports[this.portTrack].name + " and unloaded their cargo.");
 				if(this.watch)
 				{
 					for(var i=0;i<this.cargo.length;i++)
@@ -458,7 +472,7 @@ function ship(pt)
 				var goods=Math.floor(Math.random()*(this.ports[this.portTrack].resources.length));
 				var amt=Math.floor(Math.random()*10)+1;
 				var cost=amt*this.ports[this.portTrack].resources[goods].cost;
-				console.log(this.name+ " has reached "+this.ports[this.portTrack].name+" and picked up "+amt+" "+this.ports[this.portTrack].resources[goods].name);
+				bConsoleBox.log(this.name+ " has reached "+this.ports[this.portTrack].name+" and picked up "+amt+" "+this.ports[this.portTrack].resources[goods].name);
 				//todo TRADE before using gold!
 				//if(this.ports[this.portTrack].desiredComodities) contains anything from this.resources
 				{
@@ -630,26 +644,35 @@ function theWatch(){
 		}
 	};
 	
+	theWatch.prototype.logMen=function()//todo break into three lists ranger builder steward
+	{
+		bConsoleBox.log("Men of the Watch: ("+this.men.length+")");
+		for(var i=0;i<this.men.length;i++)
+		{
+			bConsoleBox.log("  "+this.men[i].name);
+		}
+	};
+	
 	theWatch.prototype.logShips=function()
 	{
-		console.log("Ships of the Watch:");
+		bConsoleBox.log("Ships of the Watch: ("+this.ships.length+")");
 		for(var i=0;i<this.ships.length;i++)
 		{
-			console.log("  "+this.ships[i].name);
-			//console.log("  "+this.ships[i].captain.name);
-			console.log("   Home: "+this.ships[i].ports[0].name);
-			console.log("   Dest: "+this.ships[i].ports[this.ships[i].portTrack].name);
+			bConsoleBox.log("  "+this.ships[i].name);
+			//bConsoleBox.log("  "+this.ships[i].captain.name);
+			bConsoleBox.log("   Home: "+this.ships[i].ports[0].name);
+			bConsoleBox.log("   Dest: "+this.ships[i].ports[this.ships[i].portTrack].name);
 			
-			console.log("   Crew: ");
+			bConsoleBox.log("   Crew: ");
 			for(var j=0;j<this.ships[i].crew.length;j++)
 			{
-				console.log("    "+this.ships[i].crew[j].name);
+				bConsoleBox.log("    "+this.ships[i].crew[j].name);
 			}
 			
-			console.log("   Cargo: ");
+			bConsoleBox.log("   Cargo: ");
 			for(var j=0;j<this.ships[i].cargo.length;j++)
 			{
-				console.log("    "+this.ships[i].cargo[j].amount+" "+this.ships[i].cargo[j].name);
+				bConsoleBox.log("    "+this.ships[i].cargo[j].amount+" "+this.ships[i].cargo[j].name);
 			}
 		}
 	};
@@ -698,7 +721,7 @@ function theWatch(){
 		if(!fed)
 		{
 			//starvation
-			console.log("Your men are starving.");
+			bConsoleBox.log("Your men are starving.");
 			this.hunger=0; // but not really. take health? kill dudes?
 		}else if(this.hunger<fed.amount)
 		{
@@ -714,23 +737,23 @@ function theWatch(){
 	
 	theWatch.prototype.logStores=function()
 	{
-		console.log("Your supplies:");
+		bConsoleBox.log("Your supplies: ("+this.stores.length+")");
 		for(var i=0;i<this.stores.length;i++)
 		{
-			console.log("  "+this.stores[i].amount+" "+this.stores[i].name);
+			bConsoleBox.log("  "+this.stores[i].amount+" "+this.stores[i].name);
 		}
 		if(this.stores.length==0)
 		{
-			console.log("  Nothing");
+			bConsoleBox.log("  Nothing");
 		}
-		console.log("Earmarked for pick up:");
+		bConsoleBox.log("Earmarked for pick up:");
 		for(var i=0;i<this.resources.length;i++)
 		{
-			console.log("  "+this.resources[i].amount+" "+this.resources[i].name);
+			bConsoleBox.log("  "+this.resources[i].amount+" "+this.resources[i].name);
 		}
 		if(this.resources.length==0)
 		{
-			console.log("  Nothing");
+			bConsoleBox.log("  Nothing");
 		}
 	};
 	
@@ -780,9 +803,9 @@ function theWatch(){
 		{
 			this.men.push(new dude());
 		}
-		console.log("Happy New Year! ");
-		console.log("Recived annual tribute from Winterfell.");
-		console.log(mens+" Recruits and "+gil+" Gold");
+		bConsoleBox.log("Happy New Year! ");
+		bConsoleBox.log("Recived annual tribute from Winterfell.");
+		bConsoleBox.log(mens+" Recruits and "+gil+" Gold");
 	};
 }
 
