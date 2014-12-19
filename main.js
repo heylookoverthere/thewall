@@ -605,6 +605,10 @@ debugkey.desc="Log Sships";
 var logmenkey=new akey("m");
 debugkey.desc="Log Men";
 
+var homekey=new akey("home");
+debugkey.desc="home key";
+
+
 var troopskey=new akey("t");
 troopskey.desc="Debug key";
 
@@ -1206,6 +1210,12 @@ function mainUpdate()
 	if(consolekey.check())
 	{
 		customConsole=!customConsole;
+	}
+	if(homekey.check())
+	{
+		camera.unFollow();
+		camera.tileX=92;
+		camera.tileY=212;
 	}
 	if(debugkey.check())
 	{

@@ -813,11 +813,11 @@ function Map(I) { //map object
             canvas.fillStyle = "red";
             canvas.fillRect(x+arm[1].squads[i].x, y+arm[1].squads[i].y, 4, 4);
         }*///todo
-		if(false)//\!cam.following)
+		if(!cam.following)
 		{
 			canvas.globalAlpha = 0.35;
 			canvas.fillStyle = "yellow";
-			canvas.fillRect(x+cam.tileX, y+cam.tileY, cam.width*I.zoom, cam.height*I.zoom);
+			canvas.fillRect(x+110, y+140, cam.width*I.zoom, cam.height*I.zoom);
 			canvas.globalAlpha=1;
 		}else
 		{
