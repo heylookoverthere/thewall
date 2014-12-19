@@ -314,7 +314,7 @@ function virtualGamePad()
 			this.buttons[3].desc="Run / Pound the ground";
 			this.buttons.push(new akey("n"));
 			this.buttons[4].desc="Change hair";
-			this.buttons.push(new akey("h"));
+			this.buttons.push(new akey("m"));
 			this.buttons[5].desc="Change face";
 			this.buttons.push(new akey("j"));
 			this.buttons[6].desc="Toggle platformer mode";
@@ -602,7 +602,7 @@ debugkey.desc="Log Supplies";
 var logshipskey=new akey("s");
 debugkey.desc="Log Sships";
 
-var logmenkey=new akey("m");
+var logmenkey=new akey("p");
 debugkey.desc="Log Men";
 
 var homekey=new akey("home");
@@ -707,7 +707,12 @@ function drawGUI(can)
 	canvas.fillRect(6,6,221,90);
 	can.fillStyle="yellow";
 	can.fillText("Men: "+nightsWatch.men.length,8,25);
-	can.fillText("Fighting Men: "+(nightsWatch.men.length-nightsWatch.wounded),8,41);
+	var cont=0;
+	for(var i=0;i<nightsWatch.ships.length;i++)
+	{
+		cont+=nightsWatch.ships[i].crew.length;
+	}
+	can.fillText("Men at Sea: "+cont,8,41);
 	can.fillText("Gold: "+nightsWatch.gold,8,57);//+camera.x+","+camera.y,25,57);
 	can.fillText("Food: "+nightsWatch.getFood(),8,73);
 	can.fillText(+thyme.years+" AC "+thyme.days+ " days, "+thyme.hours+":"+thyme.minutes ,8,91);
@@ -844,7 +849,7 @@ function startGame()
 function starter()
 {	
 	gamestart=true;	
-	bees=true;
+	//bees=true;
 	bConsoleBox.log("started");
 }
 

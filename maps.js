@@ -63,24 +63,26 @@ var camera = {  //represents the camera, aka what part of the map is on screen
         if(this.zoom==1)
 		{
 			//tax=targ.x-26;// * Math.pow(2, curMap.zoom-1);
-			tax=targ.tileX-26;
+			tax=targ.x-26*tileSize;
 			//console.log("cioc");
-			tay=targ.tileY-20;// * Math.pow(2, curMap.zoom-1);
+			tay=targ.y-20*tileSize;// * Math.pow(2, curMap.zoom-1);
 		}
 		else if(this.zoom==2){
-			 tax=targ.x-46;// * Math.pow(2, curMap.zoom-1);
-			tay=targ.y-40;
+			 tax=targ.x-46*tileSize;// * Math.pow(2, curMap.zoom-1);
+			tay=targ.y-40*tileSize;
 		}else if(this.zoom==3){
 			 tax=targ.x-78;// * Math.pow(2, curMap.zoom-1);
 			tay=targ.y-60;
 		}
         if (tax<0) {tax=0;}
         if (tay<0) {tay=0;}
-        if (tax>MAP_WIDTH-this.width) {tax=MAP_WIDTH-this.width;}
-        if (tay>MAP_HEIGHT-this.height) {tay=MAP_HEIGHT-this.height;}
+        if (Math.floor(tax/tileSize)>MAP_WIDTH-this.width) {tax=MAP_WIDTH-this.width;}
+        if (Math.floor(tay/tileSize)>MAP_HEIGHT-this.height) {tay=MAP_HEIGHT-this.height;}
 
-        this.tileX=tax;
-        this.tileY=tay;
+        this.x=tax;
+        this.y=tay;
+		this.tileX=Math.floor(this.x/tileSize);
+		this.tileY=Math.floor(this.y/tileSize);
     },
 	centerNew: function(targ) {
         //if(this.zoom>1) {tx=0;ty=0;x=0;y=0;return;}
@@ -124,8 +126,8 @@ var camera = {  //represents the camera, aka what part of the map is on screen
 	},
 	update: function(){
 		//this.updateTile();
-		this.x=this.tileX*tileSize;
-		this.y=this.tileY*tileSize;
+		//this.x=this.tileX*tileSize;
+		//this.y=this.tileY*tileSize;
 		if (this.following)
 		{
 			if(!this.following.alive)
@@ -732,6 +734,16 @@ function Map(I) { //map object
 		}
     };
 
+	 I.rebuildMap= function(obj){
+
+        mapBitmap = mapCanvas.getImageData(obj.tileX-110, obj.tileY-140, CANVAS_WIDTH, CANVAS_HEIGHT);
+		var idata = mapBitmap.data;
+		for (var i = 0; i < idata.length; i += 4) 
+		{
+			idata[i+3] = 255;
+		}
+    };
+	
 	I.drawMap= function (cam,x,y,arm) {
 		
 		//if(mode<1){return;}
@@ -740,40 +752,25 @@ function Map(I) { //map object
         //canvas.save();
         //canvas.globalAlpha = 0.55;
 
+		if(false)
+		{
+			this.rebuildMap(cam);
+		}
+
 		canvas.putImageData(mapBitmap,x,y);
+		
 		//canvas.drawImage(radarCanvas,x,y);
         
-        /*for(var i=0;i<maps[mapSelected].numTowns;i++)
+        for(var i=0;i<ships.length;i++)
         {
-            canvas.fillStyle = "blue";
-            if(towns[i].team==1){ canvas.fillStyle = "#FF2C85";}
-            canvas.fillRect(x+towns[i].x, y+towns[i].y, 8, 8);
+            canvas.fillStyle = "yellow";
+			canvas.globalAlpha=1;
+            canvas.fillRect(ships[i].tileX, ships[i].tileY, 4, 4); //todo adjust when map is panned.
+			
         }
         
-        for(var i=0;i<arm[0].numSquads;i++){
-            
-            canvas.fillStyle = "#FFD700";
-            canvas.fillRect(x+arm[0].squads[i].x, y+arm[0].squads[i].y, 4, 4);
-        }
-        
-        for(var i=0;i<arm[1].numSquads;i++){
-            
-            canvas.fillStyle = "red";
-            canvas.fillRect(x+arm[1].squads[i].x, y+arm[1].squads[i].y, 4, 4);
-        }*///todo
-		if(false)//\!cam.following)
-		{
-			canvas.globalAlpha = 0.35;
-			canvas.fillStyle = "yellow";
-			canvas.fillRect(x+cam.tileX, y+cam.tileY, cam.width*I.zoom, cam.height*I.zoom);
-			canvas.globalAlpha=1;
-		}else if (false)
-		{
-			canvas.globalAlpha = 0.35;
-			canvas.fillStyle = "yellow";
-			canvas.fillRect(x+110-cam.width/2, y+140-cam.height/2, cam.width*I.zoom, cam.height*I.zoom);
-			canvas.globalAlpha=1;
-		}
+       
+	
 	   // canvas.restore();
     };
 	
