@@ -304,6 +304,8 @@ function Map(I) { //map object
     var j = 0;
 	I.x=0;
 	I.y=0;
+	I.miniMapX=0;
+	I.miniMapY=0;
 	//list of towns
 	//story file?
 	//enemy unit file
@@ -734,9 +736,9 @@ function Map(I) { //map object
 		}
     };
 
-	 I.rebuildMap= function(obj){
+	 I.rebuildMap= function(){
 
-        mapBitmap = mapCanvas.getImageData(obj.tileX-110, obj.tileY-140, CANVAS_WIDTH, CANVAS_HEIGHT);
+        mapBitmap = mapCanvas.getImageData(this.miniMapX, this.miniMapY, CANVAS_WIDTH, CANVAS_HEIGHT);
 		var idata = mapBitmap.data;
 		for (var i = 0; i < idata.length; i += 4) 
 		{
@@ -752,9 +754,9 @@ function Map(I) { //map object
         //canvas.save();
         //canvas.globalAlpha = 0.55;
 
-		if(false)
+		if(true)
 		{
-			this.rebuildMap(cam);
+			this.rebuildMap();
 		}
 
 		canvas.putImageData(mapBitmap,x,y);
@@ -765,7 +767,7 @@ function Map(I) { //map object
         {
             canvas.fillStyle = "yellow";
 			canvas.globalAlpha=1;
-            canvas.fillRect(ships[i].tileX, ships[i].tileY, 4, 4); //todo adjust when map is panned.
+            canvas.fillRect(ships[i].tileX-this.miniMapX, ships[i].tileY-this.miniMapY, 4, 4); //todo adjust when map is panned.
 			
         }
         

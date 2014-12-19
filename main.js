@@ -849,7 +849,7 @@ function startGame()
 function starter()
 {	
 	gamestart=true;	
-	//bees=true;
+	bees=true;
 	bConsoleBox.log("started");
 }
 
@@ -1181,13 +1181,17 @@ function mainUpdate()
 				}
 			}
 		}
-		if(controller.buttons[5].checkDown())//R
+		/*if(controller.buttons[5].checkDown())//R
 		{
 			//miles.expression=Math.floor(Math.random()*numfaces);
 			showMap=true;
 		}else
 		{
 			showMap=false;
+		}*/
+		if(controller.buttons[5].check())//R
+		{
+			showMap=!showMap;
 		}
 		if(controller.buttons[4].check()) //X
 		{
@@ -1408,37 +1412,62 @@ function mainUpdate()
 	}	
 	if(true)
 	{
-		if(keydown.up)
+		if(!showMap)
 		{
-			camera.unFollow();
-			camera.tileY-=camera.moveSpeed*camera.zoomMove;
-			camera.update();
-			if(camera.tileY<0) {camera.y=0; camera.tileY=0;}
-			mapDirty=true;
-		}
-		if(keydown.down)
+			if(keydown.up)
+			{
+				camera.unFollow();
+				camera.tileY-=camera.moveSpeed*camera.zoomMove;
+				camera.update();
+				if(camera.tileY<0) {camera.y=0; camera.tileY=0;}
+				mapDirty=true;
+			}
+			if(keydown.down)
+			{
+				camera.unFollow();
+				camera.tileY+=camera.moveSpeed*camera.zoomMove;
+				camera.update();
+				if(camera.tileY>curMap.height-camera.height) {camera.tileY=curMap.height-camera.height;camera.y=camera.tileY;}
+				mapDirty=true;
+			}
+			if(keydown.right)
+			{
+				camera.unFollow();
+				camera.tileX+=camera.moveSpeed*camera.zoomMove;
+				camera.update();
+				if(camera.tileX>curMap.width-camera.width) {camera.tileX=curMap.width-camera.width;}
+				mapDirty=true;
+			}
+			if(keydown.left)
+			{
+				camera.unFollow();
+				camera.tileX-=camera.moveSpeed*camera.zoomMove;
+				camera.update();
+				if(camera.tileX<0) {camera.tileX=0; camera.x=0;}//todo
+				mapDirty=true;
+			}
+		}else
 		{
-			camera.unFollow();
-			camera.tileY+=camera.moveSpeed*camera.zoomMove;
-			camera.update();
-			if(camera.tileY>curMap.height-camera.height) {camera.tileY=curMap.height-camera.height;camera.y=camera.tileY;}
-			mapDirty=true;
-		}
-		if(keydown.right)
-		{
-			camera.unFollow();
-			camera.tileX+=camera.moveSpeed*camera.zoomMove;
-			camera.update();
-			if(camera.tileX>curMap.width-camera.width) {camera.tileX=curMap.width-camera.width;}
-			mapDirty=true;
-		}
-		if(keydown.left)
-		{
-			camera.unFollow();
-			camera.tileX-=camera.moveSpeed*camera.zoomMove;
-			camera.update();
-			if(camera.tileX<0) {camera.tileX=0; camera.x=0;}//todo
-			mapDirty=true;
+			if(keydown.up)
+			{
+				curMap.miniMapY-=15;
+				if(curMap.miniMapY<0) {curMap.miniMapY=0;}
+			}
+			if(keydown.down)
+			{
+				curMap.miniMapY+=15;
+				if(curMap.miniMapY>MAP_HEIGHT-CANVAS_HEIGHT) {curMap.miniMapY=MAP_HEIGHT-CANVAS_HEIGHT;}
+			}
+			if(keydown.right)
+			{
+				curMap.miniMapX+=15;
+				if(curMap.miniMapX>MAP_WIDTH-CANVAS_WIDTH) {curMap.miniMapX=MAP_WIDTH-CANVAS_WIDTH;}
+			}
+			if(keydown.left)
+			{
+				curMap.miniMapX-=15;
+				if(curMap.miniMapX<0) {curMap.miniMapX=0;}
+			}
 		}
 	}
 };

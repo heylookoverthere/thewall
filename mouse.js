@@ -37,12 +37,13 @@ function mouseWheel(e){
 				bConsoleBox.scroll--;
 			if(delta<0)
 				bConsoleBox.scroll++;
+				//bConsoleBox.log("wANADDA");
 
 				if(bConsoleBox.scroll<0) {bConsoleBox.scroll=0;}
 				if(bConsoleBox.scroll>bConsoleBox.msg.length) {bConsoleBox.scroll=bConsoleBox.msg.length-1;}
 		}else
 		{
-			if(curMap.zoom>3) {curMap.zoom=3;}
+			if(curMap.zoom>2) {curMap.zoom=2;}
 			if(curMap.zoom<1) {curMap.zoom=1;}
 			if(delta<0)
 			{

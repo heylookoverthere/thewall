@@ -142,10 +142,18 @@ function textbox()
 				this.msg.push(fext);
 				this.colors.push("white");
 				this.log(dext);
+				if(this.msg.length>42)
+				{
+					this.scroll++;
+				}
 			}else
 			{
 				this.msg.push(text);
 				this.colors.push("white");
+				if(this.msg.length>42)
+				{
+					this.scroll++;
+				}
 			}
 		}else
 		{
