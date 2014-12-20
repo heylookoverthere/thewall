@@ -765,9 +765,17 @@ function Map(I) { //map object
         
         for(var i=0;i<ships.length;i++)
         {
-            canvas.fillStyle = "yellow";
+            canvas.fillStyle = "white";
 			canvas.globalAlpha=1;
             canvas.fillRect(ships[i].tileX-this.miniMapX, ships[i].tileY-this.miniMapY, 4, 4); //todo adjust when map is panned.
+			
+        }
+		
+		for(var i=0;i<ports.length;i++)
+        {
+            canvas.fillStyle = "purple";
+			canvas.globalAlpha=1;
+            canvas.fillRect(ports[i].tileX-this.miniMapX, ports[i].tileY-this.miniMapY, 4, 4); //todo adjust when map is panned.
 			
         }
         

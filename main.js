@@ -37,6 +37,20 @@ ports.push(Gulltown);
 ports.push(Braavos);
 ports.push(Lorath);
 ports.push(Pentos);
+
+ports.push(Volantis);
+ports.push(Myr);
+ports.push(Lys);
+ports.push(Oldtown);
+ports.push(Sunspear);
+ports.push(Tarth);
+ports.push(Dragonstone);
+ports.push(StormsEnd);
+ports.push(KingsLanding);
+ports.push(Lannisport);
+ports.push(Pyke);
+ports.push(Duskendale);
+
 var miles=new dude();
 miles.AI=false;
 miles.equip(legArmorList[Math.floor(Math.random()*legArmorList.length)]);

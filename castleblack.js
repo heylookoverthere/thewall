@@ -325,6 +325,59 @@ function port(x,y,name)
 	
 };
 
+/*Volantis:1554,1426
+Myr:1308,1185
+Oldtown:407,1203
+Sunspear:940,1434
+Lys:1302,1420
+Storms End:786,1014
+Dragonstone:784,801
+KL:675,864
+Duskendale:693,837
+Tarth:861,997
+Lannisport:154,862
+Pyke:172,679*/
+
+
+var Volantis=new port(1554,1426,"Volantis");
+Volantis.resources.push(new commodity(CommIDs.Steel,99));
+
+var Tyrosh=new port(1179,1215,"Tyrosh");
+Volantis.resources.push(new commodity(CommIDs.Steel,99));
+
+var Myr=new port(1308,1185,"Myr");
+Myr.resources.push(new commodity(CommIDs.Steel,99));
+
+var Oldtown=new port(407,1203,"Oldtown");
+Oldtown.resources.push(new commodity(CommIDs.Steel,99));
+
+var Sunspear=new port(940,1434,"Sunspear");
+Sunspear.resources.push(new commodity(CommIDs.Steel,99));
+
+var Lys=new port(1302,1418,"Lys");
+Lys.resources.push(new commodity(CommIDs.Steel,99));
+
+var StormsEnd=new port(786,1014,"Storms End");
+StormsEnd.resources.push(new commodity(CommIDs.Steel,99));
+
+var Dragonstone=new port(784,801,"Dragonstone");
+Dragonstone.resources.push(new commodity(CommIDs.Steel,99));
+
+var KingsLanding=new port(675,864,"King's Landing");
+KingsLanding.resources.push(new commodity(CommIDs.Steel,99));
+
+var Duskendale=new port(693,837,"Duskendale");
+Duskendale.resources.push(new commodity(CommIDs.Steel,99));
+
+var Tarth=new port(861,997,"Tarh");
+Tarth.resources.push(new commodity(CommIDs.Steel,99));
+
+var Lannisport=new port(154,862,"Lannisport");
+Lannisport.resources.push(new commodity(CommIDs.Steel,99));
+
+var Pyke=new port(172,679,"Pyke");
+Pyke.resources.push(new commodity(CommIDs.Steel,99));
+
 var Eastwatch=new port(494,233,"Eastwatch");
 Eastwatch.resources.push(new commodity(CommIDs.OakWood,99));
 var Skagos=new port(226+326,200,"Skagos");
