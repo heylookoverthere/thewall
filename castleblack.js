@@ -53,8 +53,8 @@ function settlement()
 {
 	this.sprite=Sprite("castleblack");
 	this.name="Castle Black";
-	this.tileX=115;
-	this.tileY=229;
+	this.tileX=115+326;
+	this.tileY=230;
 	this.x=this.tileX*tileSize;
 	this.y=this.tileY*tileSize;
 	this.draw=function(can,cam)
@@ -325,24 +325,24 @@ function port(x,y,name)
 	
 };
 
-var Eastwatch=new port(167,231,"Eastwatch");
+var Eastwatch=new port(494,233,"Eastwatch");
 Eastwatch.resources.push(new commodity(CommIDs.OakWood,99));
-var Skagos=new port(226,200,"Skagos");
+var Skagos=new port(226+326,200,"Skagos");
 Skagos.resources.push(new commodity(CommIDs.WeirWood,99));
 Skagos.resources.push(new commodity(CommIDs.MysteryMeat,99));
 Skagos.resources.push(new commodity(CommIDs.UnicornHorn,99));
 Skagos.resources.push(new commodity(CommIDs.Obsidian,99));
-var WhiteHarbor=new port(80,546,"White Harbor");
+var WhiteHarbor=new port(80+326,550,"White Harbor");
 WhiteHarbor.resources.push(new commodity(CommIDs.SaltFish,99));
 WhiteHarbor.resources.push(new commodity(CommIDs.Capon,99));
 WhiteHarbor.resources.push(new commodity(CommIDs.Steel,99));
-var Gulltown=new port(455,731,"Gulltown");
+var Gulltown=new port(455+326,733,"Gulltown");
 Gulltown.resources.push(new commodity(CommIDs.SaltFish,99));
-var Braavos=new port(669,564,"Braavos");
+var Braavos=new port(1066,564,"Braavos");
 Braavos.resources.push(new commodity(CommIDs.SaltFish,99));
-var Lorath=new port(771,558,"Lorath");
+var Lorath=new port(1180,552,"Lorath");
 Lorath.resources.push(new commodity(CommIDs.SaltFish,99));
-var Pentos=new port(699,871,"Pentos");
+var Pentos=new port(1096,873,"Pentos");
 Pentos.resources.push(new commodity(CommIDs.SaltFish,99));
 
 function ship(pt)

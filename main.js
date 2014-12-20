@@ -12,22 +12,22 @@ var settlements=[];
 var nightsWatch=new theWatch();
 settlements.push(new settlement());
 eastwatch=new settlement();
-eastwatch.x=160*16;
+eastwatch.x=(160+326)*16;
 eastwatch.y=230*16;
 eastwatch.name="Eastwatch";
 eastwatch.sprite=Sprite("eastwatch");
 
 shadowtower=new settlement();
-shadowtower.x=52*16;
-shadowtower.y=229*16;
+shadowtower.x=(52+326)*16;
+shadowtower.y=230*16;
 shadowtower.name="shadowtower";
 shadowtower.sprite=Sprite("shadowtower");
 settlements.push(eastwatch);
 settlements.push(shadowtower);
 
 
-lights.push(new light(1865,3760,14));
-lights.push(new light(1976,3777,14));
+lights.push(new light(1865+326*16,3760,14));
+lights.push(new light(1976+326*16,3777,14));
 
 
 ports.push(Eastwatch);
@@ -836,7 +836,7 @@ function startGame()
 {
 	mode=1;	
 	setTimeout(starter,1000);
-	curMap.buildMap("maaap");
+	curMap.buildMap("map");
 	camera.tileX=1472/16;
 	camera.tileY=3328/16;
 	monsta.snow(2500,8,1);
@@ -849,7 +849,7 @@ function startGame()
 function starter()
 {	
 	gamestart=true;	
-	bees=true;
+	//bees=true;
 	bConsoleBox.log("started");
 }
 
@@ -1223,7 +1223,7 @@ function mainUpdate()
 	if(homekey.check())
 	{
 		camera.unFollow();
-		camera.tileX=92;
+		camera.tileX=92+326;
 		camera.tileY=212;
 	}
 	if(debugkey.check())
