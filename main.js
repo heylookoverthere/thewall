@@ -4,6 +4,8 @@ var fires=[];
 var ships=[];
 var ports=[];
 
+var portPaths=new Array();
+
 var showMap=false;
 
 var trackShip=0;
@@ -35,28 +37,28 @@ ports.push(Skagos);
 ports.push(WidowsWatch);
 ports.push(Sisterton);
 ports.push(WhiteHarbor);
-ports.push(Gulltown);
-ports.push(Saltpans);
 ports.push(Braavos);
 ports.push(Lorath);
 ports.push(Saath);
 ports.push(Morosh);
+ports.push(Gulltown);
+ports.push(Saltpans);
 ports.push(Maidenpool);
-ports.push(Duskendale);
-ports.push(Stonedance);
-ports.push(Tarth);
 ports.push(Dragonstone);
 ports.push(Driftmark);
+ports.push(Duskendale);
 ports.push(KingsLanding);
+ports.push(Stonedance);
+ports.push(Pentos);
 ports.push(StormsEnd);
+ports.push(Tarth);
 ports.push(Greenstone);
 ports.push(Stonehelm);
-ports.push(Pentos);
+ports.push(GhastonGrey);
 ports.push(Tyrosh);
 ports.push(Myr);
 ports.push(Lys);
 ports.push(Volantis);
-ports.push(GhastonGrey);
 ports.push(Sunspear);
 ports.push(Oldtown);
 ports.push(Ryamsport);
@@ -866,10 +868,44 @@ function troopScreenDraw(){
 	//canvas.fillText("Particles: "+ monsta.particles.length,460,550);
 };
 
+
+function computePortPaths(map,anyship)
+{
+	setTimeout(starter,1000);
+	return;
+	for(var i=0;i<ports.length;i++)
+	{
+		console.log("Computing paths for "+ports[i].name);
+		portPaths[i]=new Array();
+		for(j=0;j<ports.length;j++)
+		{
+			portPaths[i][j]=new Array();
+			if(i==j)
+			{
+				portPaths[i][j].push(null);
+			}else
+			{
+				console.log("	Computing path between "+ports[i].name+" and "+ports[j].name);
+				if(true)//(j>i)
+				{
+					portPaths[i][j].push(map.getPath(ports[i].tileX, ports[i].tileY,ports[j].tileX, ports[j].tileY,true));
+				}else
+				{
+					portPaths[i][j].push(reversePath(portPaths[j][i]));
+				}
+			}
+		}
+	}
+	//console.log(portPaths);
+	/*var smurf={'name':this.name,'address':this.address,'phone':this.phone,'tech':this.tech,'time':this.time,'notes':this.notes,'problem':this.problem,'date':this.date,'cwg':this.cwg,'recall':this.recall,'done':this.done}
+	var tempstring = JSON.stringify(smurf);
+	localStorage.setItem("Wanton",smurf);*/
+};
+
 function startGame()
 {
 	mode=1;	
-	setTimeout(starter,1000);
+	setTimeout(computePortPaths(curMap,ships[0]),1000);
 	curMap.buildMap("map");
 	camera.tileX=1472/16;
 	camera.tileY=3328/16;
@@ -881,7 +917,7 @@ function startGame()
 }
 
 function starter()
-{	
+{		
 	gamestart=true;	
 	//bees=true;
 	bConsoleBox.log("started");

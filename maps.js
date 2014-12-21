@@ -250,7 +250,7 @@ Tile.prototype.draw = function(cam) {
 };
 
 function tileToCost(data, sqd) {
-	if(sqd.boat)
+	if(sqd)
 	{
 		if( data == TileType.Ocean ) return 2;
 		return 0;
@@ -270,13 +270,13 @@ function tileToCost(data, sqd) {
 	}
 };
 
-function mapToGraph(map, sqd) { 
+function mapToGraph(map, boat) { 
     var tilesArray = [];
     for( var i=0; i<MAP_WIDTH; ++i ) {
         var rowArray = [];
         for( var j=0; j<MAP_HEIGHT; ++j ) {
             var tile = map.tiles[i][j];
-            var data = tileToCost(tile.data, sqd);
+            var data = tileToCost(tile.data, boat);
             for( var ii=-1; ii<2; ++ii ) {
                 for( var jj=-1; jj<2; ++jj) {
                     if( i+ii < 0 || i+ii >= MAP_WIDTH || j+jj < 0 || j+jj >= MAP_WIDTH ) {
@@ -284,7 +284,7 @@ function mapToGraph(map, sqd) {
                     }
                     var adjTile = map.tiles[i+ii][j+jj];
                     if( !adjTile ) continue;
-                    adjData = tileToCost(adjTile.data,sqd);
+                    adjData = tileToCost(adjTile.data,boat);
                     if( data == 0 || adjData == 0 ) { data = 0; } else {
                         data = Math.max(data, adjData);
                     }
@@ -297,6 +297,15 @@ function mapToGraph(map, sqd) {
     return new Graph(tilesArray);
 }
 
+function reversePath(path)
+{
+	var spath=new Array();
+	for(var i=0;i<path.list;i++)
+	{
+		spath.push(path.pop());
+	}
+	return spath;
+}
 
 function Map(I) { //map object
     I = I || {};
@@ -767,6 +776,7 @@ function Map(I) { //map object
         {
             canvas.fillStyle = "white";
 			canvas.globalAlpha=1;
+            canvas.fillRect(ships[i].tileX-this.miniMapX, ships[i].tileY-this.miniMapY, 4, 4); //todo adjust when map is panned.
             canvas.fillRect(ships[i].tileX-this.miniMapX, ships[i].tileY-this.miniMapY, 4, 4); //todo adjust when map is panned.
 			
         }

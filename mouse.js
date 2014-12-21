@@ -49,7 +49,7 @@ function mouseWheel(e){
 			{
 				curMap.setZoom(camera);
 				camera.check();
-			}else if(delta>0){
+			}else if((delta>0) && (curMap.zoom>0)){
 				bConsoleBox.log("Best not to try and zoom yet.");
 				curMap.minusZoom(camera);
 				var blob=[];

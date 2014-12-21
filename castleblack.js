@@ -157,6 +157,12 @@ LightLevels.push(0.60); //9pm
 LightLevels.push(0.80); //10pm
 LightLevels.push(0.85); //11pm
 
+
+
+
+	
+
+
 function port(x,y,name)
 {
 	this.name="Legoland";
@@ -200,21 +206,9 @@ function port(x,y,name)
 	
 };
 
-/*Volantis:1554,1426
-Myr:1308,1185
-Oldtown:407,1203
-Sunspear:940,1434
-Lys:1302,1420
-Storms End:786,1014
-Dragonstone:784,801
-KL:675,864
-Duskendale:693,837
-Tarth:861,997
-Lannisport:154,862
-Pyke:172,679*/
-
 var Stonedance=new port(787,870,"Stonedance");
 Stonedance.resources.push(new commodity(CommIDs.Steel,99));
+//Settlments.push(settlePort(Stonedance));
 
 var Stonehelm=new port(706,1140,"Stonehelm");
 Stonehelm.resources.push(new commodity(CommIDs.Steel,99));
@@ -249,7 +243,7 @@ Volantis.resources.push(new commodity(CommIDs.Steel,99));
 var Maidenpool=new port(721,772,"Maidenpool");
 Maidenpool.resources.push(new commodity(CommIDs.Steel,99));
 
-var Saltpans=new port(666,769,"Saltpans");
+var Saltpans=new port(667,769,"Saltpans");
 Saltpans.resources.push(new commodity(CommIDs.Steel,99));
 
 var BearIsland=new port(298,239,"Bear Island");
@@ -276,7 +270,7 @@ Sunspear.resources.push(new commodity(CommIDs.Steel,99));
 var Lys=new port(1302,1418,"Lys");
 Lys.resources.push(new commodity(CommIDs.Steel,99));
 
-var StormsEnd=new port(787,1014,"Storms End");
+var StormsEnd=new port(788,1015,"Storms End");
 StormsEnd.resources.push(new commodity(CommIDs.Steel,99));
 
 var Dragonstone=new port(786,801,"Dragonstone");

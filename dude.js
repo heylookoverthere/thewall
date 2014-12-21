@@ -1486,7 +1486,7 @@ dude.prototype.equip=function(thing)
 		this.tileY=Math.floor(this.y/tileSize);
 		if(!map.walkable(x,y,this)) {bConsoleBox.log("not walkable!"+" "+map.tiles[x][y].data);return;}
         this.clearDestination();
-        this.path = map.getPath(this.tileX, this.tileY, x, y,this);
+        this.path = map.getPath(this.tileX, this.tileY, x, y,false);
         this.dx=x;
         this.dy=y;
     };

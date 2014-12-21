@@ -5,6 +5,8 @@ shipClass.Longship=3;
 shipClass.Drummond=4;
 shipClass.OarShip=5;
 
+var portPaths=new Array();
+
 function ship(pt)
 {
 	this.navigateRivers=false;
@@ -162,6 +164,12 @@ function ship(pt)
 				this.portTrack=0;
 			}
 			this.setDestination(this.ports[this.portTrack].tileX,this.ports[this.portTrack].tileY,curMap);
+			var pDest=this.portTrack+1;
+			if(pDest>this.ports.length)
+			{
+				pDest=0;
+			}
+			//this.NEWsetDestination(this.portTrack,pDest);
 			bConsoleBox.log(this.name+ " is heading to "+this.ports[this.portTrack].name);
             return;
         }
@@ -187,11 +195,17 @@ function ship(pt)
     ship.prototype.setDestination = function(x, y, map) {
 		if(!map.sailable(x,y)) {console.log("invalid dest");return;}
         this.clearDestination();
-        this.path = map.getPath(this.tileX, this.tileY, x, y,this);
+        this.path = map.getPath(this.tileX, this.tileY, x, y,true);
         this.dx=x;
         this.dy=y;
+		console.log(portPaths);
     };
-	
+	ship.prototype.NEWsetDestination = function(portID, destID ) {
+		this.clearDestination();
+		//console.log(portPaths);
+		//console.log(portID,destID);
+        //this.path = portPaths[portID][destID];
+    };
 	ship.prototype.updateAI=function(map)
 	{
 		if( !this.nextMove )
@@ -211,7 +225,7 @@ function ship(pt)
 		var milli=stamp.getTime();
 		//speed=(speed * delta) * (60 / 1000);
 
-		if(milli-this.lastmove>10){
+		if(milli-this.lastmove>1){
 			if( this.nextMove.x > this.tileX ) {
 				this.bx += speed;
 				this.x += speed;
