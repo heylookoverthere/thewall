@@ -213,6 +213,32 @@ Tarth:861,997
 Lannisport:154,862
 Pyke:172,679*/
 
+var Stonedance=new port(787,870,"Stonedance");
+Stonedance.resources.push(new commodity(CommIDs.Steel,99));
+
+var Stonehelm=new port(706,1140,"Stonehelm");
+Stonehelm.resources.push(new commodity(CommIDs.Steel,99));
+
+var TenTowers=new port(212,651,"Ten Towers");
+TenTowers.resources.push(new commodity(CommIDs.Steel,99));
+
+var GhastonGrey=new port(806,1300,"Ghaston Grey");
+GhastonGrey.resources.push(new commodity(CommIDs.Prisoner,99));
+
+var Greenstone=new port(911,1165,"Greenstone");
+Greenstone.resources.push(new commodity(CommIDs.Steel,99));
+
+var Faircastle=new port(90,780,"Faircastle");
+Faircastle.resources.push(new commodity(CommIDs.Steel,99));
+
+var WidowsWatch=new port(626,470,"Widow's Watch");
+WidowsWatch.resources.push(new commodity(CommIDs.Steel,99));
+
+var Seaguard=new port(236,570,"Seaguard");
+Seaguard.resources.push(new commodity(CommIDs.Steel,99));
+
+var FlintsFinger=new port(183,516,"Flint's Finger");
+FlintsFinger.resources.push(new commodity(CommIDs.Steel,99));
 
 var Ryamsport=new port(168,1326,"Ryamsport");
 Ryamsport.resources.push(new commodity(CommIDs.Steel,99));
@@ -232,8 +258,11 @@ BearIsland.resources.push(new commodity(CommIDs.Steel,99));
 var Driftmark=new port(760,818,"Driftmark");
 Driftmark.resources.push(new commodity(CommIDs.Steel,99));
 
+var Sisterton=new port(545,595,"Sisterton");
+Sisterton.resources.push(new commodity(CommIDs.Steel,99));
+
 var Tyrosh=new port(1179,1215,"Tyrosh");
-Volantis.resources.push(new commodity(CommIDs.Steel,99));
+Tyrosh.resources.push(new commodity(CommIDs.Steel,99));
 
 var Myr=new port(1308,1185,"Myr");
 Myr.resources.push(new commodity(CommIDs.Steel,99));
@@ -247,10 +276,10 @@ Sunspear.resources.push(new commodity(CommIDs.Steel,99));
 var Lys=new port(1302,1418,"Lys");
 Lys.resources.push(new commodity(CommIDs.Steel,99));
 
-var StormsEnd=new port(786,1014,"Storms End");
+var StormsEnd=new port(787,1014,"Storms End");
 StormsEnd.resources.push(new commodity(CommIDs.Steel,99));
 
-var Dragonstone=new port(784,801,"Dragonstone");
+var Dragonstone=new port(786,801,"Dragonstone");
 Dragonstone.resources.push(new commodity(CommIDs.Steel,99));
 
 var KingsLanding=new port(675,864,"King's Landing");
@@ -259,14 +288,26 @@ KingsLanding.resources.push(new commodity(CommIDs.Steel,99));
 var Duskendale=new port(693,837,"Duskendale");
 Duskendale.resources.push(new commodity(CommIDs.Steel,99));
 
-var Tarth=new port(861,997,"Tarh");
+var Tarth=new port(861,997,"Tarth");
 Tarth.resources.push(new commodity(CommIDs.Steel,99));
+
+var TheCrag=new port(144,750,"The Crag");
+TheCrag.resources.push(new commodity(CommIDs.Steel,99));
 
 var Lannisport=new port(154,862,"Lannisport");
 Lannisport.resources.push(new commodity(CommIDs.Steel,99));
 
 var Pyke=new port(174,679,"Pyke");
 Pyke.resources.push(new commodity(CommIDs.Steel,99));
+
+var GreatWyk=new port(127,590,"Great Wyk");
+GreatWyk.resources.push(new commodity(CommIDs.Steel,99));
+
+var Morosh=new port(1569,506,"Morosh");
+Morosh.resources.push(new commodity(CommIDs.Steel,99));
+
+var Saath=new port(1537,521,"Saath");
+Saath.resources.push(new commodity(CommIDs.Steel,99));
 
 var Eastwatch=new port(494,233,"Eastwatch");
 Eastwatch.resources.push(new commodity(CommIDs.OakWood,99));

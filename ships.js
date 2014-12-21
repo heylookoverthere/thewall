@@ -1,5 +1,14 @@
+var shipClass=[];
+shipClass.Fishing=0;
+shipClass.Small=1;
+shipClass.Longship=3;
+shipClass.Drummond=4;
+shipClass.OarShip=5;
+
 function ship(pt)
 {
+	this.navigateRivers=false;
+	this.class=shipClass.Small;
 	this.ports=new Array();
 	this.alive=true;
 	this.lights=new Array();
@@ -120,25 +129,32 @@ function ship(pt)
 				{
 					this.resources.push(nightsWatch.resources.pop());
 				}
+				
 			}else
 			{
-				var goods=Math.floor(Math.random()*(this.ports[this.portTrack].resources.length));
-				var amt=Math.floor(Math.random()*10)+1;
-				var cost=amt*this.ports[this.portTrack].resources[goods].cost;
-				bConsoleBox.log(this.name+ " has reached "+this.ports[this.portTrack].name+" and picked up "+amt+" "+this.ports[this.portTrack].resources[goods].name);
-				//todo TRADE before using gold!
-				//if(this.ports[this.portTrack].desiredComodities) contains anything from this.resources
+				if(this.ports[this.portTrack].resources.length>0)
 				{
-					//give them as close to cost worth of sale item without going over cost. spend difference in gold.
-				}
-				if(this.watch)
+					var goods=Math.floor(Math.random()*(this.ports[this.portTrack].resources.length));
+					var amt=Math.floor(Math.random()*10)+1;
+					var cost=amt*this.ports[this.portTrack].resources[goods].cost;
+					bConsoleBox.log(this.name+ " has reached "+this.ports[this.portTrack].name+" and picked up "+amt+" "+this.ports[this.portTrack].resources[goods].name);
+					//todo TRADE before using gold!
+					//if(this.ports[this.portTrack].desiredComodities) contains anything from this.resources
+					{
+						//give them as close to cost worth of sale item without going over cost. spend difference in gold.
+					}
+					if(this.watch)
+					{
+						nightsWatch.gold-=cost;
+					}
+					var zed=new commodity(this.ports[this.portTrack].resources[goods].id,amt)
+					this.ports[this.portTrack].resources[goods].amount-=amt;
+	//				console.log(zed,cost);
+					this.cargo.push(zed);
+				}else
 				{
-					nightsWatch.gold-=cost;
+					bConsoleBox.log(this.name+ " has reached "+this.ports[this.portTrack].name+" but they had nothing to sell");
 				}
-				var zed=new commodity(this.ports[this.portTrack].resources[goods].id,amt)
-				this.ports[this.portTrack].resources[goods].amount-=amt;
-//				console.log(zed,cost);
-				this.cargo.push(zed);
 			}
 			this.portTrack++;
 			if(this.portTrack>this.ports.length-1)
@@ -146,6 +162,7 @@ function ship(pt)
 				this.portTrack=0;
 			}
 			this.setDestination(this.ports[this.portTrack].tileX,this.ports[this.portTrack].tileY,curMap);
+			bConsoleBox.log(this.name+ " is heading to "+this.ports[this.portTrack].name);
             return;
         }
         this.nextMove = this.path.shift();

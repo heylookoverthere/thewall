@@ -49,6 +49,7 @@ CommIDs.Leaches=63;
 CommIDs.UnicornHorn=64;
 CommIDs.GlassPane=65;
 CommIDs.BlackDye=66;
+CommIDs.Prisoner=99;
 //medication, gems, 
 
 
@@ -195,6 +196,12 @@ function commodity(id,amt)
 		this.name="Horse"
 		this.cost=20;
 		this.description ="Your basic Horse.";
+		this.unit="";
+	}else if(id==CommIDs.Prisoner)
+	{
+		this.name="Prisoner"
+		this.cost=20;
+		this.description ="No it's not slavery!!";
 		this.unit="";
 	}else if(id==CommIDs.SandSteed)
 	{
