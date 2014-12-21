@@ -198,7 +198,7 @@ function ship(pt)
         this.path = map.getPath(this.tileX, this.tileY, x, y,true);
         this.dx=x;
         this.dy=y;
-		console.log(portPaths);
+		//console.log(portPaths);
     };
 	ship.prototype.NEWsetDestination = function(portID, destID ) {
 		this.clearDestination();
