@@ -35,7 +35,7 @@ lights.push(new light(1976+326*16,3777,14));
 ports.push(Eastwatch);
 ports.push(Skagos);
 ports.push(WidowsWatch);
-ports.push(Sisterton);
+/*ports.push(Sisterton);
 ports.push(WhiteHarbor);
 ports.push(Braavos);
 ports.push(Lorath);
@@ -70,7 +70,7 @@ ports.push(GreatWyk);
 ports.push(TenTowers);
 ports.push(Seaguard);
 ports.push(FlintsFinger);
-ports.push(BearIsland);
+ports.push(BearIsland);*/
 
 var miles=new dude();
 miles.AI=false;
@@ -906,11 +906,22 @@ function computePortPaths(map,anyship)
 function startGame()
 {
 	mode=1;	
-	setTimeout(computePortPaths(curMap,ships[0]),1000);
+	setTimeout(computePortPaths(curMap,true),1000);
 	curMap.buildMap("map");
 	camera.tileX=1472/16;
 	camera.tileY=3328/16;
-	monsta.snow(2500,8,1);
+	if(graphicsLevel>0)
+	{
+		monsta.snow(2500,8,1);
+	}
+	if(graphicsLevel>1)
+	{
+		monsta.snow(2500,8,1);
+	}
+	if(graphicsLevel>2)
+	{
+		monsta.snow(2500,8,1);
+	}
 	for(var i=0;i<3;i++)
 	{
 		nightsWatch.men.push(new dude());

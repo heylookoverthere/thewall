@@ -188,6 +188,24 @@ function port(x,y,name)
 		//mapDirty=true;
 		//can.restore();
 	}
+	port.prototype.computePaths=function(map,orts)
+	{
+		this.portPaths=new Array();
+		for(var i=0;i<orts.length;i++)
+		{
+			if(orts[i].name==this.name)
+			{
+				//this.portPaths.push(null);
+				this.portPaths.push(map.getPath(this.tileX, this.tileY,orts[i].tileX, orts[i].tileY,true));
+				console.log("   same place");
+			}else
+			{
+				console.log("	Computing path between "+this.name+" and "+orts[i].name);
+				this.portPaths.push(map.getPath(this.tileX, this.tileY,orts[i].tileX, orts[i].tileY,true));
+			}
+		}
+		
+	};
 	port.prototype.insertResource=function(res)
 	{
 		//search for existing instance of res.id in stores. add to, or put at end if none found. 

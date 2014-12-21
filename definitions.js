@@ -4,6 +4,8 @@ var keydown={};
 var multiplayer=false;
 var holdInput=false;
 var customConsole=false;
+var graphicsLevel=3;//turn off transparency, tone down snow. less map dirties? leave map a little dirt
+//less lighting?
 
 var tileSize=16;
 // Prevent the backspace key from navigating back.

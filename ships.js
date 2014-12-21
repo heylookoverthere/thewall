@@ -27,7 +27,7 @@ function ship(pt)
 	this.ports.push(pt);
 	this.watch=false;
 	this.homeport=this.ports[0];
-	this.portTrack=0;
+	this.portTrack=-1;
 	this.bobTrack=-4;
 	this.bobflag=false;
 	this.tileX=this.homeport.tileX;
@@ -100,13 +100,9 @@ function ship(pt)
 	
 	  ship.prototype.updateNextMove = function() {
 		if(!bees) {return;}
-        if( !this.path ) {
-			
-			
-			if(this.portTrack<0)
-			{
-			
-			}else if(this.portTrack==0)
+        if( !this.path ) 
+		{			
+			if(this.portTrack==0)
 			{
 				//unload all cargo to watch. 
 				bConsoleBox.log(this.name+ " has reached "+this.ports[this.portTrack].name + " and unloaded their cargo.");
@@ -132,6 +128,10 @@ function ship(pt)
 					this.resources.push(nightsWatch.resources.pop());
 				}
 				
+				
+			}else if(this.portTrack<0)
+			{
+				this.portTrack=0; //so you don't get the message
 			}else
 			{
 				if(this.ports[this.portTrack].resources.length>0)
@@ -170,7 +170,7 @@ function ship(pt)
 			{
 				pDest=0;
 			}
-			//this.NEWsetDestination(this.portTrack,pDest);
+			//this.NEWsetDestination(pDest);
 			bConsoleBox.log(this.name+ " is heading to "+this.ports[this.portTrack].name);
             return;
         }
@@ -217,11 +217,11 @@ function ship(pt)
         this.dy=y;
 		//console.log(portPaths);
     };
-	ship.prototype.NEWsetDestination = function(portID, destID ) {
+	ship.prototype.NEWsetDestination = function(destID ) {
 		this.clearDestination();
 		//console.log(portPaths);
 		//console.log(portID,destID);
-        //this.path = portPaths[portID][destID];
+        this.path = ports[this.portTrack].portPaths[destID];
     };
 	ship.prototype.updateAI=function(map)
 	{
