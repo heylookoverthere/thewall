@@ -37,7 +37,7 @@ ports.push(Gulltown);
 ports.push(Braavos);
 ports.push(Lorath);
 ports.push(Pentos);
-
+ports.push(Tyrosh);
 ports.push(Volantis);
 ports.push(Myr);
 ports.push(Lys);
@@ -50,6 +50,11 @@ ports.push(KingsLanding);
 ports.push(Lannisport);
 ports.push(Pyke);
 ports.push(Duskendale);
+ports.push(Maidenpool);
+ports.push(Saltpans);
+ports.push(BearIsland);
+ports.push(Driftmark);
+ports.push(Ryamsport);
 
 var miles=new dude();
 miles.AI=false;
