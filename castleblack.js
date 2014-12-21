@@ -342,6 +342,7 @@ function theWatch(){
 	this.horses=6;
 	this.food=1000;
 	this.fireWood=1000;
+	this.starving=false;
 	this.wounded=0;
 	this.mealsPerDay=3;
 	this.stores=new Array();
@@ -397,19 +398,19 @@ function theWatch(){
 		{
 			bConsoleBox.log("  "+this.ships[i].name);
 			//bConsoleBox.log("  "+this.ships[i].captain.name);
-			bConsoleBox.log("   Home: "+this.ships[i].ports[0].name);
-			bConsoleBox.log("   Dest: "+this.ships[i].ports[this.ships[i].portTrack].name);
+			bConsoleBox.log("    Home: "+this.ships[i].ports[0].name);
+			bConsoleBox.log("    Dest: "+this.ships[i].ports[this.ships[i].portTrack].name);
 			
-			bConsoleBox.log("   Crew: ");
+			bConsoleBox.log("    Crew: ");
 			for(var j=0;j<this.ships[i].crew.length;j++)
 			{
-				bConsoleBox.log("    "+this.ships[i].crew[j].name);
+				bConsoleBox.log("       "+this.ships[i].crew[j].name);
 			}
 			
-			bConsoleBox.log("   Cargo: ");
+			bConsoleBox.log("     Cargo: ");
 			for(var j=0;j<this.ships[i].cargo.length;j++)
 			{
-				bConsoleBox.log("    "+this.ships[i].cargo[j].amount+" "+this.ships[i].cargo[j].name);
+				bConsoleBox.log("       "+this.ships[i].cargo[j].amount+" "+this.ships[i].cargo[j].name);
 			}
 		}
 	};

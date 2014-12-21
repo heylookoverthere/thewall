@@ -74,6 +74,7 @@ ports.push(BearIsland);
 
 var miles=new dude();
 miles.AI=false;
+miles.tileX;//todo
 miles.equip(legArmorList[Math.floor(Math.random()*legArmorList.length)]);
 miles.equip(chestArmorList[Math.floor(Math.random()*chestArmorList.length)]);
 miles.gun=miles.guns[0];
@@ -131,7 +132,7 @@ brightfish.upgrade();
 ships.push(brightfish);*/
 
 var mel=new flame(lights);
-mel.x=124*16;//miles.x;
+mel.x=(124+326)*16;//miles.x;
 mel.y=221*16;//miles.y;
 mel.alive=true;
 fires.push(mel);
@@ -141,7 +142,7 @@ var thyme=new theTime();
 for(var i=0;i<2;i++)
 {
 	var giles=new dude();
-	giles.x=Math.random()*116*16;
+	giles.x=Math.random()*(116+326)*16;
 	giles.y=Math.random()*128+10;
 	giles.doGesture(Math.floor(Math.random()*8),100000,miles);
 	giles.equip(legArmorList[Math.floor(Math.random()*legArmorList.length)]);
@@ -635,7 +636,7 @@ debugkey.desc="Debug key";
 var logstoreskey=new akey("i");
 debugkey.desc="Log Supplies";
 
-var logshipskey=new akey("s");
+var logshipskey=new akey("h");
 debugkey.desc="Log Sships";
 
 var logmenkey=new akey("p");

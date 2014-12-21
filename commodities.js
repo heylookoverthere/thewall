@@ -59,7 +59,7 @@ function commodity(id,amt)
 {
 	this.amount=amt;
 	this.id=id;
-
+	this.plural="s";
 	if(id==CommIDs.IronWood)
 	{
 		this.name="Ironwood"

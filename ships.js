@@ -152,7 +152,8 @@ function ship(pt)
 					var zed=new commodity(this.ports[this.portTrack].resources[goods].id,amt)
 					this.ports[this.portTrack].resources[goods].amount-=amt;
 	//				console.log(zed,cost);
-					this.cargo.push(zed);
+					//this.cargo.push(zed);
+					this.insertCargo(zed);
 				}else
 				{
 					bConsoleBox.log(this.name+ " has reached "+this.ports[this.portTrack].name+" but they had nothing to sell");
@@ -189,6 +190,22 @@ function ship(pt)
     ship.prototype.isWalking = function() {
         return this.path != null;
     };
+	ship.prototype.insertCargo=function(res)
+	{
+		//search for existing instance of res.id in stores. add to, or put at end if none found. 
+		for(var i=0;i<this.cargo.length;i++)
+		{
+			if(this.cargo[i].id==res.id)
+			{
+				//console.log(this.stores[i].id,res.id);
+				this.cargo[i].combine(res);
+			}
+		}
+		if(res.amount>0) {
+			this.cargo.push(res);
+		}
+	};
+	
     ship.prototype.clearDestination=function(){
         this.path=null; this.dx = this.tileX; this.dy = this.tileY; this.nextMove = null;
     };

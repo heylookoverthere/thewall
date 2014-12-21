@@ -560,7 +560,7 @@ function dude(otherdude)
 	}
 	this.sleeveColor="#404040"
 	this.torchHand=0;
-	this.x=120*tileSize;//this seems to be straight X, camera uses tile X
+	this.x=(446)*tileSize;//this seems to be straight X, camera uses tile X
 	this.y=170*tileSize;
 	this.torchPoint.x=this.x;//+this.arms[0].backArm.joint2.x;
 	this.torchPoint.y=this.y;//+this.arms[0].backArm.joint2.y;
