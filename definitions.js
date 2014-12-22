@@ -35,7 +35,9 @@ $(document).unbind('keydown').bind('keydown', function (event) {
     }
 });
 
-
+distance=function(one,two){
+	return(Math.pow(one.x-two.x,2)+Math.pow(one.y-two.y,2));
+};
 
 var starting=false;
 var bColors = ["#008000","#006400", "#FF4500", "#000080", "#696969", "#800080", "#808000", "#A52A2A", "#8B4513", "#FFDEAD", "#FFFF40","#000080" , "#FFFF80"]; //list of colors for radar/a few other things

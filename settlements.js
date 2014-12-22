@@ -130,7 +130,7 @@ FlintsFinger.resources.push(new commodity(CommIDs.Steel,99));
 
 var Ryamsport=new settlement(168,1326,"Ryamsport");
 Ryamsport.portLeft=true;
-Ryamsport.resources.push(new commodity(CommIDs.Steel,99));
+Ryamsport.resources.push(new commodity(CommIDs.ArborGold,99));
 
 var Volantis=new settlement(1554,1426,"Volantis");
 Volantis.resources.push(new commodity(CommIDs.Steel,99));
@@ -143,7 +143,7 @@ var Saltpans=new settlement(667,769,"Saltpans");
 Saltpans.resources.push(new commodity(CommIDs.Steel,99));
 
 var BearIsland=new settlement(298,239,"Bear Island");
-BearIsland.resources.push(new commodity(CommIDs.Steel,99));
+BearIsland.resources.push(new commodity(CommIDs.BearPelt,99));
 
 var Driftmark=new settlement(760,818,"Driftmark");
 Driftmark.resources.push(new commodity(CommIDs.Steel,99));
@@ -156,20 +156,24 @@ var Tyrosh=new settlement(1179,1215,"Tyrosh");
 Tyrosh.resources.push(new commodity(CommIDs.Steel,99));
 
 var Myr=new settlement(1308,1185,"Myr");
-Myr.resources.push(new commodity(CommIDs.Steel,99));
+Myr.resources.push(new commodity(CommIDs.MyrishLense,99));
 
 var Oldtown=new settlement(407,1203,"Oldtown");
 Oldtown.resources.push(new commodity(CommIDs.Steel,99));
+Oldtown.resources.push(new commodity(CommIDs.CheapWine,99));
 
-var Sunspear=new settlement(940,1433,"Sunspear");
+var Sunspear=new settlement(940,1434,"Sunspear");
 Sunspear.yOffset=-60;
-Sunspear.resources.push(new commodity(CommIDs.Steel,99));
+Sunspear.resources.push(new commodity(CommIDs.DornishRed,99));
+Sunspear.resources.push(new commodity(CommIDs.LemonCakes,99));
+Sunspear.resources.push(new commodity(CommIDs.DornishSandSteed,99));
 
 var Lys=new settlement(1302,1418,"Lys");
-Lys.resources.push(new commodity(CommIDs.Steel,99));
+Lys.resources.push(new commodity(CommIDs.TearsOfLys,99));
 
 var StormsEnd=new settlement(788,1015,"Storms End");
 StormsEnd.resources.push(new commodity(CommIDs.Steel,99));
+StormsEnd.resources.push(new commodity(CommIDs.Horse,99));
 StormsEnd.sprite=Sprite("stormsend");
 
 var Dragonstone=new settlement(786,801,"Dragonstone");
@@ -223,7 +227,8 @@ var WhiteHarbor=new settlement(80+326,550,"White Harbor");
 WhiteHarbor.resources.push(new commodity(CommIDs.SaltFish,99));
 WhiteHarbor.resources.push(new commodity(CommIDs.Capon,99));
 WhiteHarbor.resources.push(new commodity(CommIDs.Steel,99));
-var Gulltown=new settlement(455+326,732,"Gulltown");
+WhiteHarbor.resources.push(new commodity(CommIDs.FreyPie,99));
+var Gulltown=new settlement(455+326,733,"Gulltown");
 Gulltown.yOffset=-20;
 Gulltown.resources.push(new commodity(CommIDs.SaltFish,99));
 var Braavos=new settlement(1066,564,"Braavos");

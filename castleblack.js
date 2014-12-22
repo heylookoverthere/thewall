@@ -1,20 +1,3 @@
-/*function ligthenGradient(ctx,x, y, radius) {
-    ctx.save();
-    ctx.globalCompositeOperation = 'lighter';
-    var rnd = 0.05 * Math.sin(1.1 * Date.now() / 1000);
-    radius = radius * (1 + rnd);
-    var radialGradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
-    radialGradient.addColorStop(0.0, '#BB9');
-    radialGradient.addColorStop(0.2 + rnd, '#AA8');
-    radialGradient.addColorStop(0.7 + rnd, '#330');
-    radialGradient.addColorStop(0.90, '#110');
-    radialGradient.addColorStop(1, '#000');
-    ctx.fillStyle = radialGradient;
-    ctx.beginPath();
-    ctx.arc(x, y, radius, 0, 2 * 3.14);
-    ctx.fill();
-    ctx.restore();
-}*/
 var bees=false;
 
 //var bConsoleStr=new Array();
@@ -22,14 +5,6 @@ var bConsoleClr=new Array();
 var bConsoleBox;
 var bMenuBox;
 
-/*bConsoleStr.push("");
-bConsoleStr.push("");
-bConsoleStr.push("");
-bConsoleStr.push("Game Start!");
-bConsoleClr.push("white");
-bConsoleClr.push("white");
-bConsoleClr.push("white");
-bConsoleClr.push("white");*/
 
 countFPS = (function () {
   var lastLoop = (new Date()).getMilliseconds();
@@ -48,7 +23,6 @@ countFPS = (function () {
     return fps;
   };
 }());
-
 
 
 function leapYear(year)

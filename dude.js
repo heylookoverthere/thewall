@@ -171,7 +171,7 @@ gun.prototype.draw=function(can,cam)
 	
 		this.guy.gunArm=this.guy.arms[0];
 		//flip it.
-		ligthenGradient(can,cam,this, 9)
+		lightenGradient(can,cam,this, 9)
 		//can.scale(1, -1);
 
 	}else

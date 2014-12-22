@@ -1,7 +1,7 @@
 var lights=[];
 var COCKS=false;
 //TODO give each light it's own gradient track.
-function ligthenGradient(ctx,cam,source, radius) {
+function lightenGradient(ctx,cam,source, radius) {
 	if(!source.on) {return;}
 	var x=source.x-cam.tileX*tileSize+source.offSetX;//17; //campfire
 	var y=source.y-cam.tileY*tileSize+source.offSetY;//23; 

@@ -5,6 +5,14 @@ var ships=[];
 var settlements=[];
 var ports=[];
 
+	bConsoleBox=new textbox();
+	bConsoleBox.width=400;
+	bConsoleBox.height=CANVAS_HEIGHT-12;
+	bConsoleBox.log("Loading...");
+	bConsoleBox.y=18;
+	bConsoleBox.x=18;
+	bConsoleBox.lines=4;
+
 var showMap=false;
 
 var trackShip=0;
@@ -159,7 +167,7 @@ brightfish.upgrade();
 ships.push(brightfish);*/
 
 var mel=new flame(lights);
-mel.x=(124+326)*16;//miles.x;
+mel.x=450*16;//miles.x;
 mel.y=221*16;//miles.y;
 mel.alive=true;
 fires.push(mel);
@@ -216,12 +224,6 @@ requestAnimationFrame = window.requestAnimationFrame ||
 var canvasElement = $("<canvas width='" + CANVAS_WIDTH + "' height='" + CANVAS_HEIGHT + "'></canvas");
 var canvas = canvasElement.get(0).getContext("2d");
 
-var sillycanvasElement = $("<canvas width='" + CANVAS_WIDTH + "' height='" + CANVAS_HEIGHT + "'></canvas");
-var sillycanvas = sillycanvasElement.get(0).getContext("2d");
-
-var battleCanvasElement = $("<canvas width='" + CANVAS_WIDTH + "' height='" + CANVAS_HEIGHT + "'></canvas");
-var battleCanvas = battleCanvasElement.get(0).getContext("2d");
-
 var radarElement = $("<canvas width='" + MAP_WIDTH + "' height='" + MAP_HEIGHT + "'></canvas");
 var radarCanvas = radarElement.get(0).getContext("2d");
 
@@ -231,17 +233,11 @@ var mapCanvas = mapCanvasElement.get(0).getContext("2d");
 var concanvasElement = $("<canvas width='" + 432 + "' height='" + CANVAS_HEIGHT + "'></canvas");
 var concanvas = concanvasElement.get(0).getContext("2d");
 
-//concanvas.style.left=CANVAS_WIDTH;
-//concanvasElement.css("position", "absolute").css("z-index", "2");
 concanvasElement.css("position", "absolute").css("z-index", "2").css("top", canvasElement.position().top).css("left", CANVAS_WIDTH);
 concanvasElement.appendTo('body');
 canvasElement.css("position", "absolute").css("z-index", "1");
 canvasElement.appendTo('body');
 canvasElement.css("position", "absolute").css("z-index", "0").css("top", canvasElement.position().top).css("left", canvasElement.position().left);
-sillycanvasElement.css("position", "absolute").css("z-index", "1").css("top", canvasElement.position().top).css("left", canvasElement.position().left);
-battleCanvasElement.css("position", "absolute").css("z-index", "2").css("top", canvasElement.position().top).css("left", canvasElement.position().left);
-sillycanvasElement.appendTo('body');
-battleCanvasElement.appendTo('body');
 canvasElement.get(0).addEventListener("mousemove", mouseXY, false);
 
 var gamepadSupportAvailable = !!navigator.getGamepads || !!navigator.webkitGamepads;
@@ -270,380 +266,10 @@ function playSound(name){
     
 }
 
-function akey(k) {  //represents a keyboard button
-    k = k || "space";
-    this.key =k;
-    this.aflag=false;
-    this.dflag=false;
-	this.desc="A small brown mushroom.";
-    this.check= function(){
-       
-		if (keydown[this.key]) { 
-            this.aflag=true;
-            return false;
-        }
-        if((!keydown[this.key]) && (this.aflag===true)){
-            this.aflag=false;
-            return true;
-        }
-		
-    };
-    this.checkDown= function(){
-        if (keydown[this.key] )
-		{
-            return true;
-        }
-        return false;
-    };
-    return this;
-}
-
-function aPadButton(k,pad) {  //represents a keyboard button
-    k = k || 0;
-    this.key =k;
-    this.aflag=false;
-    this.dflag=false;
-	this.pressedTime=0;
-	this.parentPad=pad;
-	this.desc="A small brown mushroom.";
-    this.check= function(){
-        if ((this.parentPad.buttons[this.key]) && (!this.aflag)){ 
-            this.aflag=true;
-			timestamp = new Date();
-			this.pressedTime=timestamp.getTime();
-            return false;
-        }
-        if((!this.parentPad.buttons[this.key]) && (this.aflag===true)){
-            this.aflag=false;
-			timestamp = new Date();
-			var nurp=timestamp.getTime();
-			if(nurp-this.pressedTime<1000)
-			{	
-				//console.log(nurp-this.pressedTime);
-				return true;
-			}else
-			{
-				return false;
-			}
-        }
-		
-    };
-    this.checkDown= function(){
-        /*if ((parentPad.buttons[this.key] )  && (!this.dflag)) { 
-            this.dflag=true;
-            return true;
-        }
-        if(!parentPad.buttons[this.key]){
-            this.dflag=false;
-            return false;
-        }*/
-		if (this.parentPad.buttons[this.key] )
-		{
-			return true;
-		}
-		return false;
-    };
-    return this;
-}
-
-function virtualGamePad()
-{
-	this.buttons=[];
-	this.dpad=[];
-	this.keyboard=false;
-		
-		this.pad = navigator.getGamepads && navigator.getGamepads()[0];
-		if(navigator.getGamepads()[0]){
-		//if(this.pad){
-			this.keyboard=false;
-			this.dpad.push(this.pad.axes[0])
-			this.dpad.push(this.pad.axes[1]);
-			for(var i=0;i<this.pad.buttons.length;i++)
-			{
-				var daisy=new aPadButton(i,this.pad);
-				this.buttons.push(daisy);
-			}
-			console.log("Controller detected.");
-		}else
-		{
-			this.buttons=[];
-			this.keyboard=true;
-			this.buttons.push(new akey("z")); //a
-			this.buttons[0].desc="Remove hat";
-			this.buttons.push(new akey("space")); //b
-			this.buttons[1].desc="Jump";
-			this.buttons.push(new akey("x")); //x
-			this.buttons[2].desc="Change clothes";
-			this.buttons.push(new akey("shift")); //y
-			this.buttons[3].desc="Run / Pound the ground";
-			this.buttons.push(new akey("n"));
-			this.buttons[4].desc="Change hair";
-			this.buttons.push(new akey("m"));
-			this.buttons[5].desc="Change face";
-			this.buttons.push(new akey("j"));
-			this.buttons[6].desc="Toggle platformer mode";
-			this.buttons.push(new akey("return"));
-			this.buttons[7].desc="Respawn";
-			this.buttons.push(new akey("tab"));
-			this.buttons[8].desc="Cycle through ships";
-			console.log("No controller detected, use keyboard.");
-		}
-	
-};
-
-virtualGamePad.prototype.switchToKeyboard=function()
-{
-	this.buttons=[];
-	this.keyboard=true;
-	this.buttons.push(new akey("z")); //a
-	this.buttons[0].desc="Remove hat";
-	this.buttons.push(new akey("space")); //b
-	this.buttons[1].desc="Jump";
-	this.buttons.push(new akey("x")); //x
-	this.buttons[2].desc="Change clothes";
-	this.buttons.push(new akey("shift")); //y
-	this.buttons[3].desc="Run / Pound the ground";
-	this.buttons.push(new akey("n"));
-	this.buttons[4].desc="Change hair";
-	this.buttons.push(new akey("m"));
-	this.buttons[5].desc="Change face";
-	this.buttons.push(new akey("j"));
-	this.buttons[6].desc="Toggle platformer mode";
-	this.buttons.push(new akey("return"));
-	this.buttons[7].desc="Respawn";
-	this.buttons[8]=new akey("tab");
-	this.buttons[8].desc="Cycle through your ships";
-	console.log("controller no longer detected, switching to keyboard controls");
-};
-
-virtualGamePad.prototype.switchToController=function()
-{
-	this.buttons=[];
-	this.dpad=[];
-	this.keyboard=false;
-	this.pad = navigator.getGamepads && navigator.getGamepads()[0];
-	if((!this.keyboard) && (navigator.getGamepads()[0])){
-	//if(this.pad){
-		this.keyboard=false;
-		this.dpad.push(this.pad.axes[0])
-		this.dpad.push(this.pad.axes[1]);
-		for(var i=0;i<this.pad.buttons.length;i++)
-		{
-			var daisy=new aPadButton(i,this.pad);
-			this.buttons.push(daisy);
-		}
-	}
-	
-	console.log("controller detected, disabling keyboard controls.");
-};
-
-virtualGamePad.prototype.checkLeft=function()
-{
-	if(this.keyboard)
-	{
-		if(keydown.a)
-		{
-			return true;
-		}else
-		{
-			return false;
-		}
-	}else
-	{
-		if(this.pad.axes[0]===-1)
-		{
-			return true;
-		}else
-		{
-			return false;
-		}
-	}
-};
-
-virtualGamePad.prototype.checkRight=function()
-{
-	if(this.keyboard)
-	{
-		if(keydown.d)
-		{
-			return true;
-		}else
-		{
-			return false;
-		}
-	}else
-	{
-		if(this.pad.axes[0]===1)
-		{
-			return true;
-		}else
-		{
-			return false;
-		}
-	}
-};
-
-virtualGamePad.prototype.checkUp=function()
-{
-	if(this.keyboard)
-	{
-		if(keydown.w)
-		{
-			return true;
-		}else
-		{
-			return false;
-		}
-	}else
-	{
-		if(this.pad.axes[1]===-1)
-		{
-			return true;
-		}else
-		{
-			return false;
-		}
-	}
-};
-
-virtualGamePad.prototype.checkDown=function()
-{
-	if(this.keyboard)
-	{
-		if(keydown.s)
-		{
-			return true;
-		}else
-		{
-			return false;
-		}
-	}else
-	{
-		if(this.pad.axes[1]===1)
-		{
-			return true;
-		}else
-		{
-			return false;
-		}
-	}
-};
-
-virtualGamePad.prototype.checkUpLeft=function()
-{
-	if(this.keyboard)
-	{
-		return false;
-	}else
-	{
-		if((this.pad.axes[1]===-1) && (this.pad.axes[0]===-1))
-		{
-			return true;
-		}else
-		{
-			return false;
-		}
-	}
-};
-
-virtualGamePad.prototype.checkUpRight=function()
-{
-	if(this.keyboard)
-	{
-		return false;
-	}else
-	{
-		if((this.pad.axes[1]===-1) && (this.pad.axes[0]===1))
-		{
-			return true;
-		}else
-		{
-			return false;
-		}
-	}
-};
-
-virtualGamePad.prototype.checkDownLeft=function()
-{
-	if(this.keyboard)
-	{
-		return false;
-	}else
-	{
-		if((this.pad.axes[1]===1) && (this.pad.axes[0]===-1))
-		{
-			return true;
-		}else
-		{
-			return false;
-		}
-	}
-};
-
-virtualGamePad.prototype.checkDownRight=function()
-{
-	if(this.keyboard)
-	{
-		return false;
-	}else
-	{
-		if((this.pad.axes[1]===1) && (this.pad.axes[0]===1))
-		{
-			return true;
-		}else
-		{
-			return false;
-		}
-	}
-};
-
-virtualGamePad.prototype.update=function()
-{
-	this.pad = navigator.getGamepads && navigator.getGamepads()[0];
-	if((!this.keyboard) && (!navigator.getGamepads()[0]))
-	{
-		this.switchToKeyboard();
-
-	}else if((this.keyboard) && (navigator.getGamepads()[0]))
-	{
-		this.switchToController();
-	}
-	
-};
-
 curMap = new Map();
 curMap.clear();
 
 controller= new virtualGamePad();
-
-distance=function(one,two){
-	return(Math.pow(one.x-two.x,2)+Math.pow(one.y-two.y,2));
-};
-
-function time(){
-    this.hours=0; 
-    this.minutes=0;
-    this.seconds=0;
-    this.days=0;
-}
-time.prototype.update=function(){
-    this.seconds++;
-    if(this.seconds>60){
-        this.seconds=0;
-        this.minutes++;
-        if (this.minutes>60){
-            this.hours++;
-            if(this.hours>24) {
-				this.hours=0; 
-				this.days++;
-			} 
-            this.minutes=0;
-            this.seconds=0;
-        }
-    }
-};
-
-var theTime=new time();
 
 var ksavekey=new akey("o"); //define the different keys
 var loadkey=new akey("l");
@@ -651,118 +277,6 @@ var loadkey=new akey("l");
 var randomwalk=false;
 var gamestart=false;
 var radar=true;
-
-var edskeys=[];
-
-var pausekey=new akey("space");
-pausekey.desc="Pause";
-edskeys.push(pausekey);
-var debugkey=new akey("l");
-debugkey.desc="Debug key";
-
-var logstoreskey=new akey("i");
-debugkey.desc="Log Supplies";
-
-var logshipskey=new akey("h");
-debugkey.desc="Log Sships";
-
-var logmenkey=new akey("p");
-debugkey.desc="Log Men";
-
-var homekey=new akey("home");
-debugkey.desc="home key";
-
-
-var troopskey=new akey("t");
-troopskey.desc="Debug key";
-
-edskeys.push(debugkey);
-var escapekey=new akey("esc");
-escapekey.desc="Pause and bring up menu";
-edskeys.push(escapekey);
-var pageupkey=new akey("pageup");
-pageupkey.desc="Nothing yet."
-edskeys.push(pageupkey);
-var pagedownkey=new akey("pagedown");
-pagedownkey.desc="Nothing yet."
-edskeys.push(pagedownkey);
-var serversavekey=new akey("i");
-serversavekey.desc="Server save, eventually."
-edskeys.push(serversavekey);
-var serverloadkey=new akey("k");
-serverloadkey.desc="Server load, eventually."
-edskeys.push(serverloadkey);
-var upkey=new akey("up");
-upkey.desc="Move camera"
-edskeys.push(upkey);
-var rightkey=new akey("right");
-rightkey.desc="Move camera."
-edskeys.push(rightkey);
-var downkey=new akey("down");
-downkey.desc="Move camera."
-edskeys.push(downkey);
-var leftkey=new akey("left");
-leftkey.desc="Move camera."
-edskeys.push(leftkey);
-
-var zoomkey=new akey("z");
-zoomkey.desc="Zoom";
-edskeys.push(zoomkey);
-var helpkey=new akey("h");
-helpkey.desc="You just pressed it."
-edskeys.push(helpkey);
-
-var consolekey=new akey("c");
-consolekey.desc="Toggle custom console.";
-edskeys.push(consolekey);
-
-var outfitkey=new akey("o");
-outfitkey.desc="change into a random outfit."
-edskeys.push(outfitkey);
-
-var startkey=new akey("return");
-pageupkey.desc="It's the fucking enter button."
-edskeys.push(startkey);
-
-var letterkeys=[];
-letterkeys.push(new akey("a"));
-letterkeys.push(new akey("b"));
-letterkeys.push(new akey("c"));
-letterkeys.push(new akey("d"));
-letterkeys.push(new akey("e"));
-letterkeys.push(new akey("f"));
-letterkeys.push(new akey("g"));
-letterkeys.push(new akey("h"));
-letterkeys.push(new akey("i"));
-letterkeys.push(new akey("j"));
-letterkeys.push(new akey("k"));
-letterkeys.push(new akey("l"));
-letterkeys.push(new akey("m"));
-letterkeys.push(new akey("n"));
-letterkeys.push(new akey("o"));
-letterkeys.push(new akey("p"));
-letterkeys.push(new akey("q"));
-letterkeys.push(new akey("r"));
-letterkeys.push(new akey("s"));
-letterkeys.push(new akey("t"));
-letterkeys.push(new akey("u"));
-letterkeys.push(new akey("v"));
-letterkeys.push(new akey("w"));
-letterkeys.push(new akey("x"));
-letterkeys.push(new akey("y"));
-letterkeys.push(new akey("z"));
-
-var numberkeys=[];
-numberkeys.push(new akey("0"));
-numberkeys.push(new akey("1"));
-numberkeys.push(new akey("2"));
-numberkeys.push(new akey("3"));
-numberkeys.push(new akey("4"));
-numberkeys.push(new akey("5"));
-numberkeys.push(new akey("6"));
-numberkeys.push(new akey("7"));
-numberkeys.push(new akey("8"));
-numberkeys.push(new akey("9"));
 
 function drawGUI(can)
 {
@@ -794,8 +308,14 @@ function drawDebug(can)
 	can.fillText("Particles: "+monsta.particles.length,675,25);
 	can.fillText("Lights: "+lights.length,675,41);
 	can.fillText("FPS:"+FPS,675,57);//+camera.x+","+camera.y,25,57);
-	can.fillText("Make rain later.",675,73);
-	can.fillText(thyme.days+ " days, "+thyme.hours+":"+thyme.minutes ,675,91);
+	can.fillText(""+ships[trackShip].name+" "+ships[trackShip].tileX+","+ships[trackShip].tileY,675,73);
+	if(ships[trackShip].portTrack<0)
+	{
+		can.fillText("Going nowhere",675,91);
+	}else
+	{
+		can.fillText("Heading to: "+ships[trackShip].ports[ships[trackShip].portTrack].name ,675,91);
+	}
 	//can.fillText(": "+Math.floor(miles.numJumps-miles.jumpTrack),755,55);
 	can.globalAlpha=1;
 }
@@ -828,7 +348,7 @@ FPS=countFPS();
 
 function menuDraw()
 {
-
+	return;
     battletick++;
     //canvas.save();
     canvas.globalAlpha=0.80;
@@ -843,20 +363,6 @@ function menuDraw()
     canvas.textBaseline = "middle";
     
 }
-
-	bConsoleBox=new textbox();
-	bConsoleBox.width=400;
-	bConsoleBox.height=CANVAS_HEIGHT-12;
-	bConsoleBox.log("Loading...");
-	
-	/*bConsoleBox.msg[0]=bConsoleStr[0+bConsoleBox.scroll];//[bConsoleStr.length-4];
-	bConsoleBox.msg[1]=bConsoleStr[1+bConsoleBox.scroll];//[bConsoleStr.length-3];
-	bConsoleBox.msg[2]=bConsoleStr[2+bConsoleBox.scroll];//[bConsoleStr.length-2];
-	bConsoleBox.msg[3]=bConsoleStr[3+bConsoleBox.scroll];//[bConsoleStr.length-1];*/
-	bConsoleBox.y=18;
-	bConsoleBox.x=18;
-	bConsoleBox.lines=4;
-	
 
 if(MUSIC_ON){
 	document.getElementById("titleAudio").volume=MUSIC_VOL;
@@ -997,49 +503,6 @@ function mainMenuUpdate(){
 	
 };
 
-function reqsMet(dex){
-	if(dex==0) {return true;}
-	for(var i=0;i<maps[dex].numReqs;i++)
-	{
-		if(maps[maps[dex].preReq[i]].team==1)
-		{
-			return false;
-		}
-	}
-	return true;
-};
-
-
-function worldMapDraw(){
-
-};
-
-
-
-
-function worldMapUpdate(){
-
-};
-
-function dingle(x,y)
-{
-	canvas.save()
-	canvas.globalAlpha=0.4;
-	
-	if(curMap.walkable(Math.floor(miles.tileX)+x,Math.floor(miles.tileY)+y))
-	{
-		canvas.fillStyle="white";
-	}else
-	{
-		canvas.fillStyle="red";
-	}
-
-	canvas.translate(((miles.tileX+x)*16-camera.tileX*16)*camera.zoom,((miles.tileY+y)*16-camera.tileY*16)*camera.zoom);
-	canvas.fillRect(0,0,16,16);
-	canvas.restore();
-
-}
-
 //------------MAIN DRAW-----------------------------------------
 function mainDraw() {
 	
@@ -1052,8 +515,6 @@ function mainDraw() {
 		concanvas.clearRect(0,0,432,CANVAS_HEIGHT);
 	}
 	if(!gamestart) {return;}
-	/*canvas.fillStyle="white";
-	canvas.fillRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);*/
 	for(var i=0;i<people.length;i++)
 	{
 		if(people[i].showTail)
@@ -1068,11 +529,6 @@ function mainDraw() {
 		fires[i].draw(canvas,camera);
 	}
 	
-	/*for(var i=0;i<ports.length;i++)
-	{
-		ports[i].draw(canvas,camera);
-	}*/
-	
 	for(var i=0;i<ships.length;i++)
 	{
 		ships[i].draw(canvas,camera);
@@ -1085,22 +541,15 @@ function mainDraw() {
 	
 	monsta.draw(canvas,camera);
 
-	/*dingle(0,1);
-	dingle(0,0);
-	dingle(1,0);
-	dingle(1,1);*/
-	
-	//canvas.fillRect(miles.tileX+camera.x,miles.tileY+camera.y,16,16);
 
 	canvas.globalAlpha=LightLevels[thyme.hours];
 	canvas.fillStyle="black";
 	canvas.fillRect(0,0,CANVAS_WIDTH, CANVAS_HEIGHT);
-	//ligthenGradient(canvas,camera,fires[0], 24)
 
 	for(var i=0;i<lights.length;i++)
 	{
 		//lights[i].draw(canvas,camera);
-		ligthenGradient(canvas,camera,lights[i], lights[i].radius)
+		lightenGradient(canvas,camera,lights[i], lights[i].radius)
 	}
 	/*for(var i=0;i<people.length;i++)
 	{
