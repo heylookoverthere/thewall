@@ -49,24 +49,7 @@ countFPS = (function () {
   };
 }());
 
-function settlement()
-{
-	this.sprite=Sprite("castleblack");
-	this.name="Castle Black";
-	this.tileX=115+326;
-	this.tileY=230;
-	this.x=this.tileX*tileSize;
-	this.y=this.tileY*tileSize;
-	this.draw=function(can,cam)
-	{
-		/*can.save();
-		can.globalAlpha=0.6;
-		can.scale(cam.zoom,cam.zoom);*/
-		this.sprite.draw(can, this.x-cam.tileX*tileSize,this.y-cam.tileY*tileSize);
-		//mapDirty=true;
-		//can.restore();
-	}
-};
+
 
 function leapYear(year)
 {
@@ -158,196 +141,103 @@ LightLevels.push(0.80); //10pm
 LightLevels.push(0.85); //11pm
 
 
-
-
-	
-
-
-function port(x,y,name)
+function stringifyGraphNode (gn)
 {
-	this.name="Legoland";
-	this.tileX=166;
-	this.tileY=231;
-	this.sprite=Sprite("dock");
-	if(x) {this.tileX=x;}
-	if(y) {this.tileY=y;}
-	if(name) {this.name=name;}
-	this.x=this.tileX*16;
-	this.y=this.tileY*16;
-	this.resources=new Array();
-	this.desiredCommodities=new Array();
-	
-	
-	this.draw=function(can,cam)
-	{
-		/*can.save();
-		can.globalAlpha=0.6;
-		can.scale(cam.zoom,cam.zoom);*/
-		this.sprite.draw(can, this.x-cam.tileX*tileSize,this.y-cam.tileY*tileSize);
-		this.sprite.draw(can, this.x+16-cam.tileX*tileSize,this.y-cam.tileY*tileSize);
-		//mapDirty=true;
-		//can.restore();
-	}
-	port.prototype.computePaths=function(map,orts)
-	{
-		this.portPaths=new Array();
-		for(var i=0;i<orts.length;i++)
-		{
-			if(orts[i].name==this.name)
-			{
-				//this.portPaths.push(null);
-				this.portPaths.push(map.getPath(this.tileX, this.tileY,orts[i].tileX, orts[i].tileY,true));
-				console.log("	Computing path between "+this.name+" and "+orts[i].name)
-			}else
-			{
-				console.log("	Computing path between "+this.name+" and "+orts[i].name);
-				this.portPaths.push(map.getPath(this.tileX, this.tileY,orts[i].tileX, orts[i].tileY,true));
-			}
-		}
-		
-	};
-	port.prototype.insertResource=function(res)
-	{
-		//search for existing instance of res.id in stores. add to, or put at end if none found. 
-		for(var i=0;i<this.resources.length;i++)
-		{
-			if(this.resources[i].id==res.id)
-			{
-				//console.log(this.stores[i].id,res.id);
-				this.resources[i].combine(res);
-			}
-		}
-		if(res.amount>0) {
-			this.resources.push(res);
-		}
-	};
-	
+	return JSON.stringify(gn);
 };
 
-function computeSomePaths(map)
-{
-	for(var i=0;i<ports.length;i++)
-	{
-		ports[i].computePaths(map,ports);
+function stringifyPath(bath) {
+	var tempstring= "";
+	for (j=0;j<bath.length; j++){
+		tempstring += stringifyGraphNode(bath[j]);
+		tempstring += ",";
 	}
+	console.log( tempstring);
+};
+
+function buildGNFromLoadedinfo(tempstring) {
+    
+    var tempobj = JSON.parse(tempstring);
+    //for( var i=0; i<tempobjs.length; i++ ) {
+	//var tempobj = tempobjs[i];
+
+	return tempobj;
 }
 
-var Stonedance=new port(787,870,"Stonedance");
-Stonedance.resources.push(new commodity(CommIDs.Steel,99));
-//Settlments.push(settlePort(Stonedance));
+function buildPathFromLoadedinfo(tempstring) {
+    
+    var tempobj = JSON.parse(tempstring);
+    //for( var i=0; i<tempobjs.length; i++ ) {
+	//var tempobj = tempobjs[i];
+	ning=new appointment();
+	ning.name=tempobj.name;
+	ning.address=tempobj.address;
+	return ning;
+}
+	
+function savePaths(ports) {
+	var name="portpaths";
+	var totstring="";
+	for(var i=0;i<ports.length;i++) //first port
+	{
+		var botstring="";
+		for(var j=0;j<ports.length;j++) //path to second port
+		{
+			var tar=name.concat(i);
+			tar=tar+",";
+			var tar=tar.concat(j);
+			tar=tar+",";
+			console.log(tar);
+			//localStorage.setItem(tar,ports[i].portPaths[j].length);
+			var mepstring="";
+			for(var g=0;g<ports[i].portPaths[j].length;g++) //graph nodes
+			{
+				var har=tar.concat(g);
+				har=har+",";
+				var tempstring=stringifyGraphNode(ports[i].portPaths[j][g]);
+				mepstring+=",";
+				mepstring=mepstring.concat(tempstring);
+				
+				//localStorage.setItem(har,tempstring);
 
-var Stonehelm=new port(706,1140,"Stonehelm");
-Stonehelm.resources.push(new commodity(CommIDs.Steel,99));
+			}
+			botstring=botstring.concat(mepstring);
+			botstring+=";";
+		}
+		totstring=totstring.concat(botstring);
+		totstring+=":";
+	}
+	//console.log(totstring);
+	//localStorage.setItem(name,totstring);
+}
+	
+function loadPaths() {
+	var name="portpaths";
 
-var TenTowers=new port(212,651,"Ten Towers");
-TenTowers.resources.push(new commodity(CommIDs.Steel,99));
+	for(var i=0;i<39;i++) //first port
+	{
+		var tar=name.concat(i);
+		var amount=39;//localStorage.getItem(tar+"num");
+		for(var j=0;j<amount;j++) //path to second port
+		{
+			var lar=name.concat(i)
+			lar=lar+",";
+			lar.concat(j);
+			var camount = localStorage.getItem(lar+"number");
+			for(var g=0;g<camout;g++) //graph nodes
+			{
+				var har=lar.concat(g);
+				har=har+",";
+				var tempdata = localStorage.getItem(har);
+				buildGNFromLoadedinfo(tempdata);
+			}
+			
+		}
+	}
 
-var GhastonGrey=new port(806,1300,"Ghaston Grey");
-GhastonGrey.resources.push(new commodity(CommIDs.Prisoner,99));
+}
 
-var Greenstone=new port(911,1165,"Greenstone");
-Greenstone.resources.push(new commodity(CommIDs.Steel,99));
 
-var Faircastle=new port(90,780,"Faircastle");
-Faircastle.resources.push(new commodity(CommIDs.Steel,99));
-
-var WidowsWatch=new port(626,470,"Widow's Watch");
-WidowsWatch.resources.push(new commodity(CommIDs.Steel,99));
-
-var Seaguard=new port(236,570,"Seaguard");
-Seaguard.resources.push(new commodity(CommIDs.Steel,99));
-
-var FlintsFinger=new port(183,516,"Flint's Finger");
-FlintsFinger.resources.push(new commodity(CommIDs.Steel,99));
-
-var Ryamsport=new port(168,1326,"Ryamsport");
-Ryamsport.resources.push(new commodity(CommIDs.Steel,99));
-
-var Volantis=new port(1554,1426,"Volantis");
-Volantis.resources.push(new commodity(CommIDs.Steel,99));
-
-var Maidenpool=new port(721,772,"Maidenpool");
-Maidenpool.resources.push(new commodity(CommIDs.Steel,99));
-
-var Saltpans=new port(667,769,"Saltpans");
-Saltpans.resources.push(new commodity(CommIDs.Steel,99));
-
-var BearIsland=new port(298,239,"Bear Island");
-BearIsland.resources.push(new commodity(CommIDs.Steel,99));
-
-var Driftmark=new port(760,818,"Driftmark");
-Driftmark.resources.push(new commodity(CommIDs.Steel,99));
-
-var Sisterton=new port(545,595,"Sisterton");
-Sisterton.resources.push(new commodity(CommIDs.Steel,99));
-
-var Tyrosh=new port(1179,1215,"Tyrosh");
-Tyrosh.resources.push(new commodity(CommIDs.Steel,99));
-
-var Myr=new port(1308,1185,"Myr");
-Myr.resources.push(new commodity(CommIDs.Steel,99));
-
-var Oldtown=new port(407,1203,"Oldtown");
-Oldtown.resources.push(new commodity(CommIDs.Steel,99));
-
-var Sunspear=new port(940,1434,"Sunspear");
-Sunspear.resources.push(new commodity(CommIDs.Steel,99));
-
-var Lys=new port(1302,1418,"Lys");
-Lys.resources.push(new commodity(CommIDs.Steel,99));
-
-var StormsEnd=new port(788,1015,"Storms End");
-StormsEnd.resources.push(new commodity(CommIDs.Steel,99));
-
-var Dragonstone=new port(786,801,"Dragonstone");
-Dragonstone.resources.push(new commodity(CommIDs.Steel,99));
-
-var KingsLanding=new port(675,864,"King's Landing");
-KingsLanding.resources.push(new commodity(CommIDs.Steel,99));
-
-var Duskendale=new port(693,837,"Duskendale");
-Duskendale.resources.push(new commodity(CommIDs.Steel,99));
-
-var Tarth=new port(861,997,"Tarth");
-Tarth.resources.push(new commodity(CommIDs.Steel,99));
-
-var TheCrag=new port(144,750,"The Crag");
-TheCrag.resources.push(new commodity(CommIDs.Steel,99));
-
-var Lannisport=new port(154,862,"Lannisport");
-Lannisport.resources.push(new commodity(CommIDs.Steel,99));
-
-var Pyke=new port(174,679,"Pyke");
-Pyke.resources.push(new commodity(CommIDs.Steel,99));
-
-var GreatWyk=new port(127,590,"Great Wyk");
-GreatWyk.resources.push(new commodity(CommIDs.Steel,99));
-
-var Morosh=new port(1569,506,"Morosh");
-Morosh.resources.push(new commodity(CommIDs.Steel,99));
-
-var Saath=new port(1537,521,"Saath");
-Saath.resources.push(new commodity(CommIDs.Steel,99));
-
-var Eastwatch=new port(494,233,"Eastwatch");
-Eastwatch.resources.push(new commodity(CommIDs.OakWood,99));
-var Skagos=new port(226+326,200,"Skagos");
-Skagos.resources.push(new commodity(CommIDs.WeirWood,99));
-Skagos.resources.push(new commodity(CommIDs.MysteryMeat,99));
-Skagos.resources.push(new commodity(CommIDs.UnicornHorn,99));
-Skagos.resources.push(new commodity(CommIDs.Obsidian,99));
-var WhiteHarbor=new port(80+326,550,"White Harbor");
-WhiteHarbor.resources.push(new commodity(CommIDs.SaltFish,99));
-WhiteHarbor.resources.push(new commodity(CommIDs.Capon,99));
-WhiteHarbor.resources.push(new commodity(CommIDs.Steel,99));
-var Gulltown=new port(455+326,733,"Gulltown");
-Gulltown.resources.push(new commodity(CommIDs.SaltFish,99));
-var Braavos=new port(1066,564,"Braavos");
-Braavos.resources.push(new commodity(CommIDs.SaltFish,99));
-var Lorath=new port(1180,552,"Lorath");
-Lorath.resources.push(new commodity(CommIDs.SaltFish,99));
-var Pentos=new port(1096,873,"Pentos");
-Pentos.resources.push(new commodity(CommIDs.SaltFish,99));
 
 function watchman()
 {

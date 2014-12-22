@@ -162,14 +162,13 @@ function ship(pt)
 			{
 				pDest=0;
 			}
-			this.NEWsetDestination(pDest);
-			//console.log(ports[0].portPaths);
+			//this.NEWsetDestination(pDest);
 			this.portTrack++;
 			if(this.portTrack>this.ports.length-1)
 			{
 				this.portTrack=0;
 			}
-			//this.setDestination(this.ports[this.portTrack].tileX,this.ports[this.portTrack].tileY,curMap);
+			this.setDestination(this.ports[this.portTrack].tileX,this.ports[this.portTrack].tileY,curMap);
 			
 			
 			bConsoleBox.log(this.name+ " is heading to "+this.ports[this.portTrack].name);
@@ -225,6 +224,7 @@ function ship(pt)
 		{
 			this.path.push(ports[this.portTrack].portPaths[destID][i]);
 		}
+		
         //this.path = ports[this.portTrack].portPaths[destID];
 
     };

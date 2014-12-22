@@ -3,7 +3,7 @@ var tabbed=false;
 var keydown={};
 var multiplayer=false;
 var holdInput=false;
-var customConsole=false;
+var customConsole=true;
 var graphicsLevel=3;//turn off transparency, tone down snow. less map dirties? leave map a little dirt
 //less lighting?
 

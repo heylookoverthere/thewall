@@ -2,39 +2,68 @@ var debugInfo=true;
 var people=[];
 var fires=[];
 var ships=[];
+var settlements=[];
 var ports=[];
 
 var showMap=false;
 
 var trackShip=0;
 
-var settlements=[];
 var nightsWatch=new theWatch();
-settlements.push(new settlement());
-eastwatch=new settlement();
-eastwatch.x=(160+326)*16;
-eastwatch.y=230*16;
-eastwatch.name="Eastwatch";
-eastwatch.sprite=Sprite("eastwatch");
-
-shadowtower=new settlement();
-shadowtower.x=(52+326)*16;
-shadowtower.y=230*16;
-shadowtower.name="shadowtower";
-shadowtower.sprite=Sprite("shadowtower");
-settlements.push(eastwatch);
-settlements.push(shadowtower);
 
 
 lights.push(new light(1865+326*16,3760,14));
 lights.push(new light(1976+326*16,3777,14));
 
 
+settlements.push(CastleBlack);
+settlements.push(ShadowTower);
+settlements.push(Eastwatch);
+settlements.push(Skagos);
+settlements.push(WidowsWatch);
+settlements.push(Sisterton);
+settlements.push(WhiteHarbor);
+settlements.push(Braavos);
+settlements.push(Lorath);
+settlements.push(Saath);
+settlements.push(Morosh);
+settlements.push(Gulltown);
+settlements.push(Saltpans);
+settlements.push(Maidenpool);
+settlements.push(Dragonstone);
+settlements.push(Driftmark);
+settlements.push(Duskendale);
+settlements.push(KingsLanding);
+settlements.push(Stonedance);
+settlements.push(Pentos);
+settlements.push(StormsEnd);
+settlements.push(Tarth);
+settlements.push(Greenstone);
+settlements.push(Stonehelm);
+settlements.push(GhastonGrey);
+settlements.push(Tyrosh);
+settlements.push(Myr);
+settlements.push(Lys);
+settlements.push(Volantis);
+settlements.push(Sunspear);
+settlements.push(Oldtown);
+settlements.push(Ryamsport);
+settlements.push(Lannisport);
+settlements.push(Faircastle);
+settlements.push(TheCrag);
+settlements.push(Pyke);
+settlements.push(GreatWyk);
+settlements.push(TenTowers);
+settlements.push(Seaguard);
+settlements.push(FlintsFinger);
+settlements.push(BearIsland);
+
+
 ports.push(Eastwatch);
 ports.push(Skagos);
 ports.push(WidowsWatch);
-//ports.push(Sisterton);
-/*ports.push(WhiteHarbor);
+ports.push(Sisterton);
+ports.push(WhiteHarbor);
 ports.push(Braavos);
 ports.push(Lorath);
 ports.push(Saath);
@@ -68,7 +97,7 @@ ports.push(GreatWyk);
 ports.push(TenTowers);
 ports.push(Seaguard);
 ports.push(FlintsFinger);
-ports.push(BearIsland);*/
+ports.push(BearIsland);
 
 var miles=new dude();
 miles.AI=false;
@@ -1039,10 +1068,10 @@ function mainDraw() {
 		fires[i].draw(canvas,camera);
 	}
 	
-	for(var i=0;i<ports.length;i++)
+	/*for(var i=0;i<ports.length;i++)
 	{
 		ports[i].draw(canvas,camera);
-	}
+	}*/
 	
 	for(var i=0;i<ships.length;i++)
 	{
