@@ -5,8 +5,6 @@ shipClass.Longship=3;
 shipClass.Drummond=4;
 shipClass.OarShip=5;
 
-var portPaths=new Array();
-
 function ship(pt)
 {
 	this.navigateRivers=false;
@@ -159,18 +157,21 @@ function ship(pt)
 					bConsoleBox.log(this.name+ " has reached "+this.ports[this.portTrack].name+" but they had nothing to sell");
 				}
 			}
+			var pDest=this.portTrack+1;
+			if(pDest>this.ports.length-1)
+			{
+				pDest=0;
+			}
+			this.NEWsetDestination(pDest);
+			//console.log(ports[0].portPaths);
 			this.portTrack++;
 			if(this.portTrack>this.ports.length-1)
 			{
 				this.portTrack=0;
 			}
-			this.setDestination(this.ports[this.portTrack].tileX,this.ports[this.portTrack].tileY,curMap);
-			var pDest=this.portTrack+1;
-			if(pDest>this.ports.length)
-			{
-				pDest=0;
-			}
-			//this.NEWsetDestination(pDest);
+			//this.setDestination(this.ports[this.portTrack].tileX,this.ports[this.portTrack].tileY,curMap);
+			
+			
 			bConsoleBox.log(this.name+ " is heading to "+this.ports[this.portTrack].name);
             return;
         }
@@ -219,9 +220,13 @@ function ship(pt)
     };
 	ship.prototype.NEWsetDestination = function(destID ) {
 		this.clearDestination();
-		//console.log(portPaths);
-		//console.log(portID,destID);
-        this.path = ports[this.portTrack].portPaths[destID];
+		this.path=new Array();
+		for(var i=0;i<ports[this.portTrack].portPaths[destID].length;i++)
+		{
+			this.path.push(ports[this.portTrack].portPaths[destID][i]);
+		}
+        //this.path = ports[this.portTrack].portPaths[destID];
+
     };
 	ship.prototype.updateAI=function(map)
 	{

@@ -4,8 +4,6 @@ var fires=[];
 var ships=[];
 var ports=[];
 
-var portPaths=new Array();
-
 var showMap=false;
 
 var trackShip=0;
@@ -35,8 +33,8 @@ lights.push(new light(1976+326*16,3777,14));
 ports.push(Eastwatch);
 ports.push(Skagos);
 ports.push(WidowsWatch);
-/*ports.push(Sisterton);
-ports.push(WhiteHarbor);
+//ports.push(Sisterton);
+/*ports.push(WhiteHarbor);
 ports.push(Braavos);
 ports.push(Lorath);
 ports.push(Saath);
@@ -873,34 +871,8 @@ function troopScreenDraw(){
 function computePortPaths(map,anyship)
 {
 	setTimeout(starter,1000);
+	//computeSomePaths(map);
 	return;
-	for(var i=0;i<ports.length;i++)
-	{
-		console.log("Computing paths for "+ports[i].name);
-		portPaths[i]=new Array();
-		for(j=0;j<ports.length;j++)
-		{
-			portPaths[i][j]=new Array();
-			if(i==j)
-			{
-				portPaths[i][j].push(null);
-			}else
-			{
-				console.log("	Computing path between "+ports[i].name+" and "+ports[j].name);
-				if(true)//(j>i)
-				{
-					portPaths[i][j].push(map.getPath(ports[i].tileX, ports[i].tileY,ports[j].tileX, ports[j].tileY,true));
-				}else
-				{
-					portPaths[i][j].push(reversePath(portPaths[j][i]));
-				}
-			}
-		}
-	}
-	//console.log(portPaths);
-	/*var smurf={'name':this.name,'address':this.address,'phone':this.phone,'tech':this.tech,'time':this.time,'notes':this.notes,'problem':this.problem,'date':this.date,'cwg':this.cwg,'recall':this.recall,'done':this.done}
-	var tempstring = JSON.stringify(smurf);
-	localStorage.setItem("Wanton",smurf);*/
 };
 
 function startGame()

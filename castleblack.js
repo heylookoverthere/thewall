@@ -197,7 +197,7 @@ function port(x,y,name)
 			{
 				//this.portPaths.push(null);
 				this.portPaths.push(map.getPath(this.tileX, this.tileY,orts[i].tileX, orts[i].tileY,true));
-				console.log("   same place");
+				console.log("	Computing path between "+this.name+" and "+orts[i].name)
 			}else
 			{
 				console.log("	Computing path between "+this.name+" and "+orts[i].name);
@@ -223,6 +223,14 @@ function port(x,y,name)
 	};
 	
 };
+
+function computeSomePaths(map)
+{
+	for(var i=0;i<ports.length;i++)
+	{
+		ports[i].computePaths(map,ports);
+	}
+}
 
 var Stonedance=new port(787,870,"Stonedance");
 Stonedance.resources.push(new commodity(CommIDs.Steel,99));
