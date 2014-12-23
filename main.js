@@ -20,8 +20,8 @@ var trackShip=0;
 var nightsWatch=new theWatch();
 
 
-lights.push(new light(1865+326*16,3760,14));
-lights.push(new light(1976+326*16,3777,14));
+lights.push(new light(7092,3748,14));
+lights.push(new light(7208,3777,14));
 
 
 settlements.push(CastleBlack);
@@ -141,7 +141,7 @@ ships.push(betha);
 lights.push(betha.lights[0]);
 nightsWatch.ships.push(betha);
 
-/*var treasure=new ship(Pentos);
+var treasure=new ship(Pentos);
 treasure.name="Treasure";
 treasure.ports.push(Braavos);
 treasure.ports.push(WhiteHarbor);
@@ -164,7 +164,7 @@ brightfish.speed=4;
 //brightfish.ports.push(Eastwatch);
 brightfish.watch=false;
 brightfish.upgrade();
-ships.push(brightfish);*/
+ships.push(brightfish);
 
 var mel=new flame(lights);
 mel.x=450*16;//miles.x;

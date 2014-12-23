@@ -44,6 +44,89 @@ tileDistance=function(one,two){
 	return(Math.pow(one.tileX-two.tileX,2)+Math.pow(one.tileY-two.tileY,2));
 };
 
+countFPS = (function () {
+  var lastLoop = (new Date()).getMilliseconds();
+  var count = 1;
+  var fps = 0;
+
+  return function () {
+    var currentLoop = (new Date()).getMilliseconds();
+    if (lastLoop > currentLoop) {
+      fps = count;
+      count = 1;
+    } else {
+      count += 1;
+    }
+    lastLoop = currentLoop;
+    return fps;
+  };
+}());
+
+
+function leapYear(year)
+{
+	var lr=true;
+	if (year%4!=0) {
+		return false;
+	}else
+	{
+		if (year%100!=0) 
+		{
+			return true;
+		}else
+		{
+			if (year%400!=0)
+			{
+				return false;
+			}else{
+				return true;
+			}
+		}
+	}
+}
+
+function theTime()
+{
+	this.minutes=50;
+	this.hours=0;
+	this.days=0;
+	this.years=298;
+	this.tick=0;
+
+	theTime.prototype.update=function()
+	{
+		this.tick++;
+		if(this.tick<2)
+		{
+			return;
+		}
+		this.tick=0;
+		this.minutes++;
+		if(this.minutes>59)
+		{
+			this.minutes=0;
+			this.hours++;
+			if(this.hours>23)
+			{
+				this.hours=0;
+				this.days++;
+				var cxup=363;
+				if(leapYear(this.years))
+				{
+					cxup=364;
+				}
+				if(this.days>cxup)
+				{
+					this.years++;
+					this.days=0;
+					nightsWatch.collectTribute();
+				}
+			}
+		}
+	};
+}
+
+
 var starting=false;
 var bColors = ["#008000","#006400", "#FF4500", "#000080", "#696969", "#800080", "#808000", "#A52A2A", "#8B4513", "#FFDEAD", "#FFFF40","#000080" , "#FFFF80"]; //list of colors for radar/a few other things
 

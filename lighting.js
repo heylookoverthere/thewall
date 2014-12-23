@@ -89,4 +89,80 @@ light.prototype.draw=function(ctx,cam) {
     ctx.arc(x, y, radius, 0, 2 * 3.14);
     ctx.fill();
     ctx.restore();
+};
+
+
+flameTypes=[];
+flameTypes.Campfire=1;
+flameTypes.loose=0;
+flameTypes.Torch=3;
+flameTypes.wallTorch=4;
+flameTypes.Wildfire=5;
+
+var torchSprite=Sprite("torch");
+
+function flame(lightlist,type)
+{
+	this.type=1;
+	this.luminosity=12;
+	var offx=0;
+	var offy=0;
+	if(this.type==flameTypes.Campfire)
+	{
+		this.luminosity=70;
+		offx=17;
+		offy=23;
+	}else if((this.type==flameTypes.Torch) || (this.type==flameTypes.Torch))
+	{
+		this.luminosity=10;
+	}else if(this.type==flameTypes.Wildfire)
+	{
+		this.luminosity=440;
+	}
+	this.sprites=[];
+	this.supportSprite=Sprite("campfire");
+	this.x=0;
+	this.y=0;
+	this.xV=0;
+	this.yV=0;
+	this.alive=true;
+	this.aniRate=5;
+	this.aniTrack=0;
+	this.aniCount=0;
+	this.sprites.push(Sprite("fire0"));
+	this.sprites.push(Sprite("fire1"));
+	this.sprites.push(Sprite("fire2"));
+	this.sprites.push(Sprite("fire3"));
+	this.flare=new light(offx,offy,this.luminosity,this);
+	lightlist.push(this.flare);
+	
 }
+
+flame.prototype.update=function()
+{
+	this.aniCount++;
+	if(this.aniCount>this.aniRate)
+	{
+		this.aniCount=0;
+		this.aniTrack++;
+		if(this.aniTrack>this.sprites.length-1)
+		{
+			this.aniTrack=0;
+		}
+		
+	}
+};
+
+flame.prototype.draw=function(can,cam)
+{
+	if(!this.alive) {return;}
+	can.save();
+	can.globalAlpha=0.6;
+	can.scale(cam.zoom,cam.zoom);
+	if(this.type>0)
+	{
+		this.supportSprite.draw(can, this.x-cam.tileX*tileSize+1,this.y-cam.tileY*tileSize+4);
+	}
+	this.sprites[this.aniTrack].draw(can, this.x-cam.tileX*tileSize,this.y-cam.tileY*tileSize);
+	can.restore();
+};
