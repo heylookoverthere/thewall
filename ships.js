@@ -54,6 +54,18 @@ function ship(pt)
     this.nextTile = {x: this.tileX, y: this.tileY};
     this.inNextTile = false;
 	this.lights.push(new light(16,18,12,this));
+	this.visRange=10;
+	this.clearFog=function(map)
+	{
+		for(var i=this.tileX-this.visRange+2;i<this.tileX+this.visRange;i++)
+		{
+			for(var j=this.tileY-this.visRange+2;j<this.tileY+this.visRange;j++)
+			{
+				map.seenMap[i][j]=true;
+			}
+			
+		}
+	}
 	this.update=function(map)
 	{
 		//goto this.ports[this.portTrack]
@@ -267,6 +279,10 @@ function ship(pt)
 				this.facing=1;
 			}
 			this.lastmove=stamp.getTime();
+			if(map.fogOfWar)
+			{
+				this.clearFog(map);
+			}
 		}
 
 		if( !this.inNextTile && ( this.bx <= 0 || this.bx >= 16 || this.by <= 0 || this.by >= 16 )) {

@@ -4,6 +4,7 @@ var keydown={};
 var multiplayer=false;
 var holdInput=false;
 var customConsole=true;
+
 var graphicsLevel=3;//turn off transparency, tone down snow. less map dirties? leave map a little dirt
 //less lighting?
 
@@ -37,6 +38,10 @@ $(document).unbind('keydown').bind('keydown', function (event) {
 
 distance=function(one,two){
 	return(Math.pow(one.x-two.x,2)+Math.pow(one.y-two.y,2));
+};
+
+tileDistance=function(one,two){
+	return(Math.pow(one.tileX-two.tileX,2)+Math.pow(one.tileY-two.tileY,2));
 };
 
 var starting=false;

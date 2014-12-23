@@ -1,3 +1,8 @@
+var fogSprite=new Array();
+fogSprite.push(Sprite("fog1"));
+fogSprite.push(Sprite("fog2"));
+fogSprite.push(Sprite("fog3"));
+fogSprite.push(Sprite("fog4"));
 var camera = {  //represents the camera, aka what part of the map is on screen
     x: 0,
     y: 0,
@@ -311,6 +316,7 @@ function Map(I) { //map object
     I = I || {};
     var i = 0;
     var j = 0;
+	I.fogOfWar=false;
 	I.x=0;
 	I.y=0;
 	I.miniMapX=0;
@@ -331,7 +337,13 @@ function Map(I) { //map object
     }
     I.width = MAP_WIDTH;
     I.height = MAP_HEIGHT;
-
+	I.seenMap=new Array();
+	for (i=0;i<MAP_WIDTH; i++){
+		I.seenMap[i]=new Array();
+        for (j=0;j<MAP_HEIGHT; j++){
+            I.seenMap[i][j]= false;
+        }
+    }
     I.getPath = function(startX, startY, endX, endY,sqd) {
         var graph = mapToGraph(I,sqd);
         return astar.search(graph.nodes, graph.nodes[startX][startY], graph.nodes[endX][endY]);
@@ -579,15 +591,21 @@ function Map(I) { //map object
                         dominantType.type = type;
                     }
                 }
-                if(dominantType.type && dominantType.type <20) {
-					tileSprite[dominantType.type].draw(canvas, (i-cam.tileX)*16/Math.pow(2,I.zoom-1), (j-cam.tileY)*16/Math.pow(2,I.zoom-1));
-                }else if(dominantType.type&& dominantType.type<24){
-					tileSprite[20+tileani].draw(canvas, (i-cam.tileX)*16/Math.pow(2,I.zoom-1), (j-cam.tileY)*16/Math.pow(2,I.zoom-1));
-				}else if (dominantType.type&& dominantType.type<28) {
-					tileSprite[24+tileani].draw(canvas, (i-cam.tileX)*16/Math.pow(2,I.zoom-1), (j-cam.tileY)*16/Math.pow(2,I.zoom-1));
-				}else 
+				if((!this.fogOfWar) || (this.seenMap[i][j]))
 				{
-					tileSprite[TileType.Lava+tileani].draw(canvas, (i-cam.tileX)*16/Math.pow(2,I.zoom-1), (j-cam.tileY)*16/Math.pow(2,I.zoom-1));
+					if(dominantType.type && dominantType.type <20) {
+						tileSprite[dominantType.type].draw(canvas, (i-cam.tileX)*16/Math.pow(2,I.zoom-1), (j-cam.tileY)*16/Math.pow(2,I.zoom-1));
+					}else if(dominantType.type&& dominantType.type<24){
+						tileSprite[20+tileani].draw(canvas, (i-cam.tileX)*16/Math.pow(2,I.zoom-1), (j-cam.tileY)*16/Math.pow(2,I.zoom-1));
+					}else if (dominantType.type&& dominantType.type<28) {
+						tileSprite[24+tileani].draw(canvas, (i-cam.tileX)*16/Math.pow(2,I.zoom-1), (j-cam.tileY)*16/Math.pow(2,I.zoom-1));
+					}else 
+					{
+						tileSprite[TileType.Lava+tileani].draw(canvas, (i-cam.tileX)*16/Math.pow(2,I.zoom-1), (j-cam.tileY)*16/Math.pow(2,I.zoom-1));
+					}
+				}else
+				{
+					fogSprite[tileani].draw(canvas, (i-cam.tileX)*16/Math.pow(2,I.zoom-1), (j-cam.tileY)*16/Math.pow(2,I.zoom-1));
 				}
             }
         }
@@ -767,9 +785,24 @@ function Map(I) { //map object
 		{
 			this.rebuildMap();
 		}
+		
+		if((this.fogOfWar) && (false)){ //this is way too slow. but what if we built the map in ships. it's a function that adds tiles as they are seen to a seperate canvas (that is only shown when you hit m.) 
+			//canvas.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
+		   for(var i=0;i<MAP_WIDTH;i++)
+		   {
+				for(var j=0;j<MAP_HEIGHT;j++)
+				{
+					if(this.seenMap[i][j])
+					{
+						canvas.putImageData(mapBitmap,x,y,i,j,1,1);
+					}
+				}
+				
+			}
+		}else{
 
 		canvas.putImageData(mapBitmap,x,y);
-		
+		}
 		//canvas.drawImage(radarCanvas,x,y);
         
         for(var i=0;i<ships.length;i++)
@@ -789,7 +822,8 @@ function Map(I) { //map object
 			
         }
         
-       
+		
+	   
 	
 	   // canvas.restore();
     };
