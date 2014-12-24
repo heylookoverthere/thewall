@@ -37,6 +37,11 @@ function settlement(x,y,name)
 		/*can.save();
 		can.globalAlpha=0.6;
 		can.scale(cam.zoom,cam.zoom);*/
+		if(this.port)
+		{
+			this.portSprite.draw(can, this.x-cam.tileX*tileSize,this.y-cam.tileY*tileSize);
+			this.portSprite.draw(can, this.x+16-cam.tileX*tileSize,this.y-cam.tileY*tileSize);
+		}
 		if(this.portLeft)
 		{
 			this.sprite.draw(can, this.x+60-cam.tileX*tileSize+this.xOffset,this.y-20-cam.tileY*tileSize+this.yOffset);
@@ -44,11 +49,7 @@ function settlement(x,y,name)
 		{
 			this.sprite.draw(can, this.x-100-cam.tileX*tileSize+this.xOffset,this.y-20-cam.tileY*tileSize+this.yOffset);
 		}
-		if(this.port)
-		{
-			this.portSprite.draw(can, this.x-cam.tileX*tileSize,this.y-cam.tileY*tileSize);
-			this.portSprite.draw(can, this.x+16-cam.tileX*tileSize,this.y-cam.tileY*tileSize);
-		}
+	
 		//mapDirty=true;
 		//can.restore();
 	}
@@ -181,6 +182,8 @@ Dragonstone.sprite=Sprite("genericcastle")
 Dragonstone.resources.push(new commodity(CommIDs.Steel,99));
 
 var KingsLanding=new settlement(675,864,"King's Landing");
+KingsLanding.sprite=Sprite("kingslanding");
+KingsLanding.xOffset=-20;
 KingsLanding.resources.push(new commodity(CommIDs.Steel,99));
 
 var Duskendale=new settlement(693,837,"Duskendale");

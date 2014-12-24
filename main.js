@@ -524,23 +524,19 @@ function mainDraw() {
 		people[i].draw(canvas,camera);
 	}
 	
-	for(var i=0;i<fires.length;i++)
-	{
-		fires[i].draw(canvas,camera);
-	}
-	
-	for(var i=0;i<ships.length;i++)
-	{
-		ships[i].draw(canvas,camera);
-	}
-	
 	for(var i=0;i<settlements.length;i++)
 	{
 		settlements[i].draw(canvas,camera);
 	}
-	
+		for(var i=0;i<ships.length;i++)
+	{
+		ships[i].draw(canvas,camera);
+	}
+	for(var i=0;i<fires.length;i++)
+	{
+		fires[i].draw(canvas,camera);
+	}
 	monsta.draw(canvas,camera);
-
 
 	canvas.globalAlpha=LightLevels[thyme.hours];
 	canvas.fillStyle="black";
@@ -551,30 +547,7 @@ function mainDraw() {
 		//lights[i].draw(canvas,camera);
 		lightenGradient(canvas,camera,lights[i], lights[i].radius)
 	}
-	/*for(var i=0;i<people.length;i++)
-	{
-		if(people[i].torch)
-		{
-			if(!people[i].aiming)
-			{
-				var tehg=[];
-				//console.log(people[i].y+people[i].arms[0].backArm.joint2.y);
-				tehg.x=people[i].x+5;//people[i].arms[0].backArm.joint2.x;
-				tehg.y=people[i].y+2;//people[i].arms[0].backArm.joint2.y;
-				ligthenGradient(canvas,camera,tehg, 40);
-			}else{
-				var tehg=[];
-				//console.log(people[i].y+people[i].arms[0].backArm.joint2.y);
-				tehg.x=people[i].x+13;//people[i].arms[0].backArm.joint2.x;
-				tehg.y=people[i].y-8;//people[i].arms[0].backArm.joint2.y;
-				ligthenGradient(canvas,camera,tehg, 40);
-			}
-		}
-	}*/
 	mapDirty=true;
-
-	
-
 	
 	//canvas.globalAlpha=1;
 	if(showMap)
