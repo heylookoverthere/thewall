@@ -32,12 +32,56 @@ LightLevels.push(0.60); //9pm
 LightLevels.push(0.80); //10pm
 LightLevels.push(0.85); //11pm
 
-function farm()
+function farm(prnt,x,y)
 {
 	this.harvestTrack=0;
+	this.harvestCount=0;
+	this.tileX=x || 0;
+	this.tileY=y || 0;
+	this.x=this.tileX*tileSize;
+	this.y=this.tileY*tileSize;;
 	this.size=0; // /3
+	this.crop=0; //resource? or convert to resource later?
 	this.workers=new Array();
-
+	this.parent=prnt;
+	this.sprites=new Array();
+	this.sprites.push(Sprite("farm0"));
+	this.sprites.push(Sprite("farm1"));
+	this.sprites.push(Sprite("farm2"));
+	this.sprites.push(Sprite("farm3"));
+	this.sprites.push(Sprite("farm4"));
+	farm.prototype.employ=function(worker)
+	{
+		this.workers.push(worker);
+	};
+	this.getWorkRate=function()//return # value based on number and skill of workers
+	{
+		return this.workers.length; //for now.
+	}
+	this.harvest=function()
+	{
+		this.harvestTrack=0;
+		this.harvestCount=0;
+		//this.parent.addfood?
+	}
+	farm.prototype.update=function()
+	{
+		var spd=this.getWorkRate();
+		this.harvestCount+=spd*gameSpeed;
+		if(this.harvestCount>2000)
+		{
+			this.harvestCount=0;
+			this.harvestTrack++;
+			if(this.harvestTrack>3)
+			{
+				this.harvest(); 
+			}
+		}
+	};
+	farm.prototype.draw=function(can,cam)
+	{
+		this.sprites[this.harvestTrack].draw(can, this.x-cam.tileX*tileSize+1,this.y-cam.tileY*tileSize+4);
+	};
 };
 
 

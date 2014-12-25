@@ -3,6 +3,7 @@ var people=[];
 var fires=[];
 var ships=[];
 var settlements=[];
+var farms=[];
 var ports=[];
 
 	bConsoleBox=new textbox();
@@ -23,6 +24,9 @@ var nightsWatch=new theWatch();
 lights.push(new light(7092,3748,14));
 lights.push(new light(7208,3777,14));
 
+
+
+farms.push(new farm(nightsWatch,458,260));
 
 settlements.push(CastleBlack);
 settlements.push(ShadowTower);
@@ -528,7 +532,12 @@ function mainDraw() {
 	{
 		settlements[i].draw(canvas,camera);
 	}
-		for(var i=0;i<ships.length;i++)
+	
+	for(var i=0;i<farms.length;i++)
+	{
+		farms[i].draw(canvas,camera);
+	}
+	for(var i=0;i<ships.length;i++)
 	{
 		ships[i].draw(canvas,camera);
 	}
@@ -577,6 +586,10 @@ function mainUpdate()
     tick++;
 	thyme.update();
 	nightsWatch.update();
+	for(var i=0;i<farms.length;i++)
+	{
+		farms[i].update();
+	}
 	gamepad = navigator.getGamepads && navigator.getGamepads()[0];
 	
 	for(var i=0;i<people.length;i++)
