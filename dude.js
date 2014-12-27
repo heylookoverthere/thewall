@@ -1444,7 +1444,7 @@ dude.prototype.equip=function(thing)
 		var milli=stamp.getTime();
 		//speed=(speed * delta) * (60 / 1000);
 
-		if(milli-this.lastmove>100){
+		if(milli-this.lastmove>gameSpeed){
 			if( this.nextMove.x > this.tileX ) {
 				this.x += speed;
 				this.bx += speed;

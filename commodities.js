@@ -454,6 +454,12 @@ function commodity(id,amt)
 		this.cost=2;
 		this.description ="Edible.";
 		this.unit=" Pounds of ";
+	}else if(id==CommIDs.SaltPork)
+	{
+		this.name="Salt pork"
+		this.cost=2;
+		this.description ="Edible.";
+		this.unit=" Pounds of ";
 	}else if(id==CommIDs.Ale)
 	{
 		this.name="Ale"

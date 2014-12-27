@@ -37,7 +37,7 @@ function caravan(pt)
 	this.sprites[1]=Sprite("smallboatup");
 	this.sprites[2]=Sprite("smallboat");
 	this.sprites[3]=Sprite("smallboatdown");
-	
+	this.lastmove=0;
 	this.alive=true;
 	this.x=this.tileX*tileSize;
 	this.y=this.tileY*tileSize;
@@ -233,7 +233,7 @@ function caravan(pt)
 		var milli=stamp.getTime();
 		//speed=(speed * delta) * (60 / 1000);
 
-		if(milli-this.lastmove>1){
+		if(milli-this.lastmove>gameSpeed){
 			if( this.nextMove.x > this.tileX ) {
 				this.bx += speed;
 				this.x += speed;
@@ -365,14 +365,16 @@ function farm(prnt,x,y)
 {
 	this.harvestTrack=0;
 	this.harvestCount=0;
+	this.harvestAmount=3;
 	this.tileX=x || 0;
 	this.tileY=y || 0;
 	this.width=156;
 	this.height=156;
 	this.x=this.tileX*tileSize;
-	this.y=this.tileY*tileSize;;
+	this.y=this.tileY*tileSize;
+	this.lastmove=0;
 	this.size=0; // /3
-	this.crop=0; //resource? or convert to resource later?
+	this.crop=Math.floor(Math.random()*50); //resource? or convert to resource later?
 	this.workers=new Array();
 	this.parent=prnt;
 	this.sprites=new Array();
@@ -393,20 +395,34 @@ function farm(prnt,x,y)
 	{
 		this.harvestTrack=0;
 		this.harvestCount=0;
+		var nelly=this.harvestAmount+Math.floor(Math.random()*10)
+		var belly=new commodity(this.crop,nelly);
+		this.parent.insertResource(belly);
+		bConsoleBox.log("Harvested "+nelly+" "+belly.name+"s");
 		//this.parent.addfood?
 	}
 	farm.prototype.update=function()
 	{
-		var spd=this.getWorkRate();
-		this.harvestCount+=spd*gameSpeed;
-		if(this.harvestCount>2000)
+		//console.log("pog");
+		var stamp = new Date();
+		var milli=stamp.getTime();
+		//speed=(speed * delta) * (60 / 1000);
+
+		if(milli-this.lastmove>100)
 		{
-			this.harvestCount=0;
-			this.harvestTrack++;
-			if(this.harvestTrack>3)
+			
+			var spd=this.getWorkRate();
+			this.harvestCount+=spd;
+			if(this.harvestCount>2000)
 			{
-				this.harvest(); 
+				this.harvestCount=0;
+				this.harvestTrack++;
+				if(this.harvestTrack>3)
+				{
+					this.harvest(); 
+				}
 			}
+			this.lastmove=stamp.getTime();
 		}
 	};
 	farm.prototype.draw=function(can,cam)
@@ -701,17 +717,17 @@ function theWatch(){
 			}
 		}
 		//eat!
-		if((thyme.hours==6) && (thyme.minutes==1)&& (thyme.tick==1))
+		if((thyme.hours==6) && (thyme.minutes==0)&& (thyme.tick==1))
 		{
 			this.haveMeal()
 			//if(this.hunger>0) {console.log("Canibalism!");}
 		}
-		if((this.mealsPerDay>1)&&(thyme.hours==12) && (thyme.minutes==1)&& (thyme.tick==1))
+		if((this.mealsPerDay>1)&&(thyme.hours==12) && (thyme.minutes==0)&& (thyme.tick==1))
 		{
 			this.haveMeal();
 			//if(this.hunger>0) {console.log("Canibalism!");}
 		}
-		if((this.mealsPerDay>2)&&(thyme.hours==18) && (thyme.minutes==1)&& (thyme.tick==1))
+		if((this.mealsPerDay>2)&&(thyme.hours==18) && (thyme.minutes==0)&& (thyme.tick==1))
 		{
 			this.haveMeal();
 			//if(this.hunger>0) {console.log("Canibalism!");}
@@ -725,6 +741,12 @@ function theWatch(){
 	theWatch.prototype.calcFoodEaten=function()
 	{
 		return men.length;
+	};
+	
+	theWatch.prototype.sendMan=function(id,post)
+	{
+		post.push(this.men[i]);
+		this.men.splice(i,1);
 	};
 	
 	theWatch.prototype.collectTribute=function()

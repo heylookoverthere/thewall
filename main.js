@@ -40,7 +40,7 @@ lights.push(new light(7208,3777,14));
 
 
 
-farms.push(new farm(nightsWatch,458,260));
+
 
 settlements.push(CastleBlack);
 settlements.push(ShadowTower);
@@ -149,7 +149,7 @@ lights.push(booop);
 
 
 var betha=new ship(Eastwatch);
-//betha.ports.push(Skagos);
+betha.ports.push(Skagos);
 //betha.ports=ports;
 betha.ports.push(StormsEnd);
 /*betha.ports.push(Gulltown);
@@ -458,10 +458,12 @@ function startGame()
 	{
 		monsta.snow(2500,8,1);
 	}
-	for(var i=0;i<3;i++)
+	for(var i=0;i<5;i++)
 	{
 		nightsWatch.men.push(new dude());
 	}
+	farms.push(new farm(nightsWatch,458,260));
+	nightsWatch.sendMan(1,farms[0].workers);
 }
 
 function starter()
@@ -662,10 +664,7 @@ function mainUpdate()
     tick++;
 	thyme.update();
 	nightsWatch.update();
-	for(var i=0;i<farms.length;i++)
-	{
-		farms[i].update();
-	}
+
 	gamepad = navigator.getGamepads && navigator.getGamepads()[0];
 	
 	for(var i=0;i<people.length;i++)
@@ -928,14 +927,24 @@ function mainUpdate()
 		fires[i].update();
 	}
 	
-	for(var i=0;i<ships.length;i++)
+	if(thyme.tock)
 	{
-		ships[i].update(curMap);
+		for(var i=0;i<ships.length;i++)
+		{
+			ships[i].update(curMap);
+		}
+		for(var i=0;i<caravans.length;i++)
+		{
+			caravans[i].update(curMap);
+		}
+		for(var i=0;i<farms.length;i++)
+		{
+			farms[i].update();
+		}
+		thyme.tock=false
 	}
-	for(var i=0;i<caravans.length;i++)
-	{
-		caravans[i].update(curMap);
-	}
+	
+	
 	
 	for(var i=0;i<lights.length;i++)
 	{

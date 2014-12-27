@@ -262,7 +262,7 @@ function ship(pt)
 		var milli=stamp.getTime();
 		//speed=(speed * delta) * (60 / 1000);
 
-		if(milli-this.lastmove>1){
+		if(milli-this.lastmove>100){
 			if( this.nextMove.x > this.tileX ) {
 				this.bx += speed;
 				this.x += speed;

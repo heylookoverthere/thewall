@@ -92,36 +92,48 @@ function theTime()
 	this.days=0;
 	this.years=298;
 	this.tick=0;
-
+	this.tock=false;
+	this.lastmove=0;
+	
 	theTime.prototype.update=function()
 	{
-		this.tick++;
-		if(this.tick<2)
+		var stamp = new Date();
+		var milli=stamp.getTime();
+		//speed=(speed * delta) * (60 / 1000);
+
+		if(milli-this.lastmove>gameSpeed)
 		{
-			return;
-		}
-		this.tick=0;
-		this.minutes++;
-		if(this.minutes>59)
-		{
-			this.minutes=0;
-			this.hours++;
-			if(this.hours>23)
+		
+			this.tock=true;
+			this.tick++;
+			if(this.tick<2)
 			{
-				this.hours=0;
-				this.days++;
-				var cxup=363;
-				if(leapYear(this.years))
+				return;
+			}
+			this.tick=0;
+			this.minutes+=2;
+			if(this.minutes>59)
+			{
+				this.minutes=0;
+				this.hours++;
+				if(this.hours>23)
 				{
-					cxup=364;
-				}
-				if(this.days>cxup)
-				{
-					this.years++;
-					this.days=0;
-					nightsWatch.collectTribute();
+					this.hours=0;
+					this.days++;
+					var cxup=363;
+					if(leapYear(this.years))
+					{
+						cxup=364;
+					}
+					if(this.days>cxup)
+					{
+						this.years++;
+						this.days=0;
+						nightsWatch.collectTribute();
+					}
 				}
 			}
+			this.lastmove=stamp.getTime();
 		}
 	};
 }
@@ -444,7 +456,7 @@ var preBattleLength=100;
 var MAPNAME ="map3";
 var pageCount=0;
 var cardUsed=false;
-var gameSpeed=1;
+var gameSpeed=500;
 var isBattle=false;
 var isMenu=0;
 var battlelength=15;
