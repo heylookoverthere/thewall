@@ -161,9 +161,11 @@ Sisterton.resources.push(new commodity(CommIDs.Steel,99));
 Sisterton.portLeft=true;
 
 var Tyrosh=new settlement(1179,1215,"Tyrosh");
+Tyrosh.portLeft=true;
 Tyrosh.resources.push(new commodity(CommIDs.Steel,99));
 
-var Myr=new settlement(1308,1185,"Myr");
+var Myr=new settlement(1310,1185,"Myr");
+Myr.portLeft=true;
 Myr.resources.push(new commodity(CommIDs.MyrishLense,99));
 
 var Oldtown=new settlement(407,1203,"Oldtown");
@@ -180,6 +182,7 @@ Sunspear.resources.push(new commodity(CommIDs.LemonCakes,99));
 Sunspear.resources.push(new commodity(CommIDs.DornishSandSteed,99));
 
 var Lys=new settlement(1302,1418,"Lys");
+Lys.portLeft=true;
 Lys.resources.push(new commodity(CommIDs.TearsOfLys,99));
 
 var StormsEnd=new settlement(788,1015,"Storms End");

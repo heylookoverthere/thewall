@@ -18,7 +18,7 @@ bConsoleBox.lines=4;
 
 var Yoren=new caravan(CastleBlack);
 Yoren.ports.push(Winterfell);
-caravans.push(Yoren);
+//caravans.push(Yoren);
 
 var flipper=new dolphin(750,270);
 
@@ -148,9 +148,9 @@ lights.push(booop);
 
 var betha=new ship(Eastwatch);
 //betha.ports.push(Skagos);
-betha.ports=ports;
-/*betha.ports.push(WhiteHarbor);
-betha.ports.push(Gulltown);
+//betha.ports=ports;
+betha.ports.push(Myr);
+/*betha.ports.push(Gulltown);
 betha.ports.push(Braavos);
 betha.ports.push(Lorath);*/
 betha.watch=true;
