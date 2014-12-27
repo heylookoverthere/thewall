@@ -814,11 +814,18 @@ function Map(I) { //map object
 			
         }
 		
-		for(var i=0;i<ports.length;i++)
+		for(var i=0;i<settlements.length;i++)
         {
-            canvas.fillStyle = "purple";
+			if(settlements[i].port)
+			{
+				canvas.fillStyle = "purple";
+			}else
+			{	
+				canvas.fillStyle= "orange";
+			}
+			
 			canvas.globalAlpha=1;
-            canvas.fillRect(ports[i].tileX-this.miniMapX, ports[i].tileY-this.miniMapY, 4, 4); //todo adjust when map is panned.
+            canvas.fillRect(settlements[i].tileX-this.miniMapX, settlements[i].tileY-this.miniMapY, 4, 4); //todo adjust when map is panned.
 			
         }
         

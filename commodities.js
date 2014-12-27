@@ -1,42 +1,58 @@
 CommIDs=[];
-CommIDs.OakWood=0;
-CommIDs.IronWood=1;
-CommIDs.WeirWood=2;
-CommIDs.EbonyWood=3;
-CommIDs.SummerWood=4;
-CommIDs.Dragonbone=5;
-CommIDs.WhaleOil=6;
-CommIDs.pigIron=8;
-CommIDs.Bronze=7;
-CommIDs.Iron=9;
-CommIDs.Steel=10;
-CommIDs.Silver=11;
-CommIDs.Gold=12;
-CommIDs.Obsidian=13;
-CommIDs.Cloth=14;
-CommIDs.Wool=15;
-//pelts?
-CommIDs.BearPelt=16;
-CommIDs.WolfPelt=17;
+
+CommIDs.Bacon=0;
+CommIDs.Lemons=1;
+CommIDs.HorseMeat=2;
+CommIDs.HoneyedLocusts=3;
+CommIDs.Pheasant=4;
+CommIDs.BrownBowl=5;
+CommIDs.Lamb=6;
+CommIDs.Duck=7;
+CommIDs.Cheese=8;
+CommIDs.BlackBread=9;
+CommIDs.Bread=10;
+CommIDs.Honey=11;
+CommIDs.SistersStew=12;
+CommIDs.Eggs=13;
+CommIDs.Plums=14;
+CommIDs.Apple=15;
+CommIDs.DragonPepper=16;
+CommIDs.GreenPepper=17;
+CommIDs.BloodOrange=18;
+CommIDs.Pomegrantes=19;
 CommIDs.Beef=20;
 CommIDs.SaltFish=21;
 CommIDs.Onions=22;
 CommIDs.Lamprey=23;
 CommIDs.FreyPie=24;
-CommIDs.LemonCakes=25;
+CommIDs.LemonCake=25;
 CommIDs.Pork=26;
 CommIDs.SaltPork=27;
 CommIDs.SaltBeef=28;
 CommIDs.Capon=29;
 CommIDs.MysteryMeat=30;
-CommIDs.Ale=40;
-CommIDs.ArborGold=41;
-CommIDs.DornishRed=42;
-CommIDs.CheapWine=43;
-CommIDs.Rum=44;
-CommIDs.Horse=50;
-CommIDs.SandSteed=51;
-CommIDs.Destrier=52; //TODO check that spelling. two more hrose types? animal types?
+CommIDs.Soup=31
+CommIDs.Stew=32
+CommIDs.SingersStew=33;
+CommIDs.PeasePie=34
+CommIDs.PeasePorridge=35
+CommIDs.Pie=36;
+CommIDs.HotPie=37;
+CommIDs.Venison=38;
+CommIDs.Veal=39;
+CommIDs.boar=40;
+CommIDs.SucklingPig=41;
+CommIDs.Beats=42;
+CommIDs.Olives=43;
+CommIDs.Strawberries=44;
+CommIDs.Corn=45;
+CommIDs.PigeonPie=46;
+CommIDs.Biscuts=47;
+CommIDs.GooseInBerries=48;
+CommIDs.Lobster=49;
+CommIDs.Whiskerfish=50;
+CommIDs.Ham=51;
+//4 more foods.
 CommIDs.WidowsBlood=55; // tywin?
 CommIDs.TheStrangler=56; //
 CommIDs.Nightshade=57; //common
@@ -49,7 +65,40 @@ CommIDs.Leaches=63;
 CommIDs.UnicornHorn=64;
 CommIDs.GlassPane=65;
 CommIDs.BlackDye=66;
+CommIDs.Amber=67;
+CommIDs.EroticCarving=68;
+CommIDs.EroticScroll=69; //I did not plan this. 
+CommIDs.ThousandIslandDressing=70;
+CommIDs.SourLeaf=71;
+CommIDs.OakWood=80;
+CommIDs.IronWood=81;
+CommIDs.WeirWood=82;
+CommIDs.EbonyWood=83;
+CommIDs.SummerWood=84;
+CommIDs.Dragonbone=85;
+CommIDs.WhaleOil=86;
+CommIDs.pigIron=88;
+CommIDs.Bronze=87;
+CommIDs.Iron=89;
+CommIDs.Steel=90;
+CommIDs.Silver=91;
+CommIDs.Gold=92;
+CommIDs.Obsidian=93;
+CommIDs.Cloth=94;
+CommIDs.Wool=95;
+
 CommIDs.Prisoner=99;
+CommIDs.Ale=100;
+CommIDs.ArborGold=101;
+CommIDs.DornishRed=102;
+CommIDs.CheapWine=103;
+CommIDs.Rum=104;
+CommIDs.Milk=105;
+CommIDs.Horse=106;
+CommIDs.SandSteed=107;
+CommIDs.Destrier=108; //TODO check that spelling. two more hrose types? animal types?
+CommIDs.BearPelt=109;
+CommIDs.WolfPelt=110;
 //medication, gems, 
 
 
@@ -60,6 +109,10 @@ function commodity(id,amt)
 	this.amount=amt;
 	this.id=id;
 	this.plural="s";
+	this.name="Uninitialized item"
+	this.cost=9999;
+	this.description ="Shit dude! Fuck.";
+	this.unit="";
 	if(id==CommIDs.IronWood)
 	{
 		this.name="Ironwood"
@@ -131,6 +184,246 @@ function commodity(id,amt)
 		this.cost=3;
 		this.description ="Warmer than cloth";
 		this.unit=" Bundles of ";
+	}else if(id==CommIDs.Bacon)
+	{
+		this.name="Bacon"
+		this.cost=3;
+		this.description ="Bacon!";
+		this.unit=" Sides of ";
+	}else if(id==CommIDs.Lemon)
+	{
+		this.name="Lemons"
+		this.cost=3;
+		this.description ="Lemons";
+		this.unit=" Bundles of ";
+	}else if(id==CommIDs.HorseMeat)
+	{
+		this.name="Horse Meat"
+		this.cost=3;
+		this.description ="Dothraki delicacy.";
+		this.unit=" Sides of";
+	}else if(id==CommIDs.HoneyedLocusts)
+	{
+		this.name="Honyed Locusts"
+		this.cost=3;
+		this.description ="Totally not poisioned.";
+		this.unit="";
+	}else if(id==CommIDs.Pheasant)
+	{
+		this.name="Pheasant"
+		this.cost=3;
+		this.description ="Some kinda yummy bird.";
+		this.unit="";
+	}else if(id==CommIDs.BrownBowl)
+	{
+		this.name="Bowl o' Brown"
+		this.cost=3;
+		this.description ="Best not ask what's in it.";
+		this.unit="";
+	}else if(id==CommIDs.Lamb)
+	{
+		this.name="Lamb"
+		this.cost=3;
+		this.description ="Edible";
+		this.unit=" Rack of ";
+	}else if(id==CommIDs.Duck)
+	{
+		this.name="Duck"
+		this.cost=3;
+		this.description ="Quack.";
+		this.unit="";
+	}else if(id==CommIDs.Cheese)
+	{
+		this.name="Cheese"
+		this.cost=3;
+		this.description ="Used to be milk, but time makes fools of us all.";
+		this.unit=" Wheels of ";
+	}else if(id==CommIDs.Bread)
+	{
+		this.name="Bread"
+		this.cost=3;
+		this.description ="Oh no the carbs!";
+		this.unit=" Loafs of ";
+	}else if(id==CommIDs.Honey)
+	{
+		this.name="Honey"
+		this.cost=3;
+		this.description ="I'm thinking about bees again.";
+		this.unit=" Jars of ";
+	}else if(id==CommIDs.SistersStew)
+	{
+		this.name="Sister's Stew"
+		this.cost=3;
+		this.description ="Regional delicacy of Sisterton.";
+		this.unit=" Bowls of ";
+	}else if(id==CommIDs.Eggs)
+	{
+		this.name="Eggs"
+		this.cost=3;
+		this.description ="From chickens!";
+		this.unit=" Dozen ";
+	}else if(id==CommIDs.Plums)
+	{
+		this.name="Plums"
+		this.cost=3;
+		this.description ="Fruit";
+		this.unit=" ";
+	}else if(id==CommIDs.Apple)
+	{
+		this.name="Apples"
+		this.cost=3;
+		this.description ="Fruit";
+		this.unit=" Bushels of ";
+	}else if(id==CommIDs.DragonPepper)
+	{
+		this.name="Dragon Peppers"
+		this.cost=3;
+		this.description ="Spicy!";
+		this.unit="";
+	}else if(id==CommIDs.GreenPepper)
+	{
+		this.name="Green Pepper"
+		this.cost=3;
+		this.description ="Spicy!";
+		this.unit="";
+	}else if(id==CommIDs.BloodOrange)
+	{
+		this.name="Blood Orange"
+		this.cost=3;
+		this.description ="Not really sure what makes this different than a regular orange.";
+		this.unit="";
+	}else if(id==CommIDs.Pomegrantes)
+	{
+		this.name="Pomegrantes"
+		this.cost=3;
+		this.description ="Apparently they have magical powers.";
+		this.unit="";
+	}else if(id==CommIDs.SingersStew)
+	{
+		this.name="Singer's Stew"
+		this.cost=3;
+		this.description ="Best not to ask whats in it.";
+		this.unit="";
+	}else if(id==CommIDs.PeasePie)
+	{
+		this.name="Pease Pie"
+		this.cost=3;
+		this.description ="Ew.";
+		this.unit="";
+	}else if(id==CommIDs.Pie)
+	{
+		this.name="Pie"
+		this.cost=3;
+		this.description ="";
+		this.unit="";
+	}else if(id==CommIDs.HotPie)
+	{
+		this.name="Hot pie"
+		this.cost=3;
+		this.description ="...what?";
+		this.unit="";
+	}else if(id==CommIDs.Venison)
+	{
+		this.name="Venison"
+		this.cost=3;
+		this.description ="Bambi's mom!";
+		this.unit="";
+	}else if(id==CommIDs.Veal)
+	{
+		this.name="Veal"
+		this.cost=3;
+		this.description ="Controversially delicious.";
+		this.unit="";
+	}else if(id==CommIDs.Boar)
+	{
+		this.name="Roast Boar"
+		this.cost=3;
+		this.description ="";
+		this.unit="";
+	}else if(id==CommIDs.SucklingPig)
+	{
+		this.name="Suckling Pig"
+		this.cost=3;
+		this.description ="It's still good! It's still good!";
+		this.unit="";
+	}else if(id==CommIDs.Beats)
+	{
+		this.name="Beats"
+		this.cost=3;
+		this.description ="Enjoy them before they are outlawed.";
+		this.unit="";
+	}else if(id==CommIDs.Olives)
+	{
+		this.name="Olives"
+		this.cost=3;
+		this.description ="Do they even have martinis in Westeros?";
+		this.unit="";
+	}else if(id==CommIDs.Strawberries)
+	{
+		this.name="Strawberries"
+		this.cost=3;
+		this.description ="I should get me some strawberries.";
+		this.unit="";
+	}else if(id==CommIDs.Corn)
+	{
+		this.name="Corn"
+		this.cost=3;
+		this.description ="Corn! Corn!";
+		this.unit="";
+	}else if(id==CommIDs.PigeonPie)
+	{
+		this.name="Pigeon Pie"
+		this.cost=3;
+		this.description ="Things got really bad for the pigeons when the ravens took over the message delivery racket.";
+		this.unit="";
+	}else if(id==CommIDs.Biscuits)
+	{
+		this.name="Biscuits"
+		this.cost=3;
+		this.description ="Hey I just learned how to spell Biscuits.";
+		this.unit="";
+	}else if(id==CommIDs.GooseInBerries)
+	{
+		this.name="Goose in Berries"
+		this.cost=3;
+		this.description ="..Does this sound dirty to anyone else?";
+		this.unit="";
+	}else if(id==CommIDs.Lobster)
+	{
+		this.name="Lobster"
+		this.cost=3;
+		this.description ="Mr. Pinchy";
+		this.unit="";
+	}else if(id==CommIDs.ThousandIslandDressing)
+	{
+		this.name="Thousand Island Dressing"
+		this.cost=3;
+		this.description ="Imported form the Thousand Islands.";
+		this.unit="";
+	}else if(id==CommIDs.SourLeaf)
+	{
+		this.name="Sour Leaf"
+		this.cost=3;
+		this.description ="You chew it.";
+		this.unit="";
+	}else if(id==CommIDs.Whiskerfish)
+	{
+		this.name="Whiskerfish"
+		this.cost=30;
+		this.description ="Large fish.";
+		this.unit="";
+	}else if(id==CommIDs.BlackBread)
+	{
+		this.name="Black Bread"
+		this.cost=3;
+		this.description ="Edible but not very fresh.";
+		this.unit=" loafs of ";
+	}else if(id==CommIDs.Ham)
+	{
+		this.name="Ham"
+		this.cost=3;
+		this.description ="Born of salt and smoke.";
+		this.unit="";
 	}else if(id==CommIDs.Onions)
 	{
 		this.name="Onions"
@@ -293,7 +586,7 @@ function commodity(id,amt)
 		this.cost=2;
 		this.description ="Edible.";
 		this.unit=" Pounds of ";
-	}else if(id==CommIDs.LemonCakes)
+	}else if(id==CommIDs.LemonCake)
 	{
 		this.name="Lemon cakes"
 		this.cost=8;
@@ -347,6 +640,24 @@ function commodity(id,amt)
 		this.name="Obsidian";
 		this.cost=5;
 		this.description ="Dragonglass";
+	}else if(id==CommIDs.Amber)
+	{
+		this.unit=" Pieces of ";
+		this.name="Amber";
+		this.cost=5;
+		this.description ="Can be used to make jewellery or medical potions. ";
+	}else if(id==CommIDs.EroticCarving)
+	{
+		this.unit="";
+		this.name="Erotic carving";
+		this.cost=5;
+		this.description ="Smut of the First Men";
+	}else if(id==CommIDs.EroticScroll)
+	{
+		this.unit="";
+		this.name="Erotic scroll";
+		this.cost=5;
+		this.description ="Would make a septon go blind.";
 	}
 	commodity.prototype.combine=function(cmb)
 	{

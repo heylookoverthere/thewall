@@ -6,6 +6,7 @@ settlementTypes.SmallCity=3;
 settlementTypes.CityWithKeep=4;
 settlementTypes.VillageWithTower=5;
 settlementTypes.Tower=6;
+settlementTypes.Castle=7;
 
 function settlement(x,y,name)
 {
@@ -136,6 +137,12 @@ Ryamsport.resources.push(new commodity(CommIDs.ArborGold,99));
 var Volantis=new settlement(1554,1426,"Volantis");
 Volantis.resources.push(new commodity(CommIDs.Steel,99));
 
+var Winterfell=new settlement(404,373,"Winterfell");
+Winterfell.sprite=Sprite("genericcastle")
+Winterfell.type=settlementTypes.Castle;
+Winterfell.port=false;
+Winterfell.resources.push(new commodity(CommIDs.Steel,99));
+
 var Maidenpool=new settlement(721,772,"Maidenpool");
 Maidenpool.portLeft=true;
 Maidenpool.resources.push(new commodity(CommIDs.Steel,99));
@@ -160,6 +167,9 @@ var Myr=new settlement(1308,1185,"Myr");
 Myr.resources.push(new commodity(CommIDs.MyrishLense,99));
 
 var Oldtown=new settlement(407,1203,"Oldtown");
+Oldtown.sprite=Sprite("hightower");
+Oldtown.xOffset=-29;
+Oldtown.yOffset-=16;
 Oldtown.resources.push(new commodity(CommIDs.Steel,99));
 Oldtown.resources.push(new commodity(CommIDs.CheapWine,99));
 
@@ -250,9 +260,6 @@ var CastleBlack=new settlement();
 CastleBlack.sprite=Sprite("castleblack");
 CastleBlack.port=false;
 
-var ShadowTower=new settlement();
+var ShadowTower=new settlement(382,231,"Shadow Tower");
 ShadowTower.port=false;
-ShadowTower.x=(56+326)*16;
-ShadowTower.y=231*16;
-ShadowTower.name="shadowtower";
 ShadowTower.sprite=Sprite("shadowtower");

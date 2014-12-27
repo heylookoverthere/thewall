@@ -5,14 +5,19 @@ var ships=[];
 var settlements=[];
 var farms=[];
 var ports=[];
+var sealife=[];
 
-	bConsoleBox=new textbox();
-	bConsoleBox.width=400;
-	bConsoleBox.height=CANVAS_HEIGHT-12;
-	bConsoleBox.log("Loading...");
-	bConsoleBox.y=18;
-	bConsoleBox.x=18;
-	bConsoleBox.lines=4;
+bConsoleBox=new textbox();
+bConsoleBox.width=400;
+bConsoleBox.height=CANVAS_HEIGHT-12;
+bConsoleBox.log("Loading...");
+bConsoleBox.y=18;
+bConsoleBox.x=18;
+bConsoleBox.lines=4;
+
+var flipper=new dolphin(750,270);
+
+sealife.push(flipper);
 
 var showMap=false;
 
@@ -31,6 +36,7 @@ farms.push(new farm(nightsWatch,458,260));
 settlements.push(CastleBlack);
 settlements.push(ShadowTower);
 settlements.push(Eastwatch);
+settlements.push(Winterfell);
 settlements.push(Skagos);
 settlements.push(WidowsWatch);
 settlements.push(Sisterton);
@@ -170,11 +176,20 @@ brightfish.watch=false;
 brightfish.upgrade();
 ships.push(brightfish);
 
+
+
 var mel=new flame(lights);
 mel.x=450*16;//miles.x;
 mel.y=221*16;//miles.y;
 mel.alive=true;
 fires.push(mel);
+
+var mlel=new flame(lights);
+mlel.x=6458;
+mlel.type=0;
+mlel.y=19202;
+mlel.alive=true;
+fires.push(mlel);
 
 var thyme=new theTime();
 

@@ -5,6 +5,57 @@ var bConsoleClr=new Array();
 var bConsoleBox;
 var bMenuBox;
 
+function kraken(x,y)
+{
+	this.tileX=x||0;
+	this.tileY=y||0;
+	this.x=this.tileX*tileSize;
+	this.y=this.tileY*tileSize;
+	this.xOffset=0;
+	this.yOffset=0;
+	this.sprites=new Array();
+	this.sprites.push(Sprite("kraken0"));
+	this.sprites.push(Sprite("kraken1"));
+	this.sprites.push(Sprite("kraken2"));
+	this.sprites.push(Sprite("kraken3"));	
+	this.aniTrack=0;
+	this.aboveWater=false;
+	this.update=function()
+	{
+		
+	};
+	
+	this.draw=function(can,cam)
+	{
+		this.sprites[this.aniTrack].draw(can, this.x-cam.tileX*tileSize+1,this.y-cam.tileY*tileSize+4);
+	}
+};
+
+function dolphin(x,y)
+{
+	this.tileX=x||0;
+	this.tileY=y||0;
+	this.x=this.tileX*tileSize;
+	this.y=this.tileY*tileSize;
+	this.aniTrack=0;
+	this.xOffset=0;
+	this.yOffset=0;
+	this.aboveWater=false;
+	this.sprites=new Array();
+	this.sprites.push(Sprite("dolph0"));
+	this.sprites.push(Sprite("dolph1"));
+	this.sprites.push(Sprite("dolph2"));
+	this.sprites.push(Sprite("dolph3"));	
+	this.update=function()
+	{
+		
+	};
+	this.draw=function(can,cam)
+	{
+		this.sprites[this.aniTrack].draw(can, this.x-cam.tileX*tileSize+1,this.y-cam.tileY*tileSize+4);
+	};
+};
+
 
 var LightLevels=new Array();
 LightLevels.push(0.90); //midnight
@@ -280,7 +331,7 @@ function theWatch(){
 		var duf=null;
 		for(var i=0;i<this.stores.length;i++)
 		{
-			if((this.stores[i].id>19) && (this.stores[i].id<40))
+			if(this.stores[i].id<55)
 			{
 				return this.stores[i]; //how am I eating this thing. change the amt later I guessg? 
 			}
