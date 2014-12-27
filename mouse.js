@@ -103,21 +103,35 @@ mouseXY= function(e) {
     
 };
 
-function drawmousetext(can,targ,cam) { //draws unit status info
-	if((!targ.alive) || (!targ.deployed)) {return;}
-    can.font = "14pt Calibri";
+function drawMouseText(can,targ,cam) { //draws unit status info
+	//if(!targ.alive) {return;}
+	can.save();
+    can.font = "12pt Calibri";
     can.textAlign = "center";
     can.textBaseline = "middle";
-    can.fillStyle = "blue";
-    if(targ.team==1) {  canvas.fillStyle = "red";}
+    if(targ.dude)
+	{
 
-    tempstr = targ.leader.name+": "+targ.getHP()+ " / " +targ.getMaxHP();
-    can.fillText(tempstr, (targ.x-cam.tileX)*16/curMap.zoom+(targ.width/2), (targ.y-cam.tileY)*16/curMap.zoom+targ.height+8);
+	}else if(targ.boat)
+	{
+	
+	}else if(targ.caravan)
+	{
+	
+	}else if(targ.civilization)
+	{
+	
+	}
+	
+	canvas.fillStyle="black";
+
+    tempstr = targ.name;
+    can.fillText(tempstr, (targ.x-cam.x), (targ.y-cam.y)+targ.height+8);
     
-    can.fillStyle = "#5F9EA0";
-};
+    can.restore();
+}
 
 isOver= function(targ,cam){ //is the mouse over the player/object 
-    if((mX>(targ.x-cam.tileX)*16/curMap.zoom) && (mX<((targ.x-cam.tileX)*16+targ.width*curMap.zoom)/curMap.zoom) &&(mY>((targ.y-cam.tileY)*16)/curMap.zoom) &&(mY<((targ.y-cam.tileY)*16+targ.height)/curMap.zoom)) {return true;}
+    if((mX>(targ.tileX-cam.tileX)*16/curMap.zoom) && (mX<((targ.tileX-cam.tileX)*16+targ.width*curMap.zoom)/curMap.zoom) &&(mY>((targ.tileY-cam.tileY)*16)/curMap.zoom) &&(mY<((targ.tileY-cam.tileY)*16+targ.height)/curMap.zoom)) {return true;}
     return false;
 };

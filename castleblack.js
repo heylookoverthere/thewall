@@ -11,6 +11,8 @@ function caravan(pt)
 	//this.class=shipClass.Small;
 	this.ports=new Array();
 	this.alive=true;
+	this.width=32;
+	this.height=32;
 	this.lights=new Array();
 	this.type=0;
 	this.cargoCapacity=1000;
@@ -365,6 +367,8 @@ function farm(prnt,x,y)
 	this.harvestCount=0;
 	this.tileX=x || 0;
 	this.tileY=y || 0;
+	this.width=156;
+	this.height=156;
 	this.x=this.tileX*tileSize;
 	this.y=this.tileY*tileSize;;
 	this.size=0; // /3
@@ -526,6 +530,7 @@ function theWatch(){
 	this.men=new Array(); //array!
 	this.ships=new Array();
 	this.gold=1000;
+	this.health=100;
 	this.horses=6;
 	this.food=1000;
 	this.fireWood=1000;
@@ -647,6 +652,7 @@ function theWatch(){
 		{
 			//starvation
 			bConsoleBox.log("Your men are starving.");
+			this.health-=10;
 			this.hunger=0; // but not really. take health? kill dudes?
 		}else if(this.hunger<fed.amount)
 		{
@@ -710,7 +716,10 @@ function theWatch(){
 			this.haveMeal();
 			//if(this.hunger>0) {console.log("Canibalism!");}
 		}
-		
+		if(this.health<1)
+		{
+			gameOver="Your men have all starved to death.";
+		}
 	};
 	
 	theWatch.prototype.calcFoodEaten=function()

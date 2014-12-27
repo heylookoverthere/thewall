@@ -8,6 +8,8 @@ var ports=[];
 var caravans=[];
 var sealife=[];
 
+var gameOver=null;
+
 bConsoleBox=new textbox();
 bConsoleBox.width=400;
 bConsoleBox.height=CANVAS_HEIGHT-12;
@@ -149,7 +151,7 @@ lights.push(booop);
 var betha=new ship(Eastwatch);
 //betha.ports.push(Skagos);
 //betha.ports=ports;
-betha.ports.push(Myr);
+betha.ports.push(StormsEnd);
 /*betha.ports.push(Gulltown);
 betha.ports.push(Braavos);
 betha.ports.push(Lorath);*/
@@ -158,7 +160,7 @@ ships.push(betha);
 lights.push(betha.lights[0]);
 nightsWatch.ships.push(betha);
 
-var treasure=new ship(Pentos);
+/*var treasure=new ship(Pentos);
 treasure.name="Treasure";
 treasure.ports.push(Braavos);
 treasure.ports.push(WhiteHarbor);
@@ -181,7 +183,7 @@ brightfish.speed=4;
 //brightfish.ports.push(Eastwatch);
 brightfish.watch=false;
 brightfish.upgrade();
-ships.push(brightfish);
+ships.push(brightfish);*/
 
 
 
@@ -308,7 +310,7 @@ function drawGUI(can)
 {
 	can.globalAlpha=0.75;
 	can.fillStyle="blue";
-	canvas.fillRect(6,6,221,90);
+	canvas.fillRect(6,6,221,112);
 	can.fillStyle="yellow";
 	can.fillText("Men: "+nightsWatch.men.length,8,25);
 	var cont=0;
@@ -320,6 +322,7 @@ function drawGUI(can)
 	can.fillText("Gold: "+nightsWatch.gold,8,57);//+camera.x+","+camera.y,25,57);
 	can.fillText("Food: "+nightsWatch.getFood(),8,73);
 	can.fillText(+thyme.years+" AC "+thyme.days+ " days, "+thyme.hours+":"+thyme.minutes ,8,91);
+	can.fillText("Health: "+nightsWatch.health,8,107);
 	//can.fillText(": "+Math.floor(miles.numJumps-miles.jumpTrack),755,55);
 	can.globalAlpha=1;
 }
@@ -571,6 +574,37 @@ function mainDraw() {
 	{
 		fires[i].draw(canvas,camera);
 	}
+	
+	for(var i=0;i<settlements.length;i++)
+	{
+		if(isOver(settlements[i],camera))
+		{
+			drawMouseText(canvas,settlements[i],camera);
+		}
+	}
+	
+	for(var i=0;i<farms.length;i++)
+	{
+		if(isOver(farms[i],camera))
+		{
+			drawMouseText(canvas,farms[i],camera);
+		}
+	}
+	for(var i=0;i<ships.length;i++)
+	{
+		if(isOver(ships[i],camera))
+		{
+			drawMouseText(canvas,ships[i],camera);
+		}
+	}
+	for(var i=0;i<caravans.length;i++)
+	{
+		if(isOver(caravans[i],camera))
+		{
+			drawMouseText(canvas,caravans[i],camera);
+		}
+	}
+	
 	monsta.draw(canvas,camera);
 
 	canvas.globalAlpha=LightLevels[thyme.hours];
@@ -596,12 +630,28 @@ function mainDraw() {
 	drawGUI(canvas);
 	drawDebug(canvas);
 	
-	
+	if(gameOver)
+	{
+		canvas.fillStyle="white";
+		var wodth=78+gameOver.length*8;
+		var yex=Math.floor(CANVAS_WIDTH/2-wodth*0.5);
+
+		var yey=Math.floor(CANVAS_HEIGHT/2);
+		canvas.fillRect(yex,yey,wodth,100);	
+		canvas.fillStyle="blue";
+		canvas.fillRect(yex+12,yey+12,wodth-24,100-24);
+		canvas.fillStyle = "white";
+		canvas.font = "12pt Calibri";
+		//canvas.fillText("Press Enter",200,500);
+		canvas.fillText("Game Over",yex+wodth/2-32,yey+38);
+		canvas.fillText(gameOver,yex+wodth/6,yey+64);
+	}
 };
 //------------MAIN LOOP-----------------------------------------
 function mainUpdate()
 {
 	if(!gamestart) return;
+	if(gameOver) return;
 	controller.update();
 	//mel.x=miles.x;
 	//mel.y=miles.y-26+miles.headHeight;
@@ -784,6 +834,10 @@ function mainUpdate()
 	if(consolekey.check())
 	{
 		customConsole=!customConsole;
+		if(!customConsole)
+		{
+		concanvasElement.css("position", "absolute").css("z-index", "2").css("top", canvasElement.position().top).css("left", CANVAS_WIDTH);
+		}
 	}
 	if(homekey.check())
 	{
@@ -818,7 +872,7 @@ function mainUpdate()
 	if(controller.buttons[6].check())
 	{
 		//platformer=!platformer;
-		thyme.hours=6;
+		thyme.hours=8;
 	}
 	
 	 /*if(zoomkey.check()) {

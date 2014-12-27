@@ -13,12 +13,15 @@ function settlement(x,y,name)
 	//this.name="Legoland";
 	//this.tileX=166;
 	//this.tileY=231;
+	this.alive=true;
 	this.port=true;
 	this.portLeft=false;
 	this.sprite=Sprite("genericvillage");
 	this.name="Castle Black";
 	this.tileX=122+326;
 	this.tileY=231;
+	this.width=64;
+	this.height=64;
 	this.xOffset=0;
 	this.yOffset=0;
 	this.x=this.tileX*tileSize;
@@ -40,8 +43,15 @@ function settlement(x,y,name)
 		can.scale(cam.zoom,cam.zoom);*/
 		if(this.port)
 		{
-			this.portSprite.draw(can, this.x-cam.tileX*tileSize,this.y-cam.tileY*tileSize);
-			this.portSprite.draw(can, this.x+16-cam.tileX*tileSize,this.y-cam.tileY*tileSize);
+			if(this.portLeft)
+			{
+				this.portSprite.draw(can, this.x+16-cam.tileX*tileSize,this.y-cam.tileY*tileSize);
+				this.portSprite.draw(can, this.x+32-cam.tileX*tileSize,this.y-cam.tileY*tileSize);
+			}else
+			{
+				this.portSprite.draw(can, this.x-cam.tileX*tileSize,this.y-cam.tileY*tileSize);
+				this.portSprite.draw(can, this.x-16-cam.tileX*tileSize,this.y-cam.tileY*tileSize);
+			}
 		}
 		if(this.portLeft)
 		{
@@ -102,7 +112,7 @@ var Stonedance=new settlement(787,870,"Stonedance");
 Stonedance.resources.push(new commodity(CommIDs.Steel,99));
 //Settlments.push(settlePort(Stonedance));
 
-var Stonehelm=new settlement(706,1140,"Stonehelm");
+var Stonehelm=new settlement(705,1140,"Stonehelm");
 Stonehelm.resources.push(new commodity(CommIDs.Steel,99));
 
 var TenTowers=new settlement(212,651,"Ten Towers");
@@ -130,11 +140,11 @@ var FlintsFinger=new settlement(183,516,"Flint's Finger");
 FlintsFinger.portLeft=true;
 FlintsFinger.resources.push(new commodity(CommIDs.Steel,99));
 
-var Ryamsport=new settlement(168,1326,"Ryamsport");
+var Ryamsport=new settlement(169,1326,"Ryamsport");
 Ryamsport.portLeft=true;
 Ryamsport.resources.push(new commodity(CommIDs.ArborGold,99));
 
-var Volantis=new settlement(1554,1426,"Volantis");
+var Volantis=new settlement(1550,1426,"Volantis");
 Volantis.resources.push(new commodity(CommIDs.Steel,99));
 
 var Winterfell=new settlement(404,373,"Winterfell");
@@ -175,7 +185,7 @@ Oldtown.yOffset-=16;
 Oldtown.resources.push(new commodity(CommIDs.Steel,99));
 Oldtown.resources.push(new commodity(CommIDs.CheapWine,99));
 
-var Sunspear=new settlement(940,1434,"Sunspear");
+var Sunspear=new settlement(940,1432,"Sunspear");
 Sunspear.yOffset=-60;
 Sunspear.resources.push(new commodity(CommIDs.DornishRed,99));
 Sunspear.resources.push(new commodity(CommIDs.LemonCakes,99));
@@ -185,7 +195,7 @@ var Lys=new settlement(1302,1418,"Lys");
 Lys.portLeft=true;
 Lys.resources.push(new commodity(CommIDs.TearsOfLys,99));
 
-var StormsEnd=new settlement(788,1015,"Storms End");
+var StormsEnd=new settlement(787,1015,"Storms End");
 StormsEnd.resources.push(new commodity(CommIDs.Steel,99));
 StormsEnd.resources.push(new commodity(CommIDs.Horse,99));
 StormsEnd.sprite=Sprite("stormsend");
@@ -202,7 +212,7 @@ KingsLanding.resources.push(new commodity(CommIDs.Steel,99));
 var Duskendale=new settlement(693,837,"Duskendale");
 Duskendale.resources.push(new commodity(CommIDs.Steel,99));
 
-var Tarth=new settlement(861,997,"Tarth");
+var Tarth=new settlement(864,997,"Tarth");
 Tarth.portLeft=true;
 Tarth.resources.push(new commodity(CommIDs.Steel,99));
 
@@ -211,7 +221,7 @@ TheCrag.sprite=Sprite("genericcastle");
 TheCrag.portLeft=true;
 TheCrag.resources.push(new commodity(CommIDs.Steel,99));
 
-var Lannisport=new settlement(154,862,"Lannisport");
+var Lannisport=new settlement(156,862,"Lannisport");
 Lannisport.portLeft=true;
 Lannisport.resources.push(new commodity(CommIDs.Steel,99));
 
@@ -226,7 +236,7 @@ Morosh.yOffset=40;
 Morosh.portLeft=true;
 Morosh.resources.push(new commodity(CommIDs.Steel,99));
 
-var Saath=new settlement(1537,521,"Saath");
+var Saath=new settlement(1539,522,"Saath");
 Saath.resources.push(new commodity(CommIDs.Steel,99));
 Saath.portLeft=true;
 
@@ -240,15 +250,15 @@ Skagos.resources.push(new commodity(CommIDs.WeirWood,99));
 Skagos.resources.push(new commodity(CommIDs.MysteryMeat,99));
 Skagos.resources.push(new commodity(CommIDs.UnicornHorn,99));
 Skagos.resources.push(new commodity(CommIDs.Obsidian,99));
-var WhiteHarbor=new settlement(80+326,550,"White Harbor");
+var WhiteHarbor=new settlement(404,550,"White Harbor");
 WhiteHarbor.resources.push(new commodity(CommIDs.SaltFish,99));
 WhiteHarbor.resources.push(new commodity(CommIDs.Capon,99));
 WhiteHarbor.resources.push(new commodity(CommIDs.Steel,99));
 WhiteHarbor.resources.push(new commodity(CommIDs.FreyPie,99));
 var Gulltown=new settlement(455+326,733,"Gulltown");
-Gulltown.yOffset=-20;
+Gulltown.yOffset=-50;
 Gulltown.resources.push(new commodity(CommIDs.SaltFish,99));
-var Braavos=new settlement(1066,564,"Braavos");
+var Braavos=new settlement(1067,564,"Braavos");
 Braavos.portLeft=true;
 Braavos.resources.push(new commodity(CommIDs.SaltFish,99));
 
@@ -256,8 +266,8 @@ var Lorath=new settlement(1180,552,"Lorath");
 Lorath.resources.push(new commodity(CommIDs.SaltFish,99));
 Lorath.portLeft=true;
 
-var Pentos=new settlement(1096,873,"Pentos");
-Pentos.resources.push(new commodity(CommIDs.SaltFish,99));
+var Pentos=new settlement(1098,873,"Pentos");
+Pentos.resources.push(new commodity(CommIDs.PeasePie,99));
 Pentos.portLeft=true;
 
 var CastleBlack=new settlement();

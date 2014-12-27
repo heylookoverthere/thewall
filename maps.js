@@ -81,7 +81,7 @@ var camera = {  //represents the camera, aka what part of the map is on screen
 		}
         if (tax<0) {tax=0;}
         if (tay<0) {tay=0;}
-        if (Math.floor(tax/tileSize)>MAP_WIDTH-this.width) {tax=MAP_WIDTH-this.width;}
+        if (Math.floor(tax/tileSize)>MAP_WIDTH-this.width) {console.log("PROBLEM");}//tax=MAP_WIDTH-this.width;}
         if (Math.floor(tay/tileSize)>MAP_HEIGHT-this.height) {tay=MAP_HEIGHT-this.height;}
 
         this.x=tax;

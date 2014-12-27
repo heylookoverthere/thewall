@@ -9,6 +9,8 @@ function ship(pt)
 {
 	this.navigateRivers=false;
 	this.class=shipClass.Small;
+	this.width=32;
+	this.height=32;
 	this.ports=new Array();
 	this.alive=true;
 	this.lights=new Array();
@@ -89,6 +91,7 @@ function ship(pt)
 	
 	this.upgrade=function(){
 		this.type=2;
+		this.width=64;
 		this.cargoCapacity=10000;
 		this.speed=5;
 		this.sprites[0]=Sprite("largeboatright");

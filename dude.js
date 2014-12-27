@@ -497,6 +497,8 @@ function dude(otherdude)
 	this.nextTile = {x: this.tileX, y: this.tileY};
 	this.xV=0;
 	this.yV=0;
+	this.width=16;
+	this.height=16;
 	this.elasticity=.3;
 	this.maxSpeed=4;
 	this.numJumps=8;
