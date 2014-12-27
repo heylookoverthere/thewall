@@ -401,6 +401,14 @@ var helpkey=new akey("h");
 helpkey.desc="You just pressed it."
 edskeys.push(helpkey);
 
+var tabtownkey =new akey("q");
+tabtownkey.desc="Cycle through settlements";
+edskeys.push(tabtownkey);
+
+var tabcaravankey =new akey("1"); //192/`
+tabcaravankey.desc="Cycle through caravans";
+edskeys.push(tabcaravankey);
+
 var consolekey=new akey("c");
 consolekey.desc="Toggle custom console.";
 edskeys.push(consolekey);

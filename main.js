@@ -5,6 +5,7 @@ var ships=[];
 var settlements=[];
 var farms=[];
 var ports=[];
+var caravans=[];
 var sealife=[];
 
 bConsoleBox=new textbox();
@@ -15,6 +16,10 @@ bConsoleBox.y=18;
 bConsoleBox.x=18;
 bConsoleBox.lines=4;
 
+var Yoren=new caravan(CastleBlack);
+Yoren.ports.push(Winterfell);
+caravans.push(Yoren);
+
 var flipper=new dolphin(750,270);
 
 sealife.push(flipper);
@@ -22,6 +27,8 @@ sealife.push(flipper);
 var showMap=false;
 
 var trackShip=0;
+var trackTown=0;
+var trackCaravan=0;
 
 var nightsWatch=new theWatch();
 
@@ -556,6 +563,10 @@ function mainDraw() {
 	{
 		ships[i].draw(canvas,camera);
 	}
+	for(var i=0;i<caravans.length;i++)
+	{
+		caravans[i].draw(canvas,camera);
+	}
 	for(var i=0;i<fires.length;i++)
 	{
 		fires[i].draw(canvas,camera);
@@ -624,6 +635,27 @@ function mainUpdate()
 		}
 	}
 	
+	if(tabtownkey.check())
+	{
+		trackTown++;
+		if(trackTown>settlements.length-1)
+		{
+			trackTown=0;
+		}
+		camera.unFollow();
+		camera.center(settlements[trackTown]);
+	}
+	if(tabcaravankey.check())
+	{
+		trackCaravan++;
+		if(trackCaravan>caravans.length-1)
+		{
+			trackCaravan=0;
+		}
+		
+		camera.follow(caravans[trackCaravan]);
+	}
+	
 	
 	if((controller.keyboard ) ||(controller.pad))
 	{
@@ -641,7 +673,7 @@ function mainUpdate()
 			}
 			camera.follow(ships[trackShip]);
 		}
-	
+		
 		if(controller.buttons[1].check())
 		{
 			if(miles.crouching)
@@ -845,6 +877,10 @@ function mainUpdate()
 	for(var i=0;i<ships.length;i++)
 	{
 		ships[i].update(curMap);
+	}
+	for(var i=0;i<caravans.length;i++)
+	{
+		caravans[i].update(curMap);
 	}
 	
 	for(var i=0;i<lights.length;i++)

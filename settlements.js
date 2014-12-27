@@ -200,6 +200,7 @@ var Duskendale=new settlement(693,837,"Duskendale");
 Duskendale.resources.push(new commodity(CommIDs.Steel,99));
 
 var Tarth=new settlement(861,997,"Tarth");
+Tarth.portLeft=true;
 Tarth.resources.push(new commodity(CommIDs.Steel,99));
 
 var TheCrag=new settlement(144,750,"The Crag");
