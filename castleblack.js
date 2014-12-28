@@ -28,8 +28,8 @@ function caravan(pt)
 	this.watch=false;
 	this.homeport=this.ports[0];
 	this.portTrack=-1;
-	this.tileX=this.homeport.tileX;
-	this.tileY=this.homeport.tileY;
+	this.tileX=this.homeport.entranceTileX;
+	this.tileY=this.homeport.entranceTileY;
 	this.hp=100;
 	this.sprites=new Array();
 	this.facing=0;
@@ -154,7 +154,7 @@ function caravan(pt)
 			{
 				this.portTrack=0;
 			}
-			this.setDestination(this.ports[this.portTrack].tileX,this.ports[this.portTrack].tileY,curMap);
+			this.setDestination(this.ports[this.portTrack].entranceTileX,this.ports[this.portTrack].entranceTileY,curMap);
 			
 			
 			bConsoleBox.log(this.name+ " is heading to "+this.ports[this.portTrack].name);
@@ -548,7 +548,7 @@ function theWatch(){
 	this.gold=1000;
 	this.health=100;
 	this.horses=6;
-	this.food=1000;
+	this.food=0;
 	this.fireWood=1000;
 	this.starving=false;
 	this.wounded=0;
@@ -559,6 +559,7 @@ function theWatch(){
 	this.stores.push(new commodity(CommIDs.SaltFish,51));
 	this.stores.push(new commodity(CommIDs.Capon,3));
 	this.stores.push(new commodity(CommIDs.LemonCakes,11));
+	
 	this.resources.push(new commodity(CommIDs.OakWood,9));
 	
 	theWatch.prototype.getFood=function() //go through stores and compute numerical value of food. do one for wood also. 
@@ -566,12 +567,37 @@ function theWatch(){
 		var funt=0;
 		for(var i=0;i<this.stores.length;i++)
 		{
-			if((this.stores[i].id>20) && (this.stores[i].id<40))
+			if(this.stores[i].id<55)
 			{
 				funt+=this.stores[i].amount;
 			}
 		}
 		return funt;
+	};
+	
+	theWatch.prototype.spend=function(amt)
+	{
+		if(this.gold>amt)
+		{
+			this.gold-=amt;
+			return true;
+		}else
+		{
+			return false;
+		}
+	};
+	
+	theWatch.prototype.timeToStarve=function() //go through stores and compute numerical value of food. do one for wood also. 
+	{
+		var funt=0;
+		for(var i=0;i<this.stores.length;i++)
+		{
+			if(this.stores[i].id<55)
+			{
+				funt+=this.stores[i].amount;
+			}
+		}
+		return Math.floor(funt/(this.mealsPerDay*this.men.length));
 	};
 	
 	theWatch.prototype.insertResource=function(res)
@@ -598,7 +624,10 @@ function theWatch(){
 			bConsoleBox.log("  "+this.men[i].name);
 		}
 	};
-	
+	for(var i=0;i<15;i++)
+	{
+		this.insertResource(new commodity(Math.floor(Math.random()*50),Math.floor(Math.random()*16+1)));
+	}
 	theWatch.prototype.logShips=function()
 	{
 		bConsoleBox.log("Ships of the Watch: ("+this.ships.length+")");
@@ -742,6 +771,8 @@ function theWatch(){
 	{
 		return men.length;
 	};
+	
+	
 	
 	theWatch.prototype.sendMan=function(id,post)
 	{

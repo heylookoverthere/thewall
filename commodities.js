@@ -15,7 +15,7 @@ CommIDs.Honey=11;
 CommIDs.SistersStew=12;
 CommIDs.Eggs=13;
 CommIDs.Plums=14;
-CommIDs.Apple=15;
+CommIDs.Apples=15;
 CommIDs.DragonPepper=16;
 CommIDs.GreenPepper=17;
 CommIDs.BloodOrange=18;
@@ -35,19 +35,19 @@ CommIDs.Soup=31
 CommIDs.Stew=32
 CommIDs.SingersStew=33;
 CommIDs.PeasePie=34
-CommIDs.PeasePorridge=35
+CommIDs.PeasePorridge=35;
 CommIDs.Pie=36;
 CommIDs.HotPie=37;
 CommIDs.Venison=38;
 CommIDs.Veal=39;
-CommIDs.boar=40;
+CommIDs.Boar=40;
 CommIDs.SucklingPig=41;
 CommIDs.Beats=42;
 CommIDs.Olives=43;
 CommIDs.Strawberries=44;
 CommIDs.Corn=45;
 CommIDs.PigeonPie=46;
-CommIDs.Biscuts=47;
+CommIDs.Biscuits=47;
 CommIDs.GooseInBerries=48;
 CommIDs.Lobster=49;
 CommIDs.Whiskerfish=50;
@@ -190,7 +190,7 @@ function commodity(id,amt)
 		this.cost=3;
 		this.description ="Bacon!";
 		this.unit=" Sides of ";
-	}else if(id==CommIDs.Lemon)
+	}else if(id==CommIDs.Lemons)
 	{
 		this.name="Lemons"
 		this.cost=3;
@@ -204,7 +204,7 @@ function commodity(id,amt)
 		this.unit=" Sides of";
 	}else if(id==CommIDs.HoneyedLocusts)
 	{
-		this.name="Honyed Locusts"
+		this.name="Honeyed Locusts"
 		this.cost=3;
 		this.description ="Totally not poisioned.";
 		this.unit="";
@@ -268,7 +268,7 @@ function commodity(id,amt)
 		this.cost=3;
 		this.description ="Fruit";
 		this.unit=" ";
-	}else if(id==CommIDs.Apple)
+	}else if(id==CommIDs.Apples)
 	{
 		this.name="Apples"
 		this.cost=3;
@@ -303,6 +303,24 @@ function commodity(id,amt)
 		this.name="Singer's Stew"
 		this.cost=3;
 		this.description ="Best not to ask whats in it.";
+		this.unit="";
+	}else if(id==CommIDs.Stew)
+	{
+		this.name="Stew"
+		this.cost=3;
+		this.description ="Best not to ask whats in it.";
+		this.unit="";
+	}else if(id==CommIDs.Soup)
+	{
+		this.name="Chicken Soup"
+		this.cost=3;
+		this.description ="Mmmm";
+		this.unit="";
+	}else if(id==CommIDs.PeasePorridge)
+	{
+		this.name="Pease Porridge"
+		this.cost=3;
+		this.description ="Ew.";
 		this.unit="";
 	}else if(id==CommIDs.PeasePie)
 	{

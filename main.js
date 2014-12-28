@@ -149,12 +149,11 @@ lights.push(booop);
 
 
 var betha=new ship(Eastwatch);
-betha.ports.push(Skagos);
 //betha.ports=ports;
-betha.ports.push(StormsEnd);
 /*betha.ports.push(Gulltown);
 betha.ports.push(Braavos);
 betha.ports.push(Lorath);*/
+betha.ports.push(Skagos)
 betha.watch=true;
 ships.push(betha);
 lights.push(betha.lights[0]);
@@ -183,8 +182,8 @@ brightfish.speed=4;
 //brightfish.ports.push(Eastwatch);
 brightfish.watch=false;
 brightfish.upgrade();
-ships.push(brightfish);*/
-
+ships.push(brightfish);
+*/
 
 
 var mel=new flame(lights);
@@ -200,7 +199,7 @@ mlel.y=19202;
 mlel.alive=true;
 fires.push(mlel);
 
-var thyme=new theTime();
+
 
 for(var i=0;i<2;i++)
 {
@@ -320,8 +319,8 @@ function drawGUI(can)
 	}
 	can.fillText("Men at Sea: "+cont,8,41);
 	can.fillText("Gold: "+nightsWatch.gold,8,57);//+camera.x+","+camera.y,25,57);
-	can.fillText("Food: "+nightsWatch.getFood(),8,73);
-	can.fillText(+thyme.years+" AC "+thyme.days+ " days, "+thyme.hours+":"+thyme.minutes ,8,91);
+	can.fillText("Food: "+nightsWatch.getFood()+ " (~"+nightsWatch.timeToStarve()+" days)",8,73);
+	can.fillText(thyme.years+" AC "+thyme.days+ " days, "+thyme.hours+":"+thyme.minutes ,8,91);
 	can.fillText("Health: "+nightsWatch.health,8,107);
 	//can.fillText(": "+Math.floor(miles.numJumps-miles.jumpTrack),755,55);
 	can.globalAlpha=1;

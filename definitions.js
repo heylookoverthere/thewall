@@ -95,6 +95,22 @@ function theTime()
 	this.tock=false;
 	this.lastmove=0;
 	
+	theTime.prototype.getString=function()
+	{
+		var suffix="th";
+		if(this.days+1==1)
+		{
+			suffix="st";
+		}else if(this.days+1==2)
+		{
+			suffix="nd";
+		}if(this.days+1==3)
+		{
+			suffix="rd";
+		}
+		return this.hours+":"+this.minutes+" on the "+(this.days+1)+suffix+" day of the year "+this.years+" AC";
+	};
+	
 	theTime.prototype.update=function()
 	{
 		var stamp = new Date();
@@ -137,7 +153,7 @@ function theTime()
 		}
 	};
 }
-
+var thyme=new theTime();
 
 var starting=false;
 var bColors = ["#008000","#006400", "#FF4500", "#000080", "#696969", "#800080", "#808000", "#A52A2A", "#8B4513", "#FFDEAD", "#FFFF40","#000080" , "#FFFF80"]; //list of colors for radar/a few other things
@@ -456,7 +472,7 @@ var preBattleLength=100;
 var MAPNAME ="map3";
 var pageCount=0;
 var cardUsed=false;
-var gameSpeed=500;
+var gameSpeed=0;
 var isBattle=false;
 var isMenu=0;
 var battlelength=15;

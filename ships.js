@@ -7,6 +7,8 @@ shipClass.OarShip=5;
 
 function ship(pt)
 {
+	this.log=new Array();
+	this.log.push("Commissioned at "+thyme.getString());
 	this.navigateRivers=false;
 	this.class=shipClass.Small;
 	this.width=32;
@@ -98,6 +100,7 @@ function ship(pt)
 		this.sprites[1]=Sprite("largeboatup");
 		this.sprites[2]=Sprite("largeboat");
 		this.sprites[3]=Sprite("largeboatdown");
+		this.log.push("Upgraded at "+thyme.getString());
 	};
 	
 	this.draw=function(can,cam)
@@ -111,6 +114,23 @@ function ship(pt)
 		//can.restore();
 	}
 	
+	ship.prototype.nearestPort=function(orts)
+	{
+		var earlessPort=null;
+		var tengle=900000;
+		for(var i=0;i<orts.length;i++)
+		{
+			var bingle=tileDistance(this,orts[i]);
+			if(bingle<tengle)
+			{
+				tengle=bingle;
+				earlessPort=orts[i];
+			}
+			
+		}
+		return earlessPort; 
+	};
+	
 	  ship.prototype.updateNextMove = function() {
 		if(!bees) {return;}
         if( !this.path ) 
@@ -119,6 +139,7 @@ function ship(pt)
 			{
 				//unload all cargo to watch. 
 				bConsoleBox.log(this.name+ " has reached "+this.ports[this.portTrack].name + " and unloaded their cargo.");
+				this.log.push("Reached "+this.ports[this.portTrack].name + " and unloaded their cargo. at "+thyme.getString());
 				if(this.watch)
 				{
 					for(var i=0;i<this.cargo.length;i++)
@@ -152,25 +173,40 @@ function ship(pt)
 					var goods=Math.floor(Math.random()*(this.ports[this.portTrack].resources.length));
 					var amt=Math.floor(Math.random()*10)+1;
 					var cost=amt*this.ports[this.portTrack].resources[goods].cost;
-					bConsoleBox.log(this.name+ " has reached "+this.ports[this.portTrack].name+" and picked up "+amt+" "+this.ports[this.portTrack].resources[goods].name);
+
 					//todo TRADE before using gold!
 					//if(this.ports[this.portTrack].desiredComodities) contains anything from this.resources
 					{
 						//give them as close to cost worth of sale item without going over cost. spend difference in gold.
-					}
+					}		
+
 					if(this.watch)
 					{
-						nightsWatch.gold-=cost;
+						if(nightsWatch.spend(cost))
+						{
+							var zed=new commodity(this.ports[this.portTrack].resources[goods].id,amt)
+							this.ports[this.portTrack].resources[goods].amount-=amt;
+							this.insertCargo(zed);
+
+							bConsoleBox.log(this.name+ " has reached "+this.ports[this.portTrack].name+" and picked up "+amt+" "+this.ports[this.portTrack].resources[goods].name);
+							this.log.push("Reached "+this.ports[this.portTrack].name + "and picked up "+amt+" "+this.ports[this.portTrack].resources[goods].name+" at "+thyme.getString());
+						}else
+						{
+							bConsoleBox.log(this.name+ " has reached "+this.ports[this.portTrack].name+" but the proposed deal was too expensive");
+							this.log.push("Reached "+this.ports[this.portTrack].name + " but the proposed deal was too expensive: "+thyme.getString());
+						}
+						
+					}else
+					{
+						bConsoleBox.log(this.name+ " has reached "+this.ports[this.portTrack].name);
+						this.log.push("Reached "+this.ports[this.portTrack].name+" at "+thyme.getString());
+						var zed=new commodity(this.ports[this.portTrack].resources[goods].id,amt)
+						this.ports[this.portTrack].resources[goods].amount-=amt;
+						this.insertCargo(zed);
 					}
-					var zed=new commodity(this.ports[this.portTrack].resources[goods].id,amt)
-					this.ports[this.portTrack].resources[goods].amount-=amt;
-	//				console.log(zed,cost);
-					//this.cargo.push(zed);
-					this.insertCargo(zed);
-				}else
-				{
-					bConsoleBox.log(this.name+ " has reached "+this.ports[this.portTrack].name+" but they had nothing to sell");
+
 				}
+				
 			}
 			var pDest=this.portTrack+1;
 			if(pDest>this.ports.length-1)
