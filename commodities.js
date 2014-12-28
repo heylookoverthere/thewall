@@ -92,14 +92,24 @@ CommIDs.Ale=100;
 CommIDs.ArborGold=101;
 CommIDs.DornishRed=102;
 CommIDs.CheapWine=103;
+CommIDs.Summerwine=105;
 CommIDs.Rum=104;
-CommIDs.Milk=105;
-CommIDs.Horse=106;
+CommIDs.Milk=106;
+CommIDs.Horse=109;
 CommIDs.SandSteed=107;
 CommIDs.Destrier=108; //TODO check that spelling. two more hrose types? animal types?
-CommIDs.BearPelt=109;
+CommIDs.BearPelt=112;
 CommIDs.WolfPelt=110;
-//medication, gems, 
+CommIDs.LionPelt=111;
+CommIDs.Ruby=119;
+CommIDs.Emerald=113;
+CommID.Sapphire=114;
+CommID.FireOpal=115;
+CommID.Jade=116;
+CommID.Onyx=117;
+CommID.Diamond=118;
+CommID.DragonEgg=199;
+//medication
 
 
 
@@ -116,13 +126,13 @@ function commodity(id,amt)
 	if(id==CommIDs.IronWood)
 	{
 		this.name="Ironwood"
-		this.cost=2;
+		this.cost=8;
 		this.description ="Hard Wood";
 		this.unit=" Planks of ";
 	}else if(id==CommIDs.EbonyWood)
 	{
 		this.name="Ebony Wood"
-		this.cost=2;
+		this.cost=16;
 		this.description ="Dark hard wood";
 		this.unit=" Planks of ";
 	}else if(id==CommIDs.Dragonbone)
@@ -140,8 +150,8 @@ function commodity(id,amt)
 	}else if(id==CommIDs.PigIorn)
 	{
 		this.name="Pig iron"
-		this.cost=8;
-		this.description ="Edible.Cheap iron. ";
+		this.cost=4;
+		this.description ="Cheap iron. ";
 	}else if(id==CommIDs.WhaleOil)
 	{
 		this.name="Whale oil"
@@ -175,13 +185,13 @@ function commodity(id,amt)
 	}else if(id==CommIDs.BearPelt)
 	{
 		this.name="Bear pelt"
-		this.cost=4;
+		this.cost=10;
 		this.description ="Warm and fuzzy.";
 		this.unit="";
 	}else if(id==CommIDs.Wool)
 	{
 		this.name="Wool"
-		this.cost=3;
+		this.cost=4;
 		this.description ="Warmer than cloth";
 		this.unit=" Bundles of ";
 	}else if(id==CommIDs.Bacon)
@@ -193,37 +203,37 @@ function commodity(id,amt)
 	}else if(id==CommIDs.Lemons)
 	{
 		this.name="Lemons"
-		this.cost=3;
+		this.cost=4;
 		this.description ="Lemons";
 		this.unit=" Bundles of ";
 	}else if(id==CommIDs.HorseMeat)
 	{
 		this.name="Horse Meat"
-		this.cost=3;
+		this.cost=2;
 		this.description ="Dothraki delicacy.";
 		this.unit=" Sides of";
 	}else if(id==CommIDs.HoneyedLocusts)
 	{
 		this.name="Honeyed Locusts"
-		this.cost=3;
+		this.cost=7;
 		this.description ="Totally not poisioned.";
 		this.unit="";
 	}else if(id==CommIDs.Pheasant)
 	{
 		this.name="Pheasant"
-		this.cost=3;
+		this.cost=5;
 		this.description ="Some kinda yummy bird.";
 		this.unit="";
 	}else if(id==CommIDs.BrownBowl)
 	{
 		this.name="Bowl o' Brown"
-		this.cost=3;
-		this.description ="Best not ask what's in it.";
+		this.cost=1;
+		this.description ="Flea Bottom recipe.";
 		this.unit="";
 	}else if(id==CommIDs.Lamb)
 	{
 		this.name="Lamb"
-		this.cost=3;
+		this.cost=2;
 		this.description ="Edible";
 		this.unit=" Rack of ";
 	}else if(id==CommIDs.Duck)
@@ -253,7 +263,7 @@ function commodity(id,amt)
 	}else if(id==CommIDs.SistersStew)
 	{
 		this.name="Sister's Stew"
-		this.cost=3;
+		this.cost=5;
 		this.description ="Regional delicacy of Sisterton.";
 		this.unit=" Bowls of ";
 	}else if(id==CommIDs.Eggs)
@@ -277,19 +287,19 @@ function commodity(id,amt)
 	}else if(id==CommIDs.DragonPepper)
 	{
 		this.name="Dragon Peppers"
-		this.cost=3;
+		this.cost=9;
 		this.description ="Spicy!";
 		this.unit="";
 	}else if(id==CommIDs.GreenPepper)
 	{
 		this.name="Green Pepper"
-		this.cost=3;
+		this.cost=5;
 		this.description ="Spicy!";
 		this.unit="";
 	}else if(id==CommIDs.BloodOrange)
 	{
 		this.name="Blood Orange"
-		this.cost=3;
+		this.cost=4;
 		this.description ="Not really sure what makes this different than a regular orange.";
 		this.unit="";
 	}else if(id==CommIDs.Pomegrantes)
@@ -308,7 +318,7 @@ function commodity(id,amt)
 	{
 		this.name="Stew"
 		this.cost=3;
-		this.description ="Best not to ask whats in it.";
+		this.description ="Carl Weathers approves.";
 		this.unit="";
 	}else if(id==CommIDs.Soup)
 	{
@@ -337,31 +347,31 @@ function commodity(id,amt)
 	}else if(id==CommIDs.HotPie)
 	{
 		this.name="Hot pie"
-		this.cost=3;
+		this.cost=5;
 		this.description ="...what?";
 		this.unit="";
 	}else if(id==CommIDs.Venison)
 	{
 		this.name="Venison"
-		this.cost=3;
+		this.cost=6;
 		this.description ="Bambi's mom!";
 		this.unit="";
 	}else if(id==CommIDs.Veal)
 	{
 		this.name="Veal"
-		this.cost=3;
+		this.cost=8;
 		this.description ="Controversially delicious.";
 		this.unit="";
 	}else if(id==CommIDs.Boar)
 	{
 		this.name="Roast Boar"
-		this.cost=3;
+		this.cost=6;
 		this.description ="";
 		this.unit="";
 	}else if(id==CommIDs.SucklingPig)
 	{
 		this.name="Suckling Pig"
-		this.cost=3;
+		this.cost=6;
 		this.description ="It's still good! It's still good!";
 		this.unit="";
 	}else if(id==CommIDs.Beats)
@@ -403,13 +413,13 @@ function commodity(id,amt)
 	}else if(id==CommIDs.GooseInBerries)
 	{
 		this.name="Goose in Berries"
-		this.cost=3;
+		this.cost=7;
 		this.description ="..Does this sound dirty to anyone else?";
 		this.unit="";
 	}else if(id==CommIDs.Lobster)
 	{
 		this.name="Lobster"
-		this.cost=3;
+		this.cost=19;
 		this.description ="Mr. Pinchy";
 		this.unit="";
 	}else if(id==CommIDs.ThousandIslandDressing)
@@ -427,19 +437,19 @@ function commodity(id,amt)
 	}else if(id==CommIDs.Whiskerfish)
 	{
 		this.name="Whiskerfish"
-		this.cost=30;
+		this.cost=15;
 		this.description ="Large fish.";
 		this.unit="";
 	}else if(id==CommIDs.BlackBread)
 	{
 		this.name="Black Bread"
-		this.cost=3;
+		this.cost=1;
 		this.description ="Edible but not very fresh.";
 		this.unit=" loafs of ";
 	}else if(id==CommIDs.Ham)
 	{
 		this.name="Ham"
-		this.cost=3;
+		this.cost=5;
 		this.description ="Born of salt and smoke.";
 		this.unit="";
 	}else if(id==CommIDs.Onions)
@@ -451,13 +461,13 @@ function commodity(id,amt)
 	}else if(id==CommIDs.Beef)
 	{
 		this.name="Beef"
-		this.cost=2;
+		this.cost=5;
 		this.description ="Edible.";
 		this.unit=" Pounds of ";
 	}else if(id==CommIDs.Lamprey)
 	{
 		this.name="Lamprey"
-		this.cost=2;
+		this.cost=5;
 		this.description ="Edible, but seriously have you seen one of these things?";
 		this.unit=" Pounds of ";
 	}else if(id==CommIDs.FreyPie)
@@ -469,7 +479,7 @@ function commodity(id,amt)
 	}else if(id==CommIDs.Pork)
 	{
 		this.name="Pork"
-		this.cost=2;
+		this.cost=5;
 		this.description ="Edible.";
 		this.unit=" Pounds of ";
 	}else if(id==CommIDs.SaltPork)
@@ -487,25 +497,31 @@ function commodity(id,amt)
 	}else if(id==CommIDs.ArborGold)
 	{
 		this.name="Arbor Gold"
-		this.cost=2;
+		this.cost=24;
 		this.description ="The fancy stuff.";
 		this.unit=" Gallons of ";
 	}else if(id==CommIDs.DornishRed)
 	{
 		this.name="Dornish red"
-		this.cost=2;
+		this.cost=20;
 		this.description ="the fancy stuff.";
 		this.unit=" Gallons of ";
 	}else if(id==CommIDs.CheapWine)
 	{
 		this.name="CheapWine"
-		this.cost=2;
+		this.cost=7;
 		this.description ="Drinkable";
+		this.unit=" Gallons of ";
+	}else if(id==CommIDs.SummerWine)
+	{
+		this.name="Summerwine"
+		this.cost=14;
+		this.description ="Sweet";
 		this.unit=" Gallons of ";
 	}else if(id==CommIDs.Rum)
 	{
 		this.name="Black tar rum"
-		this.cost=2;
+		this.cost=17;
 		this.description ="Alcohol from the Summer Isles.";
 		this.unit=" Gallons of ";
 	}else if(id==CommIDs.Horse)
@@ -529,13 +545,13 @@ function commodity(id,amt)
 	}else if(id==CommIDs.Destrier)
 	{
 		this.name="Destrier"
-		this.cost=2;
+		this.cost=200;
 		this.description ="A Warhorse";
 		this.unit="";
 	}else if(id==CommIDs.WidowsBlood)
 	{
 		this.name="Widow's Blood"
-		this.cost=2;
+		this.cost=200;
 		this.description ="Poison";
 		this.unit=" Vials of ";
 	}else if(id==CommIDs.theStrangler)
@@ -565,31 +581,37 @@ function commodity(id,amt)
 	}else if(id==CommIDs.MoonTea)
 	{
 		this.name="Moon Tea"
-		this.cost=2;
+		this.cost=20;
 		this.description ="Morning after contreception";
 		this.unit=" Vials of ";
 	}else if(id==CommIDs.SweetSleep)
 	{
 		this.name="Sweet sleep"
-		this.cost=2;
+		this.cost=90;
 		this.description ="Sleep aid that kills in large doses.";
 		this.unit=" Vials of ";
 	}else if(id==CommIDs.Leaches)
 	{
 		this.name="Leaches"
-		this.cost=2;
+		this.cost=12;
 		this.description ="cures what ails ya!";
 		this.unit="";
 	}else if(id==CommIDs.GlassPane)
 	{
 		this.name="Glass pane"
-		this.cost=20;
+		this.cost=40;
 		this.description ="Glass.";
 		this.unit=" Panels of ";
 	}else if(id==CommIDs.WolfPelt)
 	{
 		this.name="Wolf pelt"
-		this.cost=4;
+		this.cost=12;
+		this.description ="Warm and fuzzy.";
+		this.unit="";
+	}else if(id==CommIDs.LionPelt)
+	{
+		this.name="Lion pelt"
+		this.cost=15;
 		this.description ="Warm and fuzzy.";
 		this.unit="";
 	}else if(id==CommIDs.MyrishLense)
@@ -601,7 +623,7 @@ function commodity(id,amt)
 	}else if(id==CommIDs.BlackDye)
 	{
 		this.name="Black Dye"
-		this.cost=2;
+		this.cost=5;
 		this.description ="Dye clothes black";
 		this.unit=" Gallons of ";
 	}else if(id==CommIDs.SaltBeef)
@@ -613,19 +635,19 @@ function commodity(id,amt)
 	}else if(id==CommIDs.LemonCake)
 	{
 		this.name="Lemon cakes"
-		this.cost=8;
+		this.cost=17;
 		this.description ="Lemony.";
 		this.unit=" Pieces of ";
 	}else if(id==CommIDs.WeirWood)
 	{
 		this.name="Weirwood"
-		this.cost=10;
+		this.cost=30;
 		this.description ="Pale white and will never rot. Excellent for making bows.";
 		this.unit=" Pieces of ";
 	}else if(id==CommIDs.OakWood)
 	{
 		this.name="Oak wood"
-		this.cost=3;
+		this.cost=13;
 		this.description ="Wood.";
 		this.unit=" Pieces of ";
 	}else if(id==CommIDs.MysteryMeat)
@@ -656,31 +678,79 @@ function commodity(id,amt)
 	{
 		this.unit=" Pieces of ";
 		this.name="Steel Ignot";
-		this.cost=15;
+		this.cost=50;
 		this.description ="decent steel";
 	}else if(id==CommIDs.Obsidian)
 	{
 		this.unit=" Pieces of ";
 		this.name="Obsidian";
-		this.cost=5;
+		this.cost=12;
 		this.description ="Dragonglass";
 	}else if(id==CommIDs.Amber)
 	{
 		this.unit=" Pieces of ";
 		this.name="Amber";
-		this.cost=5;
+		this.cost=15;
 		this.description ="Can be used to make jewellery or medical potions. ";
+	}else if(id==CommIDs.Ruby)
+	{
+		this.unit="";
+		this.name="Ruby";
+		this.cost=900;
+		this.description ="Can be used to make jewellery or sold ";
+	}else if(id==CommIDs.Emerald)
+	{
+		this.unit="";
+		this.name="Emerald";
+		this.cost=750;
+		this.description ="Can be used to make jewellery or sold. ";
+	}else if(id==CommID.Sapphire)
+	{
+		this.unit="";
+		this.name="Sapphire";
+		this.cost=600;
+		this.description ="Can be used to make jewellery or sold. ";
+	}else if(id==CommID.FireOpal)
+	{
+		this.unit="";
+		this.name="Fire Opal";
+		this.cost=550;
+		this.description ="Can be used to make jewellery or sold. ";
+	}else if(id==CommID.Jade)
+	{
+		this.unit="";
+		this.name="Jade";
+		this.cost=250;
+		this.description ="Can be used to make jewellery or sold. ";
+	}else if(id==CommID.Onyx)
+	{
+		this.unit="";
+		this.name="Onyx";
+		this.cost=400;
+		this.description ="Can be used to make jewellery or sold. ";
+	}else if(id==CommID.Diamond)
+	{
+		this.unit="";
+		this.name="Diamond";
+		this.cost=1000;
+		this.description ="Can be used to make jewellery or sold. ";
+	}else if(id==CommID.DragonEgg)
+	{
+		this.unit="";
+		this.name="Dragon Egg";
+		this.cost=10000;
+		this.description ="The ages have turned them to stone.";
 	}else if(id==CommIDs.EroticCarving)
 	{
 		this.unit="";
 		this.name="Erotic carving";
-		this.cost=5;
+		this.cost=50;
 		this.description ="Smut of the First Men";
 	}else if(id==CommIDs.EroticScroll)
 	{
 		this.unit="";
 		this.name="Erotic scroll";
-		this.cost=5;
+		this.cost=150;
 		this.description ="Would make a septon go blind.";
 	}
 	commodity.prototype.combine=function(cmb)
