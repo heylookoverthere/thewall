@@ -560,7 +560,7 @@ function theWatch(){
 	this.stores.push(new commodity(CommIDs.Capon,3));
 	this.stores.push(new commodity(CommIDs.LemonCakes,11));
 	
-	this.resources.push(new commodity(CommIDs.OakWood,9));
+	this.resources.push(new commodity(CommIDs.DragonEgg,1));
 	
 	theWatch.prototype.getFood=function() //go through stores and compute numerical value of food. do one for wood also. 
 	{
@@ -765,6 +765,19 @@ function theWatch(){
 		{
 			gameOver="Your men have all starved to death.";
 		}
+		if(this.men.length<1)
+		{
+			gameOver="Your men have all died.";
+		}
+		/*if(this.defaultLoan)
+		{
+			gameOver="You failed to repay your loan to the Iron Bank.";
+		}
+		if(you lost all your castles)
+		{
+			gameOver="The Wildlings have taken the Wall.";
+		}
+		*/
 	};
 	
 	theWatch.prototype.calcFoodEaten=function()

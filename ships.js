@@ -180,6 +180,17 @@ function ship(pt)
 						//give them as close to cost worth of sale item without going over cost. spend difference in gold.
 					}		
 
+						while(this.resources.length>0)
+						{
+							//sell
+							var leop=this.resources.pop();
+							if(this.watch)//todo give settlments own treasuries. 
+							{
+								nightsWatch.gold+=leop.cost*leop.amount;
+							}
+							this.ports[this.portTrack].resources.push(leop);
+						}
+			
 					if(this.watch)
 					{
 						if(nightsWatch.spend(cost))

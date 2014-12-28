@@ -103,12 +103,12 @@ CommIDs.WolfPelt=110;
 CommIDs.LionPelt=111;
 CommIDs.Ruby=119;
 CommIDs.Emerald=113;
-CommID.Sapphire=114;
-CommID.FireOpal=115;
-CommID.Jade=116;
-CommID.Onyx=117;
-CommID.Diamond=118;
-CommID.DragonEgg=199;
+CommIDs.Sapphire=114;
+CommIDs.FireOpal=115;
+CommIDs.Jade=116;
+CommIDs.Onyx=117;
+CommIDs.Diamond=118;
+CommIDs.DragonEgg=199;
 //medication
 
 
@@ -704,37 +704,37 @@ function commodity(id,amt)
 		this.name="Emerald";
 		this.cost=750;
 		this.description ="Can be used to make jewellery or sold. ";
-	}else if(id==CommID.Sapphire)
+	}else if(id==CommIDs.Sapphire)
 	{
 		this.unit="";
 		this.name="Sapphire";
 		this.cost=600;
 		this.description ="Can be used to make jewellery or sold. ";
-	}else if(id==CommID.FireOpal)
+	}else if(id==CommIDs.FireOpal)
 	{
 		this.unit="";
 		this.name="Fire Opal";
 		this.cost=550;
 		this.description ="Can be used to make jewellery or sold. ";
-	}else if(id==CommID.Jade)
+	}else if(id==CommIDs.Jade)
 	{
 		this.unit="";
 		this.name="Jade";
 		this.cost=250;
 		this.description ="Can be used to make jewellery or sold. ";
-	}else if(id==CommID.Onyx)
+	}else if(id==CommIDs.Onyx)
 	{
 		this.unit="";
 		this.name="Onyx";
 		this.cost=400;
 		this.description ="Can be used to make jewellery or sold. ";
-	}else if(id==CommID.Diamond)
+	}else if(id==CommIDs.Diamond)
 	{
 		this.unit="";
 		this.name="Diamond";
 		this.cost=1000;
 		this.description ="Can be used to make jewellery or sold. ";
-	}else if(id==CommID.DragonEgg)
+	}else if(id==CommIDs.DragonEgg)
 	{
 		this.unit="";
 		this.name="Dragon Egg";
