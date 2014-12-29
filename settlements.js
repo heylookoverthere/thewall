@@ -33,8 +33,8 @@ function settlement(x,y,name)
 	if(name) {this.name=name;}
 	this.x=this.tileX*16;
 	this.y=this.tileY*16;
-	this.entranceTileX=function() { return this.tileX+this.width/2;}//+3;
-	this.entranceTileY=function() {return this.tileY+this.height+1;}
+	this.entranceTileX=function() { return Math.floor(this.tileX+this.width/2);}//+3;
+	this.entranceTileY=function() {return Math.floor(this.tileY+this.height+1);}
 	this.resources=new Array();
 	this.desiredCommodities=new Array();
 	

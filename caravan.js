@@ -209,7 +209,7 @@ function caravan(pt)
 			{
 				this.portTrack=0;
 			}
-			this.setDestination(this.ports[this.portTrack].tileX,this.ports[this.portTrack].tileY,curMap);
+			this.setDestination(this.ports[this.portTrack].entranceTileX(),this.ports[this.portTrack].entranceTileY(),curMap);
 			
 			
 			bConsoleBox.log(this.name+ " is heading to "+this.ports[this.portTrack].name);
