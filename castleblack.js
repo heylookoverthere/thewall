@@ -351,7 +351,6 @@ function theWatch(){
 	{
 		bConsoleBox.log("Men of the Watch: ("+this.countMen()+")");
 		var menses=this.getAllMen();
-		console.log(menses);
 		for(var i=0;i<menses.length;i++)
 		{
 			bConsoleBox.log("  "+menses[i].name+" - "+menses[i].task);
@@ -568,6 +567,10 @@ function theWatch(){
 				cont.push(this.farms[i].men[j]);
 			}
 		}
+		for(var i=0;i<this.recruits.length;i++)
+		{
+			cont.push(this.recruits[i]);
+		}
 		return cont;
 	};
 	
@@ -590,6 +593,7 @@ function theWatch(){
 		{
 			cont+=this.farms[i].men.length;
 		}
+		cont+=this.recruits.length;
 		return cont;
 	};
 	

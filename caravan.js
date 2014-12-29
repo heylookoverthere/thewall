@@ -128,8 +128,9 @@ function caravan(pt)
 						for(var i=1;i<this.men.length;i++)
 						{
 							this.men[i].task="Recruits training to become men of the watch.";
-							nightsWatch.recruits.push(this.men.pop());
-							//this.cargo.splice(i,1);
+							nightsWatch.recruits.push(this.men[i]);
+							this.men.splice(i,1);
+							i--;
 						}
 					}
 				}else
@@ -193,7 +194,7 @@ function caravan(pt)
 						}
 						if(this.recruiter)
 						{
-							var pit=Math.floor(Math.random()*4);
+							var pit=Math.floor(Math.random()*4)+1;
 							for(var ji=0;ji<pit;ji++)
 							{
 								var phulp=new dude();
