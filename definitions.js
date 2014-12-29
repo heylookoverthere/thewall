@@ -4,6 +4,7 @@ var keydown={};
 var multiplayer=false;
 var holdInput=false;
 var customConsole=true;
+var trainTick=false;
 
 var graphicsLevel=3;//turn off transparency, tone down snow. less map dirties? leave map a little dirt
 //less lighting?
@@ -135,6 +136,7 @@ function theTime()
 				if(this.hours>23)
 				{
 					this.hours=0;
+					trainTick=true;
 					this.days++;
 					var cxup=363;
 					if(leapYear(this.years))

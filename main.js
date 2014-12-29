@@ -43,6 +43,7 @@ Yoren.x=Yoren.tileX*tileSize;
 Yoren.tileY+=10;
 Yoren.y=Yoren.tileY*tileSize;
 Yoren.ports.push(Winterfell);
+//Yoren.ports.push(KingsLanding);
 caravans.push(Yoren);
 nightsWatch.caravans.push(Yoren);
 

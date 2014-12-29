@@ -274,7 +274,8 @@ function theWatch(){
 	this.caravans=new Array();
 	this.farms=new Array();
 	this.settlements=new Array();
-
+	this.recruits=new Array();
+	this.trainingDays=10;
 	this.gold=1000;
 	this.health=100;
 	this.horses=6;
@@ -467,6 +468,21 @@ function theWatch(){
 	
 	theWatch.prototype.update=function()
 	{
+		if(trainTick)
+		{
+			trainTick=false;
+			for(var i=0;i<this.recruits.length;i++)
+			{
+				
+				this.recruits[i].trainingDays--;
+				
+				if(this.recruits[i].trainingDays<1)
+				{
+					this.men.push(this.recruits[i]);
+					this.recruits.splice(i,1);
+				}
+			}
+		}
 		
 		
 		//check stores and remove things you are out of.

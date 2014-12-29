@@ -25,6 +25,8 @@ function settlement(x,y,name)
 	this.height=2;
 	this.xOffset=0;
 	this.yOffset=0;
+	this.entranceTileXOffset=0;
+	this.entranceTileYOffset=0;
 	this.x=this.tileX*tileSize;
 	this.y=this.tileY*tileSize;
 	this.portSprite=Sprite("dock");
@@ -33,8 +35,8 @@ function settlement(x,y,name)
 	if(name) {this.name=name;}
 	this.x=this.tileX*16;
 	this.y=this.tileY*16;
-	this.entranceTileX=function() { return Math.floor(this.tileX+this.width/2);}//+3;
-	this.entranceTileY=function() {return Math.floor(this.tileY+this.height+1);}
+	this.entranceTileX=function() { return (Math.floor(this.tileX+this.width/2)+this.entranceTileXOffset);}//+3;
+	this.entranceTileY=function() {return(Math.floor(this.tileY+this.height+1)+this.entranceTileYOffset);}
 	this.resources=new Array();
 	this.desiredCommodities=new Array();
 	
@@ -209,6 +211,8 @@ Dragonstone.resources.push(new commodity(CommIDs.Steel,99));
 
 var KingsLanding=new settlement(675,864,"King's Landing");
 KingsLanding.sprite=Sprite("kingslanding");
+KingsLanding.entranceTileXOffset=-232;
+KingsLanding.entranceTileXOffset=-19;
 KingsLanding.xOffset=-20;
 KingsLanding.resources.push(new commodity(CommIDs.Steel,99));
 

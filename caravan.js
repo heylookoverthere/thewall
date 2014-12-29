@@ -3,6 +3,7 @@ function caravan(pt)
 	this.log=new Array();
 	this.log.push("Commissioned at "+thyme.getString());
 	this.navigateRivers=false;
+	this.recruiter=true;
 	this.class=shipClass.Small;
 	this.name="Yoren";
 	this.width=32;
@@ -22,7 +23,7 @@ function caravan(pt)
 	this.boat=true;
 	this.lastmove=0;
 	this.ports.push(pt);
-	this.watch=false;
+	this.watch=true;
 	this.homeport=this.ports[0];
 	this.portTrack=-1;
 	this.bobTrack=-4;
@@ -32,10 +33,10 @@ function caravan(pt)
 	this.hp=100;
 	this.sprites=new Array();
 	this.facing=0;
-	this.sprites[0]=Sprite("smallboatright");
-	this.sprites[1]=Sprite("smallboatup");
-	this.sprites[2]=Sprite("smallboat");
-	this.sprites[3]=Sprite("smallboatdown");
+	this.sprites[0]=Sprite("caravanright0");
+	this.sprites[1]=Sprite("caravanup0");
+	this.sprites[2]=Sprite("caravanleft0");
+	this.sprites[3]=Sprite("caravandown0");
 	
 	this.alive=true;
 	this.x=this.tileX*tileSize;
@@ -75,10 +76,6 @@ function caravan(pt)
 		this.width=64;
 		this.cargoCapacity=10000;
 		this.speed=5;
-		this.sprites[0]=Sprite("largeboatright");
-		this.sprites[1]=Sprite("largeboatup");
-		this.sprites[2]=Sprite("largeboat");
-		this.sprites[3]=Sprite("largeboatdown");
 		this.log.push("Upgraded at "+thyme.getString());
 	};
 	
@@ -125,6 +122,15 @@ function caravan(pt)
 					{
 						nightsWatch.insertResource(this.cargo[i]);
 						//this.cargo.splice(i,1);
+					}
+					if(this.recruiter)
+					{
+						for(var i=1;i<this.men.length;i++)
+						{
+							this.men[i].task="Recruits training to become men of the watch.";
+							nightsWatch.recruits.push(this.men.pop());
+							//this.cargo.splice(i,1);
+						}
 					}
 				}else
 				{
@@ -185,7 +191,20 @@ function caravan(pt)
 							bConsoleBox.log(this.name+ " has reached "+this.ports[this.portTrack].name+" but the proposed deal was too expensive");
 							this.log.push("Reached "+this.ports[this.portTrack].name + " but the proposed deal was too expensive: "+thyme.getString());
 						}
-						
+						if(this.recruiter)
+						{
+							var pit=Math.floor(Math.random()*4);
+							for(var ji=0;ji<pit;ji++)
+							{
+								var phulp=new dude();
+								phulp.task="New recruit bound for the wall."
+								this.men.push(phulp);
+							}
+							if (pit>0)
+							{
+								bConsoleBox.log(this.name+ " has recruited "+pit+" men at "+this.ports[this.portTrack].name);
+							}
+						}
 					}else
 					{
 						bConsoleBox.log(this.name+ " has reached "+this.ports[this.portTrack].name);

@@ -813,6 +813,14 @@ function Map(I) { //map object
             canvas.fillRect(ships[i].tileX-this.miniMapX, ships[i].tileY-this.miniMapY, 4, 4); //todo adjust when map is panned.
 			
         }
+		for(var i=0;i<caravans.length;i++)
+        {
+            canvas.fillStyle = "white";
+			canvas.globalAlpha=1;
+            canvas.fillRect(caravans[i].tileX-this.miniMapX, caravans[i].tileY-this.miniMapY, 4, 4); //todo adjust when map is panned.
+            canvas.fillRect(caravans[i].tileX-this.miniMapX, caravans[i].tileY-this.miniMapY, 4, 4); //todo adjust when map is panned.
+			
+        }
 		
 		for(var i=0;i<settlements.length;i++)
         {

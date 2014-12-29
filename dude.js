@@ -412,6 +412,7 @@ function dude(otherdude)
 	{
 	var namenum=Math.floor(Math.random()*names[0].length);
 	this.task="Whackin it";
+	this.trainingDays=10;
 	this.name=names[0][namenum];
 	this.small=true;
 	this.crouchAdj=0;
