@@ -532,7 +532,7 @@ function button(pt)
 			if((!this.object.awayTeam)||(this.object.awayTeam.length<1))
 			{
 				console.log("forming away team");
-				if(this.object.prepareAwayTeam(this.object.crew.length-2))
+				if(this.object.prepareAwayTeam(this.object.men.length-2))
 				{
 					this.text="Disband";
 				}
@@ -947,10 +947,10 @@ function button(pt)
 				if(!this.awayTeamScreen)
 				{
 					can.fillText("O2:"+(this.object.oxygen/10)+"%",this.x+10,this.y+2+32);
-					for(var i=0;i<this.object.crew.length;i++)
+					for(var i=0;i<this.object.men.length;i++)
 					{
-						can.fillText(this.object.crew[i].title+" "+this.object.crew[i].name+" Lvl: "+this.object.crew[i].level,this.x+10,this.y+2+46+i*32);
-						can.fillText("   "+this.object.crew[i].hp+"/"+this.object.crew[i].maxHp,this.x+10,this.y+2+46+i*32+16);
+						can.fillText(this.object.men[i].title+" "+this.object.men[i].name+" Lvl: "+this.object.men[i].level,this.x+10,this.y+2+46+i*32);
+						can.fillText("   "+this.object.men[i].hp+"/"+this.object.men[i].maxHp,this.x+10,this.y+2+46+i*32+16);
 					}
 					if(this.evacButton)
 					{
@@ -1125,7 +1125,7 @@ function button(pt)
 						can.fillText(this.object.torpedoTarget.civ.name+" "+this.object.torpedoTarget.class.name +" Starship",this.x+10,this.y+2+80); //todo class!
 						can.fillText("Target HP: "+this.object.torpedoTarget.hp+"/"+this.object.torpedoTarget.maxHp,this.x+10,this.y+2+96);
 						can.fillText("Target Shields: "+this.object.torpedoTarget.shields+"/"+this.object.torpedoTarget.maxShields,this.x+10,this.y+2+112);
-						can.fillText("Target Crew: "+this.object.torpedoTarget.crew.length,this.x+10,this.y+2+124);
+						can.fillText("Target Crew: "+this.object.torpedoTarget.men.length,this.x+10,this.y+2+124);
 						//todo, list whats systems are offline
 				
 					}else

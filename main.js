@@ -18,9 +18,7 @@ bConsoleBox.y=18;
 bConsoleBox.x=18;
 bConsoleBox.lines=4;
 
-var Yoren=new caravan(CastleBlack);
-Yoren.ports.push(Winterfell);
-//caravans.push(Yoren);
+
 
 var flipper=new dolphin(750,270);
 
@@ -39,9 +37,15 @@ lights.push(new light(7092,3748,14));
 lights.push(new light(7208,3777,14));
 
 
+var Yoren=new caravan(Eastwatch);
+Yoren.ports.push(Braavos);
+caravans.push(Yoren);
+nightsWatch.caravans.push(Yoren);
 
+var farmington=new farm(nightsWatch,458,260)
+farms.push(farmington);
 
-
+	
 settlements.push(CastleBlack);
 settlements.push(ShadowTower);
 settlements.push(Eastwatch);
@@ -138,8 +142,22 @@ miles.torchHand=1;
 //miles.y=221*tileSize;
 
 people.push(miles);
+miles.task="wandering aimlessly";
 nightsWatch.men.push(miles);
+	for(var i=0;i<5;i++)
+	{	var noop=new dude();
+		noop.task="Manning the Wall.";
+		nightsWatch.men.push(noop);
+	}
 
+nightsWatch.farms.push(farmington);
+nightsWatch.settlements.push(CastleBlack);
+nightsWatch.settlements.push(Eastwatch);
+nightsWatch.settlements.push(ShadowTower);
+
+nightsWatch.sendMan(1,farms[0]);
+
+	
 var booop=new light(0,0,32,miles.torchPoint);//.arms[0].joint2));
 booop.offSetX=6;
 booop.offSetY=6;
@@ -311,13 +329,9 @@ function drawGUI(can)
 	can.fillStyle="blue";
 	canvas.fillRect(6,6,221,112);
 	can.fillStyle="yellow";
-	can.fillText("Men: "+nightsWatch.men.length,8,25);
+	can.fillText("Men: "+nightsWatch.countMen(),8,25);
 	var cont=0;
-	for(var i=0;i<nightsWatch.ships.length;i++)
-	{
-		cont+=nightsWatch.ships[i].crew.length;
-	}
-	can.fillText("Men at Sea: "+cont,8,41);
+	can.fillText("Men at Wall: "+nightsWatch.men.length,8,41);
 	can.fillText("Gold: "+nightsWatch.gold,8,57);//+camera.x+","+camera.y,25,57);
 	can.fillText("Food: "+nightsWatch.getFood()+ " (~"+nightsWatch.timeToStarve()+" days)",8,73);
 	can.fillText(thyme.years+" AC "+thyme.days+ " days, "+thyme.hours+":"+thyme.minutes ,8,91);
@@ -457,12 +471,8 @@ function startGame()
 	{
 		monsta.snow(2500,8,1);
 	}
-	for(var i=0;i<5;i++)
-	{
-		nightsWatch.men.push(new dude());
-	}
-	farms.push(new farm(nightsWatch,458,260));
-	nightsWatch.sendMan(1,farms[0].workers);
+
+
 }
 
 function starter()
@@ -865,7 +875,7 @@ function mainUpdate()
 			//people[i].setDestination(settlements[0].tileX,settlements[0].tileY-5,curMap);
 		}
 		bees=true;
-		camera.follow(ships[0]);
+		//camera.follow(ships[0]);
 	}
 	if(controller.buttons[6].check())
 	{

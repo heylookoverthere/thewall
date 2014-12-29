@@ -411,6 +411,7 @@ function dude(otherdude)
 	if(!otherdude)
 	{
 	var namenum=Math.floor(Math.random()*names[0].length);
+	this.task="Whackin it";
 	this.name=names[0][namenum];
 	this.small=true;
 	this.crouchAdj=0;

@@ -11,6 +11,7 @@ function ship(pt)
 	this.log.push("Commissioned at "+thyme.getString());
 	this.navigateRivers=false;
 	this.class=shipClass.Small;
+	this.name="Black Betha";
 	this.width=32;
 	this.height=32;
 	this.ports=new Array();
@@ -19,11 +20,12 @@ function ship(pt)
 	this.type=0;
 	this.cargoCapacity=1000;
 	this.resources=new Array();
-	this.crew=new Array();
+	this.men=new Array();
 	var lyle=new dude();
+	lyle.task="Captaining the ship "+this.name;
 	//lyle.name="aaa";
 	//console.log(lyle);
-	this.crew.push(lyle);
+	this.men.push(lyle);
 	this.boat=true;
 	this.lastmove=0;
 	this.ports.push(pt);

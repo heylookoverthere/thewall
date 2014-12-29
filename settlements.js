@@ -27,8 +27,8 @@ function settlement(x,y,name)
 	this.yOffset=0;
 	this.x=this.tileX*tileSize;
 	this.y=this.tileY*tileSize;
-	this.entranceTileX=this.tileX+this.width/2;
-	this.entranceTileY=this.tileY+this.height;
+	this.entranceTileX=this.tileX+3;
+	this.entranceTileY=this.tileY+12;
 	this.portSprite=Sprite("dock");
 	if(x) {this.tileX=x;}
 	if(y) {this.tileY=y;}

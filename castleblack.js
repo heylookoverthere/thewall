@@ -10,6 +10,7 @@ function caravan(pt)
 	this.navigateRivers=false;
 	//this.class=shipClass.Small;
 	this.ports=new Array();
+	this.task="Travelling with a caravan.";
 	this.alive=true;
 	this.width=32;
 	this.height=32;
@@ -17,19 +18,20 @@ function caravan(pt)
 	this.type=0;
 	this.cargoCapacity=1000;
 	this.resources=new Array();
-	this.crew=new Array();
+	this.men=new Array();
 	var lyle=new dude();
+	lyle.task="Travelling with a caravan.";
 	//lyle.name="aaa";
 	//console.log(lyle);
-	this.crew.push(lyle);
+	this.men.push(lyle);
 	this.boat=false;
 	this.lastmove=0;
 	this.ports.push(pt);
 	this.watch=false;
 	this.homeport=this.ports[0];
 	this.portTrack=-1;
-	this.tileX=this.homeport.entranceTileX;
-	this.tileY=this.homeport.entranceTileY;
+	this.tileX=this.homeport.tileX//.entranceTileX;
+	this.tileY=this.homeport.tileY//entranceTileY;
 	this.hp=100;
 	this.sprites=new Array();
 	this.facing=0;
@@ -89,7 +91,7 @@ function caravan(pt)
 			if(this.portTrack==0)
 			{
 				//unload all cargo to watch. 
-				bConsoleBox.log(this.name+ " has reached "+this.ports[this.portTrack].name + " and unloaded their cargo.");
+				/*bConsoleBox.log(this.name+ " has reached "+this.ports[this.portTrack].name + " and unloaded their cargo.");
 				if(this.watch)
 				{
 					for(var i=0;i<this.cargo.length;i++)
@@ -112,13 +114,13 @@ function caravan(pt)
 					this.resources.push(nightsWatch.resources.pop());
 				}
 				
-				
+				*/
 			}else if(this.portTrack<0)
 			{
 				this.portTrack=0; //so you don't get the message
 			}else
 			{
-				if(this.ports[this.portTrack].resources.length>0)
+				/*if(this.ports[this.portTrack].resources.length>0)
 				{
 					var goods=Math.floor(Math.random()*(this.ports[this.portTrack].resources.length));
 					var amt=Math.floor(Math.random()*10)+1;
@@ -141,7 +143,8 @@ function caravan(pt)
 				}else
 				{
 					bConsoleBox.log(this.name+ " has reached "+this.ports[this.portTrack].name+" but they had nothing to sell");
-				}
+				}*/
+				bConsoleBox.log(this.name+ " has reached "+this.ports[this.portTrack].name);
 			}
 			var pDest=this.portTrack+1;
 			if(pDest>this.ports.length-1)
@@ -154,10 +157,14 @@ function caravan(pt)
 			{
 				this.portTrack=0;
 			}
-			this.setDestination(this.ports[this.portTrack].entranceTileX,this.ports[this.portTrack].entranceTileY,curMap);
 			
-			
-			bConsoleBox.log(this.name+ " is heading to "+this.ports[this.portTrack].name);
+			if(this.setDestination(this.ports[this.portTrack].entranceTileX,this.ports[this.portTrack].entranceTileY,curMap))
+			{
+				bConsoleBox.log(this.name+ " is heading to "+this.ports[this.portTrack].name);
+			}else
+			{
+				bConsoleBox.log(this.name+ "'s pathfinding is fucked going to "+this.ports[this.portTrack].name);
+			}
             return;
         }
         this.nextMove = this.path.shift();
@@ -198,9 +205,15 @@ function caravan(pt)
     caravan.prototype.setDestination = function(x, y, map) {
 		if(!map.walkable(x,y)) {console.log("invalid dest");return;}
         this.clearDestination();
-        this.path = map.getPath(this.tileX, this.tileY, x, y,true);
-        this.dx=x;
+        this.path = map.getPath(this.tileX, this.tileY, x, y,true); //last param is "BOAT"
+		console.log(this.path);
+	    this.dx=x;
         this.dy=y;
+		if((this.path) && (this.path.length>0))
+		{
+			return true;
+		}
+		return false;
 		//console.log(portPaths);
     };
 	caravan.prototype.NEWsetDestination = function(destID ) {
@@ -365,7 +378,8 @@ function farm(prnt,x,y)
 {
 	this.harvestTrack=0;
 	this.harvestCount=0;
-	this.harvestAmount=3;
+	this.task="Working a farm.";
+	this.harvestAmount=60;
 	this.tileX=x || 0;
 	this.tileY=y || 0;
 	this.width=156;
@@ -375,7 +389,7 @@ function farm(prnt,x,y)
 	this.lastmove=0;
 	this.size=0; // /3
 	this.crop=Math.floor(Math.random()*50); //resource? or convert to resource later?
-	this.workers=new Array();
+	this.men=new Array();
 	this.parent=prnt;
 	this.sprites=new Array();
 	this.sprites.push(Sprite("farm0"));
@@ -385,17 +399,17 @@ function farm(prnt,x,y)
 	this.sprites.push(Sprite("farm4"));
 	farm.prototype.employ=function(worker)
 	{
-		this.workers.push(worker);
+		this.men.push(worker);
 	};
 	this.getWorkRate=function()//return # value based on number and skill of workers
 	{
-		return this.workers.length; //for now.
+		return this.men.length; //for now.
 	}
 	this.harvest=function()
 	{
 		this.harvestTrack=0;
 		this.harvestCount=0;
-		var nelly=this.harvestAmount+Math.floor(Math.random()*10)
+		var nelly=this.harvestAmount+Math.floor(Math.random()*20)
 		var belly=new commodity(this.crop,nelly);
 		this.parent.insertResource(belly);
 		bConsoleBox.log("Harvested "+nelly+" "+belly.name+"s");
@@ -545,6 +559,11 @@ function watchman()
 function theWatch(){
 	this.men=new Array(); //array!
 	this.ships=new Array();
+	this.rangerSquads=new Array();
+	this.caravans=new Array();
+	this.farms=new Array();
+	this.settlements=new Array();
+
 	this.gold=1000;
 	this.health=100;
 	this.horses=6;
@@ -597,7 +616,7 @@ function theWatch(){
 				funt+=this.stores[i].amount;
 			}
 		}
-		return Math.floor(funt/(this.mealsPerDay*this.men.length));
+		return Math.floor(funt/(this.mealsPerDay*this.countMen()));
 	};
 	
 	theWatch.prototype.insertResource=function(res)
@@ -618,10 +637,12 @@ function theWatch(){
 	
 	theWatch.prototype.logMen=function()//todo break into three lists ranger builder steward
 	{
-		bConsoleBox.log("Men of the Watch: ("+this.men.length+")");
-		for(var i=0;i<this.men.length;i++)
+		bConsoleBox.log("Men of the Watch: ("+this.countMen()+")");
+		var menses=this.getAllMen();
+		console.log(menses);
+		for(var i=0;i<menses.length;i++)
 		{
-			bConsoleBox.log("  "+this.men[i].name);
+			bConsoleBox.log("  "+menses[i].name+" - "+menses[i].task);
 		}
 	};
 	for(var i=0;i<15;i++)
@@ -639,9 +660,9 @@ function theWatch(){
 			bConsoleBox.log("    Dest: "+this.ships[i].ports[this.ships[i].portTrack].name);
 			
 			bConsoleBox.log("    Crew: ");
-			for(var j=0;j<this.ships[i].crew.length;j++)
+			for(var j=0;j<this.ships[i].men.length;j++)
 			{
-				bConsoleBox.log("       "+this.ships[i].crew[j].name);
+				bConsoleBox.log("       "+this.ships[i].men[j].name);
 			}
 			
 			bConsoleBox.log("     Cargo: ");
@@ -785,12 +806,71 @@ function theWatch(){
 		return men.length;
 	};
 	
+	theWatch.prototype.getAllMen=function()
+	{
+		var cont=new Array();
+		for(var i=0;i<this.men.length;i++)
+		{
+			cont.push(this.men[i]);
+		}
+		for(var i=0;i<this.ships.length;i++)
+		{
+			for(var j=0;j<this.ships[i].men.length;j++)
+			{
+				cont.push(this.ships[i].men[j]);
+			}
+		}
+		for(var i=0;i<this.caravans.length;i++)
+		{
+			for(var j=0;j<this.caravans[i].men.length;j++)
+			{
+				cont.push(this.caravans[i].men[j]);
+			}
+		}
+		for(var i=0;i<this.rangerSquads.length;i++)
+		{
+			for(var j=0;j<this.rangerSquads[i].men.length;j++)
+			{
+				cont.push(this.rangerSquads[i].men[j]);
+			}
+		}
+		for(var i=0;i<this.farms.length;i++)
+		{
+			for(var j=0;j<this.farms[i].men.length;j++)
+			{
+				cont.push(this.farms[i].men[j]);
+			}
+		}
+		return cont;
+	};
 	
+	theWatch.prototype.countMen=function()
+	{
+		var cont=this.men.length;
+		for(var i=0;i<this.ships.length;i++)
+		{
+			cont+=this.ships[i].men.length;
+		}
+		for(var i=0;i<this.caravans.length;i++)
+		{
+			cont+=this.caravans[i].men.length;
+		}
+		for(var i=0;i<this.rangerSquads.length;i++)
+		{
+			cont+=this.rangerSquads[i].men.length;
+		}
+		for(var i=0;i<this.farms.length;i++)
+		{
+			cont+=this.farms[i].men.length;
+		}
+		return cont;
+	};
 	
 	theWatch.prototype.sendMan=function(id,post)
 	{
-		post.push(this.men[i]);
-		this.men.splice(i,1);
+		this.men[id].task=post.task;
+		post.men.push(this.men[id]);
+		this.men.splice(id,1);
 	};
 	
 	theWatch.prototype.collectTribute=function()
