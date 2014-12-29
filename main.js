@@ -37,8 +37,12 @@ lights.push(new light(7092,3748,14));
 lights.push(new light(7208,3777,14));
 
 
-var Yoren=new caravan(Eastwatch);
-Yoren.ports.push(Braavos);
+var Yoren=new caravan(CastleBlack);
+Yoren.tileX-=2;
+Yoren.x=Yoren.tileX*tileSize;
+Yoren.tileY+=10;
+Yoren.y=Yoren.tileY*tileSize;
+Yoren.ports.push(Winterfell);
 caravans.push(Yoren);
 nightsWatch.caravans.push(Yoren);
 

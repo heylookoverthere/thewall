@@ -21,20 +21,20 @@ function settlement(x,y,name)
 	this.tileX=122+326;
 	this.tileY=231;
 
-	this.width=64;
-	this.height=64;
+	this.width=3;
+	this.height=2;
 	this.xOffset=0;
 	this.yOffset=0;
 	this.x=this.tileX*tileSize;
 	this.y=this.tileY*tileSize;
-	this.entranceTileX=this.tileX+3;
-	this.entranceTileY=this.tileY+12;
 	this.portSprite=Sprite("dock");
 	if(x) {this.tileX=x;}
 	if(y) {this.tileY=y;}
 	if(name) {this.name=name;}
 	this.x=this.tileX*16;
 	this.y=this.tileY*16;
+	this.entranceTileX=function() { return this.tileX+this.width/2;}//+3;
+	this.entranceTileY=function() {return this.tileY+this.height+1;}
 	this.resources=new Array();
 	this.desiredCommodities=new Array();
 	
@@ -274,6 +274,7 @@ Pentos.resources.push(new commodity(CommIDs.PeasePie,99));
 Pentos.portLeft=true;
 
 var CastleBlack=new settlement();
+CastleBlack.height=10;
 CastleBlack.sprite=Sprite("castleblack");
 CastleBlack.port=false;
 

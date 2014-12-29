@@ -261,7 +261,7 @@ function tileToCost(data, boat) {
 		return 0;
 	}else
 	{
-		/*//if(sqd.getFlightHeight()>2) {return 2;}
+		//if(sqd.getFlightHeight()>2) {return 2;}
 		if(( data == TileType.Mountains ) ||( data == TileType.Ocean )) return 0;
 		//if(sqd.getFlightHeight()>1) {return 2;}
 		//if(( data == TileType.Water ) && sqd.canSwim()){ return 2;}
@@ -270,7 +270,7 @@ function tileToCost(data, boat) {
 		if( data == TileType.Swamp  ) return 5;
 		if( data == TileType.Forest  ) return 3;
 		if( data == TileType.Sand  ) return 2;
-		if( data == TileType.Road  ) return 1;*/
+		if( data == TileType.Road  ) return 1;
 		return 2;
 	}
 };
