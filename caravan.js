@@ -85,7 +85,7 @@ function caravan(pt)
 		/*can.save();
 		can.globalAlpha=0.6;
 		can.scale(cam.zoom,cam.zoom);*/
-		this.sprites[this.facing].draw(can, this.x-cam.tileX*tileSize,this.y-cam.tileY*tileSize+this.bobTrack/30);
+		this.sprites[this.facing].draw(can, this.x-8-cam.tileX*tileSize,this.y-32-cam.tileY*tileSize+this.bobTrack/30);
 		//mapDirty=true;
 		//can.restore();
 	}

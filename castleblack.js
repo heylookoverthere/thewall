@@ -61,9 +61,9 @@ function dolphin(x,y)
 
 var LightLevels=new Array();
 LightLevels.push(0.90); //midnight
-LightLevels.push(0.80); //1am
-LightLevels.push(0.85); //2am
-LightLevels.push(0.80); //3am
+LightLevels.push(0.85); //1am
+LightLevels.push(0.80); //2am
+LightLevels.push(0.75); //3am
 LightLevels.push(0.60); //4am
 LightLevels.push(0.45); //5am
 LightLevels.push(0.30); //6am
@@ -547,13 +547,7 @@ function theWatch(){
 				cont.push(this.ships[i].men[j]);
 			}
 		}
-		for(var i=0;i<this.caravans.length;i++)
-		{
-			for(var j=0;j<this.caravans[i].men.length;j++)
-			{
-				cont.push(this.caravans[i].men[j]);
-			}
-		}
+		
 		for(var i=0;i<this.rangerSquads.length;i++)
 		{
 			for(var j=0;j<this.rangerSquads[i].men.length;j++)
@@ -566,6 +560,13 @@ function theWatch(){
 			for(var j=0;j<this.farms[i].men.length;j++)
 			{
 				cont.push(this.farms[i].men[j]);
+			}
+		}
+		for(var i=0;i<this.caravans.length;i++)
+		{
+			for(var j=0;j<this.caravans[i].men.length;j++)
+			{
+				cont.push(this.caravans[i].men[j]);
 			}
 		}
 		for(var i=0;i<this.recruits.length;i++)
@@ -582,10 +583,7 @@ function theWatch(){
 		{
 			cont+=this.ships[i].men.length;
 		}
-		for(var i=0;i<this.caravans.length;i++)
-		{
-			cont+=this.caravans[i].men.length;
-		}
+		
 		for(var i=0;i<this.rangerSquads.length;i++)
 		{
 			cont+=this.rangerSquads[i].men.length;
@@ -593,6 +591,10 @@ function theWatch(){
 		for(var i=0;i<this.farms.length;i++)
 		{
 			cont+=this.farms[i].men.length;
+		}
+		for(var i=0;i<this.caravans.length;i++)
+		{
+			cont+=this.caravans[i].men.length;
 		}
 		cont+=this.recruits.length;
 		return cont;

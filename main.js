@@ -38,15 +38,11 @@ lights.push(new light(7208,3777,14));
 
 
 var Yoren=new caravan(CastleBlack);
-Yoren.tileX-=2;
-Yoren.x=Yoren.tileX*tileSize;
-Yoren.tileY+=10;
-Yoren.y=Yoren.tileY*tileSize;
-/*Yoren.ports.push(Winterfell);
+Yoren.ports.push(Winterfell);
 Yoren.ports.push(WidowsWatch);
 Yoren.ports.push(WhiteHarbor);
 Yoren.ports.push(Gulltown);
-*/
+
 Yoren.ports.push(KingsLanding);
 Yoren.ports.push(StormsEnd);
 Yoren.ports.push(Oldtown);
@@ -102,6 +98,11 @@ settlements.push(Seaguard);
 settlements.push(FlintsFinger);
 settlements.push(BearIsland);
 
+for(var poj=0;poj<settlements.length;poj++)
+{
+	settlements[poj].resources.push(randomFood());
+	settlements[poj].resources.push(randomFood());
+}
 
 ports.push(Eastwatch);
 ports.push(Skagos);

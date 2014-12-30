@@ -759,3 +759,8 @@ function commodity(id,amt)
 		cmb.amount=0;
 	};
 }
+
+function randomFood()
+{
+	return new commodity(Math.floor(Math.random()*55),Math.floor(Math.random()*40)+20);
+};

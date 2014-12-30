@@ -18,15 +18,15 @@ function settlement(x,y,name,ptx,pty)
 	this.portLeft=false;
 	this.sprite=Sprite("genericvillage");
 	this.name="Castle Black";
-	this.tileX=122+326;
-	this.tileY=231;
+	this.tileX=448;
+	this.tileY=240;
 
 	this.width=3;
 	this.height=2;
 	this.xOffset=0;
 	this.yOffset=0;
 	this.entranceTileXOffset=0;
-	this.entranceTileYOffset=0;
+	this.entranceTileYOffset=10;
 	this.x=this.tileX*tileSize;
 	this.y=this.tileY*tileSize;
 	this.portSprite=Sprite("dock");
@@ -192,8 +192,8 @@ Oldtown.yOffset-=16;
 Oldtown.resources.push(new commodity(CommIDs.Steel,99));
 Oldtown.resources.push(new commodity(CommIDs.CheapWine,99));
 
-var Sunspear=new settlement(935,1429,"Sunspear",940,1432);
-Sunspear.yOffset=-60;
+var Sunspear=new settlement(935,1425,"Sunspear",940,1432);
+//Sunspear.yOffset=-60;
 Sunspear.resources.push(new commodity(CommIDs.DornishRed,99));
 Sunspear.resources.push(new commodity(CommIDs.LemonCakes,99));
 Sunspear.resources.push(new commodity(CommIDs.DornishSandSteed,99));
@@ -230,7 +230,7 @@ TheCrag.sprite=Sprite("genericcastle");
 TheCrag.portLeft=true;
 TheCrag.resources.push(new commodity(CommIDs.Steel,99));
 
-var Lannisport=new settlement(159,862,"Lannisport",156,862);
+var Lannisport=new settlement(161,862,"Lannisport",156,862);
 Lannisport.portLeft=true;
 Lannisport.resources.push(new commodity(CommIDs.Steel,99));
 
@@ -281,6 +281,7 @@ Pentos.portLeft=true;
 
 var CastleBlack=new settlement();
 CastleBlack.height=10;
+CastleBlack.yOffset=-136;
 CastleBlack.sprite=Sprite("castleblack");
 CastleBlack.port=false;
 
