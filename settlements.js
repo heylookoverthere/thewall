@@ -160,7 +160,7 @@ Winterfell.type=settlementTypes.Castle;
 Winterfell.port=false;
 Winterfell.resources.push(new commodity(CommIDs.Steel,99));
 
-var Maidenpool=new settlement(721,772,"Maidenpool",721,774);
+var Maidenpool=new settlement(721,774,"Maidenpool",721,772);
 Maidenpool.portLeft=true;
 Maidenpool.resources.push(new commodity(CommIDs.Steel,99));
 

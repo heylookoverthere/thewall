@@ -300,21 +300,21 @@ function caravan(pt)
 
 		if(milli-this.lastmove>100){
 			if( this.nextMove.x > this.tileX ) {
-				this.bx += speed;
-				this.x += speed;
+				this.bx += speed;//*gameSpeed;
+				this.x += speed;//*gameSpeed;
 				this.facing=0;
 			} else if( this.nextMove.x < this.tileX ) {
-				this.bx -= speed;
-				this.x -= speed;
+				this.bx -= speed;//*gameSpeed;
+				this.x -= speed;//*gameSpeed;
 				this.facing=2;
 			}
 			if( this.nextMove.y > this.tileY) {
-				this.by += speed;
-				this.y += speed;
+				this.by += speed;//*gameSpeed;
+				this.y += speed;//*gameSpeed;
 				this.facing=3;
 			} else if( this.nextMove.y < this.tileY) {
-				this.by -= speed;
-				this.y -= speed;
+				this.by -= speed;//*gameSpeed;
+				this.y -= speed;//*gameSpeed;
 				this.facing=1;
 			}
 			this.lastmove=stamp.getTime();

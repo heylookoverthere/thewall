@@ -38,6 +38,7 @@ lights.push(new light(7208,3777,14));
 
 
 var Yoren=new caravan(CastleBlack);
+Yoren.men[0].name="Yoren";
 Yoren.ports.push(Winterfell);
 Yoren.ports.push(WidowsWatch);
 Yoren.ports.push(WhiteHarbor);
@@ -341,7 +342,7 @@ function drawGUI(can)
 {
 	can.globalAlpha=0.75;
 	can.fillStyle="blue";
-	canvas.fillRect(6,6,221,112);
+	canvas.fillRect(6,6,221,138);
 	can.fillStyle="yellow";
 	can.fillText("Men: "+nightsWatch.countMen(),8,25);
 	var cont=0;
@@ -349,7 +350,8 @@ function drawGUI(can)
 	can.fillText("Gold: "+nightsWatch.gold,8,57);//+camera.x+","+camera.y,25,57);
 	can.fillText("Food: "+nightsWatch.getFood()+ " (~"+nightsWatch.timeToStarve()+" days)",8,73);
 	can.fillText(thyme.years+" AC "+thyme.days+ " days, "+thyme.hours+":"+thyme.minutes ,8,91);
-	can.fillText("Health: "+nightsWatch.health,8,107);
+	can.fillText("Meals Per Day: "+nightsWatch.mealsPerDay,8,107);
+	can.fillText("Health: "+nightsWatch.health,8,125);
 	//can.fillText(": "+Math.floor(miles.numJumps-miles.jumpTrack),755,55);
 	can.globalAlpha=1;
 }
@@ -362,7 +364,7 @@ function drawDebug(can)
 	canvas.fillRect(672,6,221,90);
 	can.fillStyle="yellow";
 	can.fillText("Particles: "+monsta.particles.length,675,25);
-	can.fillText("Lights: "+lights.length,675,41);
+	can.fillText("Gamespeed: "+gameSpeed,675,41);
 	can.fillText("FPS:"+FPS,675,57);//+camera.x+","+camera.y,25,57);
 	can.fillText(""+ships[trackShip].name+" "+ships[trackShip].tileX+","+ships[trackShip].tileY,675,73);
 	if(ships[trackShip].portTrack<0)
@@ -912,6 +914,17 @@ function mainUpdate()
 	if(outfitkey.check())
 	{
 		miles.equipOutfit(Math.floor(Math.random()*5));
+	}
+	
+	if(pageupkey.checkDown())
+	{
+		gameSpeed+=.3;
+		if (gameSpeed>maxGameSpeed) {gameSpeed=maxGameSpeed;}
+	}
+	if(pagedownkey.checkDown())
+	{
+		gameSpeed-=.3;
+		if (gameSpeed<.3) {gameSpeed=0;}
 	}
 	
 	if(helpkey.check())

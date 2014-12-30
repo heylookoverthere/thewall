@@ -277,9 +277,9 @@ function tileToCost(data, boat) {
 
 function mapToGraph(map, boat) { 
     var tilesArray = [];
-    for( var i=0; i<MAP_WIDTH; ++i ) {
+    for( var i=0; i<map.width; ++i ) {
         var rowArray = [];
-        for( var j=0; j<MAP_HEIGHT; ++j ) {
+        for( var j=0; j<map.height; ++j ) {
             var tile = map.tiles[i][j];
             var data = tileToCost(tile.data, boat);
             for( var ii=-1; ii<2; ++ii ) {
@@ -345,7 +345,8 @@ function Map(I) { //map object
         }
     }
     I.getPath = function(startX, startY, endX, endY,booat) {
-        var graph = mapToGraph(I,booat);
+		var snerd=I.getSubMap(0,0,MAP_WIDTH,MAP_HEIGHT);//(startX,startY,endX,endY);
+        var graph = mapToGraph(snerd,booat);
         return astar.search(graph.nodes, graph.nodes[startX][startY], graph.nodes[endX][endY]);
     };
 	
@@ -894,5 +895,41 @@ function Map(I) { //map object
 		}
 	   // canvas.restore();
     };
+	I.getSubMap=function(tilex1,tiley1,tilex2,tiley2)
+	{
+		var x=x2=y=y2=0;
+		if(tilex1>tilex2)
+		{
+			x=tilex2;
+			x2=tilex1;
+		}else
+		{
+			x=tilex1;
+			x2=tilex2;
+		}
+		
+		if(tiley1>tiley2)
+		{
+			y=tiley2;
+			y2=tiley1;
+		}else
+		{
+			y=tiley1;
+			y2=tiley2;
+		}
+		var snookle=new Map();
+		snookle.width=x2-x;
+		snookle.height=y2-y;
+		snookle.tiles=new Array()
+		for(var i=0;i<x2;i++)
+		{
+			snookle.tiles[i]=new Array();
+			for(var j=0;j<y2;j++)
+			{
+				snookle.tiles[i][j]=this.tiles[x+i][y+j];
+			}
+		}
+		return snookle;
+	};
     return I;
 }

@@ -101,6 +101,7 @@ function farm(prnt,x,y)
 	this.size=0; // /3
 	this.crop=Math.floor(Math.random()*50); //resource? or convert to resource later?
 	this.men=new Array();
+	this.maxMen=3;
 	this.parent=prnt;
 	this.sprites=new Array();
 	this.sprites.push(Sprite("farm0"));
@@ -276,7 +277,7 @@ function theWatch(){
 	this.settlements=new Array();
 	this.recruits=new Array();
 	this.trainingDays=10;
-	this.gold=1000;
+	this.gold=1500;
 	this.health=100;
 	this.horses=6;
 	this.food=0;
@@ -291,7 +292,7 @@ function theWatch(){
 	this.stores.push(new commodity(CommIDs.Capon,3));
 	this.stores.push(new commodity(CommIDs.LemonCakes,11));
 	
-	this.resources.push(new commodity(CommIDs.DragonEgg,1));
+	this.resources.push(new commodity(CommIDs.OakWood,100));
 	
 	theWatch.prototype.getFood=function() //go through stores and compute numerical value of food. do one for wood also. 
 	{
@@ -467,8 +468,24 @@ function theWatch(){
 	
 	theWatch.prototype.update=function()
 	{
+		
+
 		if(trainTick)
 		{
+			if(this.mealsPerDay<2)
+			{
+				if(this.health>10)
+				{
+					this.health--;
+				}
+			}else if(this.mealsPerDay>2)
+			{
+				this.health++;
+				if(this.health>100)
+				{
+					this.health=100;
+				}
+			}
 			trainTick=false;
 			for(var i=0;i<this.recruits.length;i++)
 			{
@@ -602,9 +619,12 @@ function theWatch(){
 	
 	theWatch.prototype.sendMan=function(id,post)
 	{
-		this.men[id].task=post.task;
-		post.men.push(this.men[id]);
-		this.men.splice(id,1);
+		if(post.men.length<post.maxMen)
+		{
+			this.men[id].task=post.task;
+			post.men.push(this.men[id]);
+			this.men.splice(id,1);
+		}
 	};
 	
 	theWatch.prototype.collectTribute=function()
