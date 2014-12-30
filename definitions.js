@@ -121,14 +121,15 @@ function theTime()
 		if(milli-this.lastmove>1000/gameSpeed)
 		{
 		
-			this.tock=true;
-			this.tick++;//=1*gameSpeed;
+			
+			this.tick+=1*gameSpeed;
 			if(this.tick<2)
 			{
 				return;
 			}
+			this.tock=true;
 			this.tick=0;
-			this.minutes+=2;
+			this.minutes++;
 			if(this.minutes>59)
 			{
 				this.minutes=0;

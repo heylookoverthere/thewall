@@ -1,4 +1,4 @@
-var bees=false;
+var bees=true;//false;
 
 //var bConsoleStr=new Array();
 var bConsoleClr=new Array();
@@ -138,7 +138,7 @@ function farm(prnt,x,y)
 		{
 			
 			var spd=this.getWorkRate();
-			this.harvestCount+=spd;
+			this.harvestCount+=spd;//*gameSpeed;
 			if(this.harvestCount>2000)
 			{
 				this.harvestCount=0;
@@ -284,7 +284,7 @@ function theWatch(){
 	this.fireWood=1000;
 	this.starving=false;
 	this.wounded=0;
-	this.mealsPerDay=3;
+	this.mealsPerDay=2;
 	this.stores=new Array();
 	this.resources=new Array();
 	this.stores.push(new commodity(CommIDs.SaltBeef,41));

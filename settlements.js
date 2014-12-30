@@ -164,6 +164,26 @@ var Maidenpool=new settlement(721,774,"Maidenpool",721,772);
 Maidenpool.portLeft=true;
 Maidenpool.resources.push(new commodity(CommIDs.Steel,99));
 
+var Riverrun=new settlement(317,754,"Riverrun");
+Riverrun.port=false;
+Riverrun.resources.push(new commodity(CommIDs.Steel,99));
+
+var TheEyrie=new settlement(646,692,"The Eyrie");
+TheEyrie.port=false;
+TheEyrie.resources.push(new commodity(CommIDs.Steel,99));
+
+var Harrenhal=new settlement(482,760,"Harrenhal");
+Harrenhal.port=false;
+Harrenhal.resources.push(new commodity(CommIDs.Steel,99));
+
+var Highgarden=new settlement(344,1106,"Highgarden");
+Highgarden.port=false;
+Highgarden.resources.push(new commodity(CommIDs.Steel,99));
+
+var TheTwins=new settlement(337,675,"The Twins");
+TheTwins.port=false;
+TheTwins.resources.push(new commodity(CommIDs.Steel,99));
+
 var Saltpans=new settlement(665,769,"Saltpans",667,769);
 Saltpans.resources.push(new commodity(CommIDs.Steel,99));
 

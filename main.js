@@ -69,6 +69,11 @@ settlements.push(Lorath);
 settlements.push(Saath);
 settlements.push(Morosh);
 settlements.push(Gulltown);
+settlements.push(Riverrun);
+settlements.push(TheEyrie);
+settlements.push(TheTwins);
+settlements.push(Highgarden);
+settlements.push(Harrenhal);
 settlements.push(Saltpans);
 settlements.push(Maidenpool);
 settlements.push(Dragonstone);
@@ -347,11 +352,13 @@ function drawGUI(can)
 	can.fillText("Men: "+nightsWatch.countMen(),8,25);
 	var cont=0;
 	can.fillText("Men at Wall: "+nightsWatch.men.length,8,41);
-	can.fillText("Gold: "+nightsWatch.gold,8,57);//+camera.x+","+camera.y,25,57);
+	
+	can.fillText("Men in training: "+nightsWatch.recruits.length,8,57);//+camera.x+","+camera.y,25,57);
 	can.fillText("Food: "+nightsWatch.getFood()+ " (~"+nightsWatch.timeToStarve()+" days)",8,73);
 	can.fillText(thyme.years+" AC "+thyme.days+ " days, "+thyme.hours+":"+thyme.minutes ,8,91);
 	can.fillText("Meals Per Day: "+nightsWatch.mealsPerDay,8,107);
 	can.fillText("Health: "+nightsWatch.health,8,125);
+	can.fillText("Gold: "+nightsWatch.gold,8,143);//+camera.x+","+camera.y,25,57);
 	//can.fillText(": "+Math.floor(miles.numJumps-miles.jumpTrack),755,55);
 	can.globalAlpha=1;
 }
@@ -715,6 +722,16 @@ function mainUpdate()
 		console.log("coords: "+settlements[trackTown].tileX,settlements[trackTown].tileY);
 		console.log("Port: "+settlements[trackTown].portTileX,settlements[trackTown].portTileY);
 		console.log("Entrance: "+settlements[trackTown].entranceTileX(),settlements[trackTown].entranceTileY());
+	}	
+	if(tabtownkey.check())
+	{
+		trackTown++;
+		if(trackTown>settlements.length-1)
+		{
+			trackTown=0;
+		}
+		camera.unFollow();
+		camera.center(settlements[trackTown]);
 	}
 	if(tabtownkey.check())
 	{
