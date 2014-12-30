@@ -75,7 +75,7 @@ function caravan(pt)
 		this.type=2;
 		this.width=64;
 		this.cargoCapacity=10000;
-		this.speed=5;
+		this.speed=4;
 		this.log.push("Upgraded at "+thyme.getString());
 	};
 	
@@ -229,7 +229,7 @@ function caravan(pt)
 			{
 				this.portTrack=0;
 			}
-			this.setDestination(this.ports[this.portTrack].entranceTileX(),this.ports[this.portTrack].entranceTileY(),curMap);
+			this.setDestination(this.ports[this.portTrack].tileX,this.ports[this.portTrack].tileY,curMap);
 			
 			
 			bConsoleBox.log(this.name+ " is heading to "+this.ports[this.portTrack].name);

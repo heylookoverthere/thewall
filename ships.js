@@ -34,8 +34,8 @@ function ship(pt)
 	this.portTrack=-1;
 	this.bobTrack=-4;
 	this.bobflag=false;
-	this.tileX=this.homeport.tileX;
-	this.tileY=this.homeport.tileY;
+	this.tileX=this.homeport.portTileX;
+	this.tileY=this.homeport.portTileY;
 	this.hp=100;
 	this.sprites=new Array();
 	this.facing=0;
@@ -232,7 +232,7 @@ function ship(pt)
 			{
 				this.portTrack=0;
 			}
-			this.setDestination(this.ports[this.portTrack].tileX,this.ports[this.portTrack].tileY,curMap);
+			this.setDestination(this.ports[this.portTrack].portTileX,this.ports[this.portTrack].portTileY,curMap);
 			
 			
 			bConsoleBox.log(this.name+ " is heading to "+this.ports[this.portTrack].name);

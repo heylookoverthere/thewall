@@ -42,8 +42,16 @@ Yoren.tileX-=2;
 Yoren.x=Yoren.tileX*tileSize;
 Yoren.tileY+=10;
 Yoren.y=Yoren.tileY*tileSize;
-Yoren.ports.push(Winterfell);
-//Yoren.ports.push(KingsLanding);
+/*Yoren.ports.push(Winterfell);
+Yoren.ports.push(WidowsWatch);
+Yoren.ports.push(WhiteHarbor);
+Yoren.ports.push(Gulltown);
+*/
+Yoren.ports.push(KingsLanding);
+Yoren.ports.push(StormsEnd);
+Yoren.ports.push(Oldtown);
+Yoren.ports.push(Sunspear);
+Yoren.ports.push(Lannisport);
 caravans.push(Yoren);
 nightsWatch.caravans.push(Yoren);
 
@@ -172,11 +180,11 @@ lights.push(booop);
 
 
 var betha=new ship(Eastwatch);
-//betha.ports=ports;
+betha.ports=ports;
 /*betha.ports.push(Gulltown);
 betha.ports.push(Braavos);
 betha.ports.push(Lorath);*/
-betha.ports.push(Skagos)
+//betha.ports.push(Skagos)
 betha.watch=true;
 ships.push(betha);
 lights.push(betha.lights[0]);
@@ -216,9 +224,9 @@ mel.alive=true;
 fires.push(mel);
 
 var mlel=new flame(lights);
-mlel.x=6458;
+mlel.x=6426;
 mlel.type=0;
-mlel.y=19202;
+mlel.y=19148;
 mlel.alive=true;
 fires.push(mlel);
 
@@ -698,6 +706,13 @@ function mainUpdate()
 		}
 	}
 	
+	if(logsetkey.check())
+	{
+		console.log(settlements[trackTown].name);
+		console.log("coords: "+settlements[trackTown].tileX,settlements[trackTown].tileY);
+		console.log("Port: "+settlements[trackTown].portTileX,settlements[trackTown].portTileY);
+		console.log("Entrance: "+settlements[trackTown].entranceTileX(),settlements[trackTown].entranceTileY());
+	}
 	if(tabtownkey.check())
 	{
 		trackTown++;

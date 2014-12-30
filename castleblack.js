@@ -477,6 +477,7 @@ function theWatch(){
 				
 				if(this.recruits[i].trainingDays<1)
 				{
+					this.recruits[i].task="Manning the wall"
 					this.men.push(this.recruits[i]);
 					this.recruits.splice(i,1);
 				}

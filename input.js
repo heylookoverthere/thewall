@@ -418,8 +418,12 @@ outfitkey.desc="change into a random outfit."
 edskeys.push(outfitkey);
 
 var startkey=new akey("return");
-pageupkey.desc="It's the fucking enter button."
+startkey.desc="It's the fucking enter button."
 edskeys.push(startkey);
+
+var logsetkey=new akey("v");
+logsetkey.desc="debug"
+edskeys.push(logsetkey);
 
 var letterkeys=[];
 letterkeys.push(new akey("a"));

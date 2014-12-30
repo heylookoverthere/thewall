@@ -266,11 +266,11 @@ function tileToCost(data, boat) {
 		//if(sqd.getFlightHeight()>1) {return 2;}
 		//if(( data == TileType.Water ) && sqd.canSwim()){ return 2;}
 		if( data == TileType.Water ) {return 0;}
-		//if((data==TileType.Swamp ) &&(sqd.leader.class==SEEAss.Frog)) {return 2};
-		if( data == TileType.Swamp  ) return 5;
+		if( data == TileType.Swamp  ) return 0;
 		if( data == TileType.Forest  ) return 3;
 		if( data == TileType.Sand  ) return 2;
 		if( data == TileType.Road  ) return 1;
+		if( data == TileType.Grass  ) return 4;
 		return 2;
 	}
 };
