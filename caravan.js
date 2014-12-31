@@ -114,7 +114,7 @@ function caravan(pt)
 			if(this.portTrack==0)
 			{
 				//unload all cargo to watch. 
-				bConsoleBox.log(this.name+ " has reached "+this.ports[this.portTrack].name + " and unloaded their cargo.");
+				bConsoleBox.log(this.name+ " has reached "+this.ports[this.portTrack].name +" at "+thyme.getString()+ " and unloaded their cargo.");
 				this.log.push("Reached "+this.ports[this.portTrack].name + " and unloaded their cargo. at "+thyme.getString());
 				if(this.watch)
 				{
@@ -185,11 +185,11 @@ function caravan(pt)
 							this.ports[this.portTrack].resources[goods].amount-=amt;
 							this.insertCargo(zed);
 
-							bConsoleBox.log(this.name+ " has reached "+this.ports[this.portTrack].name+" and picked up "+amt+" "+this.ports[this.portTrack].resources[goods].name);
+							bConsoleBox.log(this.name+ " has reached "+this.ports[this.portTrack].name+" at "+thyme.getString()+" and picked up "+amt+" "+this.ports[this.portTrack].resources[goods].name);
 							this.log.push("Reached "+this.ports[this.portTrack].name + "and picked up "+amt+" "+this.ports[this.portTrack].resources[goods].name+" at "+thyme.getString());
 						}else
 						{
-							bConsoleBox.log(this.name+ " has reached "+this.ports[this.portTrack].name+" but the proposed deal was too expensive");
+							bConsoleBox.log(this.name+ " has reached "+this.ports[this.portTrack].name+" at "+thyme.getString()+" "+" but the proposed deal was too expensive");
 							this.log.push("Reached "+this.ports[this.portTrack].name + " but the proposed deal was too expensive: "+thyme.getString());
 						}
 						if(this.recruiter)

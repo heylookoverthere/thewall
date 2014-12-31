@@ -110,7 +110,13 @@ function theTime()
 		{
 			suffix="rd";
 		}
-		return this.hours+":"+this.minutes+" on the "+(this.days+1)+suffix+" day of the year "+this.years+" AC";
+		var kevinbacon=this.minutes;
+		if(kevinbacon<10)
+		{
+			var srtup= "0"+kevinbacon;
+			kevinbacon=srtup;
+		}
+		return this.hours+":"+kevinbacon+" on the "+(this.days+1)+suffix+" day of the year "+this.years+" AC";
 	};
 	
 	theTime.prototype.update=function()
@@ -381,6 +387,7 @@ TileType.Ocean=24;
 TileType.Lava=28;
 TileType.Forest=3;
 TileType.Road=8;
+TileType.Bridge=18;
 TileType.Sand=9;
 
 var lastEventX=0;
@@ -520,7 +527,8 @@ tileSprite[TileType.Grass] = Sprite("grass");
 tileSprite[TileType.Forest] = Sprite("darkgrass"); 
 tileSprite[TileType.Snow] = Sprite("snow"); 
 tileSprite[TileType.Ice] = Sprite("ice"); 
-tileSprite[TileType.IceMountain] = Sprite("icemountain"); 
+tileSprite[TileType.IceMountain] = Sprite("icemountain");
+tileSprite[TileType.Bridge] = Sprite("road");  
 tileSprite[TileType.Ocean] = Sprite("ocean");
 tileSprite[TileType.Ocean+1] = Sprite("ocean1");
 tileSprite[TileType.Ocean+2] = Sprite("ocean2");
@@ -549,6 +557,7 @@ tileColors[TileType.Ocean] = "#0000FF";
 
 tileColors[TileType.Snow] = "#F0FFFF";
 tileColors[TileType.Ice] = "#3399FF";
+tileColors[TileType.Bridge] = "#CCCCCC";
 tileColors[TileType.IceMountain] = "#99CCFF";
 tileColors[TileType.Water] = "#0066CC";
 tileColors[TileType.Mountains] = "#330000";

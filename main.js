@@ -41,11 +41,10 @@ var Yoren=new caravan(CastleBlack);
 Yoren.men[0].name="Yoren";
 
 
-
-/*Yoren.ports.push(Winterfell);
+Yoren.ports.push(Winterfell);
 Yoren.ports.push(WidowsWatch);
 Yoren.ports.push(WhiteHarbor);
-Yoren.ports.push(TheEyrie);*/
+Yoren.ports.push(TheEyrie);
 Yoren.ports.push(Gulltown);
 Yoren.ports.push(Saltpans);
 Yoren.ports.push(Maidenpool);
@@ -135,6 +134,7 @@ ports.push(Dragonstone);
 ports.push(Driftmark);
 ports.push(Duskendale);
 ports.push(KingsLanding);
+ports.push(Harrenhal);
 ports.push(Stonedance);
 ports.push(Pentos);
 ports.push(StormsEnd);
@@ -196,11 +196,11 @@ lights.push(booop);
 
 
 var betha=new ship(Eastwatch);
-//betha.ports=ports;
-betha.ports.push(Sunspear);
+betha.ports=ports;
+/*betha.ports.push(Sunspear);
 betha.ports.push(Oldtown);
 betha.ports.push(Lannisport);
-//betha.ports.push(Skagos)
+betha.ports.push(Skagos)*/
 betha.watch=true;
 ships.push(betha);
 lights.push(betha.lights[0]);

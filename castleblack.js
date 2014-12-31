@@ -128,7 +128,7 @@ function farm(prnt,x,y)
 		var nelly=this.harvestAmount+Math.floor(Math.random()*20)
 		var belly=new commodity(this.crop,nelly);
 		this.parent.insertResource(belly);
-		bConsoleBox.log("Harvested "+nelly+" "+belly.name+"s");
+		bConsoleBox.log("Harvested "+nelly+" "+belly.name+"s at "+thyme.getString());
 		//this.parent.addfood?
 	}
 	farm.prototype.update=function()

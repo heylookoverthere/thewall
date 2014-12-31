@@ -258,6 +258,7 @@ function tileToCost(data, boat) {
 	if(boat)
 	{
 		if( data == TileType.Ocean ) return 2;
+		if( data == TileType.Bridge ) return 2;
 		if(/*(boat.navigateRivers )*/(true) && ( data == TileType.Water )) return 2;
 		return 0;
 	}else
@@ -665,6 +666,7 @@ function Map(I) { //map object
 		  var forestrgb =[0,255,0,0];
 		  var sandrgb =[255,255,0,0];
 		  var roadrgb =[195,165,195,0];
+		  var bridgergb =[128,100,0,0];
 		  var swamprgb =[0,255,64,0];
 		  var plainsrgb =[128,64,64,0];
 		  var snowrgb =[230,230,230,0];
@@ -697,6 +699,8 @@ function Map(I) { //map object
 			I.setTile(xPos, yPos, TileType.Snow);
 		  }else if (closeEnough(rgba,icergb)){
 			I.setTile(xPos, yPos, TileType.Ice);
+		  }else if (closeEnough(rgba,bridgergb)){
+			I.setTile(xPos, yPos, TileType.Bridge);
 		  }else if (closeEnough(rgba,icemountainrgb)){
 			I.setTile(xPos, yPos, TileType.IceMountain);
 		  }else if (closeEnough(rgba,grassrgb)) {
