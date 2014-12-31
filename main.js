@@ -197,8 +197,8 @@ lights.push(booop);
 
 var betha=new ship(Eastwatch);
 betha.ports=ports;
-/*betha.ports.push(Sunspear);
-betha.ports.push(Oldtown);
+//betha.ports.push(Harrenhal);
+/*betha.ports.push(Oldtown);
 betha.ports.push(Lannisport);
 betha.ports.push(Skagos)*/
 betha.watch=true;
