@@ -242,10 +242,10 @@ helmetList[17].coversHair=false;
 helmetList[21].coversFacialHair=false;
 
 
-function point()
+function point(x,y)
 {
-	x=0;
-	y=0;
+	this.x=x||0;
+	this.y=y||0;
 }
 function bone(anchor)
 {

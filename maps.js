@@ -258,6 +258,7 @@ function tileToCost(data, boat) {
 	if(boat)
 	{
 		if( data == TileType.Ocean ) return 2;
+		if(/*(boat.navigateRivers )*/(true) && ( data == TileType.Water )) return 2;
 		return 0;
 	}else
 	{
@@ -351,8 +352,12 @@ function Map(I) { //map object
     };
 	
 	
-	I.sailable=function(x,y){
+	I.sailable=function(x,y){//,b){
 		if((I.tiles[x][y].data==TileType.Ocean)) {return true;}
+		if(true)//(b.navigateRivers)
+		{
+			if((I.tiles[x][y].data==TileType.Water)) {return true;}
+		}
 		return false;
 	}
 	

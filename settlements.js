@@ -160,7 +160,7 @@ Winterfell.type=settlementTypes.Castle;
 Winterfell.port=false;
 Winterfell.resources.push(new commodity(CommIDs.Steel,99));
 
-var Maidenpool=new settlement(721,774,"Maidenpool",721,772);
+var Maidenpool=new settlement(719,774,"Maidenpool",721,772);
 Maidenpool.portLeft=true;
 Maidenpool.resources.push(new commodity(CommIDs.Steel,99));
 
@@ -172,11 +172,11 @@ var TheEyrie=new settlement(646,692,"The Eyrie");
 TheEyrie.port=false;
 TheEyrie.resources.push(new commodity(CommIDs.Steel,99));
 
-var Harrenhal=new settlement(482,760,"Harrenhal");
-Harrenhal.port=false;
+var Harrenhal=new settlement(482,760,"Harrenhal",483,766);
+Harrenhal.port=true;
 Harrenhal.resources.push(new commodity(CommIDs.Steel,99));
 
-var Highgarden=new settlement(344,1106,"Highgarden");
+var Highgarden=new settlement(350,1106,"Highgarden");
 Highgarden.port=false;
 Highgarden.resources.push(new commodity(CommIDs.Steel,99));
 
@@ -184,7 +184,7 @@ var TheTwins=new settlement(337,675,"The Twins");
 TheTwins.port=false;
 TheTwins.resources.push(new commodity(CommIDs.Steel,99));
 
-var Saltpans=new settlement(665,769,"Saltpans",667,769);
+var Saltpans=new settlement(663,773,"Saltpans",667,769);
 Saltpans.resources.push(new commodity(CommIDs.Steel,99));
 
 var BearIsland=new settlement(298,239,"Bear Island");
@@ -239,7 +239,7 @@ KingsLanding.sprite=Sprite("kingslanding");
 KingsLanding.xOffset=-20;
 KingsLanding.resources.push(new commodity(CommIDs.Steel,99));
 
-var Duskendale=new settlement(691,835,"Duskendale",693,837);
+var Duskendale=new settlement(687,835,"Duskendale",693,837);
 Duskendale.resources.push(new commodity(CommIDs.Steel,99));
 
 var Tarth=new settlement(864,997,"Tarth");
@@ -251,7 +251,7 @@ TheCrag.sprite=Sprite("genericcastle");
 TheCrag.portLeft=true;
 TheCrag.resources.push(new commodity(CommIDs.Steel,99));
 
-var Lannisport=new settlement(161,862,"Lannisport",156,862);
+var Lannisport=new settlement(163,862,"Lannisport",156,862);
 Lannisport.portLeft=true;
 Lannisport.resources.push(new commodity(CommIDs.Steel,99));
 

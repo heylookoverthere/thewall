@@ -39,19 +39,25 @@ lights.push(new light(7208,3777,14));
 
 var Yoren=new caravan(CastleBlack);
 Yoren.men[0].name="Yoren";
-Yoren.ports.push(TheTwins);
-Yoren.ports.push(Sunspear);
 
-Yoren.ports.push(Winterfell);
+
+
+/*Yoren.ports.push(Winterfell);
 Yoren.ports.push(WidowsWatch);
 Yoren.ports.push(WhiteHarbor);
+Yoren.ports.push(TheEyrie);*/
 Yoren.ports.push(Gulltown);
-
+Yoren.ports.push(Saltpans);
+Yoren.ports.push(Maidenpool);
+Yoren.ports.push(Duskendale);
 Yoren.ports.push(KingsLanding);
 Yoren.ports.push(StormsEnd);
-
+Yoren.ports.push(Sunspear);
 Yoren.ports.push(Oldtown);
 Yoren.ports.push(Lannisport);
+Yoren.ports.push(Harrenhal);
+Yoren.ports.push(Riverrun);
+Yoren.ports.push(TheTwins);
 caravans.push(Yoren);
 nightsWatch.caravans.push(Yoren);
 

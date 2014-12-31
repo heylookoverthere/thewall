@@ -9,7 +9,7 @@ function ship(pt)
 {
 	this.log=new Array();
 	this.log.push("Commissioned at "+thyme.getString());
-	this.navigateRivers=false;
+	this.navigateRivers=true;
 	this.class=shipClass.Small;
 	this.name="Black Betha";
 	this.width=32;

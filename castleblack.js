@@ -5,6 +5,10 @@ var bConsoleClr=new Array();
 var bConsoleBox;
 var bMenuBox;
 
+var farmSlots=new Array();
+farmSlots.push(new point(458,260));
+farmSlots.push(new point(418,260));
+
 
 
 function kraken(x,y)
