@@ -39,6 +39,9 @@ lights.push(new light(7208,3777,14));
 
 var Yoren=new caravan(CastleBlack);
 Yoren.men[0].name="Yoren";
+Yoren.ports.push(TheTwins);
+Yoren.ports.push(Sunspear);
+
 Yoren.ports.push(Winterfell);
 Yoren.ports.push(WidowsWatch);
 Yoren.ports.push(WhiteHarbor);
@@ -46,8 +49,8 @@ Yoren.ports.push(Gulltown);
 
 Yoren.ports.push(KingsLanding);
 Yoren.ports.push(StormsEnd);
+
 Yoren.ports.push(Oldtown);
-Yoren.ports.push(Sunspear);
 Yoren.ports.push(Lannisport);
 caravans.push(Yoren);
 nightsWatch.caravans.push(Yoren);
@@ -187,10 +190,10 @@ lights.push(booop);
 
 
 var betha=new ship(Eastwatch);
-betha.ports=ports;
-/*betha.ports.push(Gulltown);
-betha.ports.push(Braavos);
-betha.ports.push(Lorath);*/
+//betha.ports=ports;
+betha.ports.push(Sunspear);
+betha.ports.push(Oldtown);
+betha.ports.push(Lannisport);
 //betha.ports.push(Skagos)
 betha.watch=true;
 ships.push(betha);
@@ -347,7 +350,7 @@ function drawGUI(can)
 {
 	can.globalAlpha=0.75;
 	can.fillStyle="blue";
-	canvas.fillRect(6,6,221,138);
+	canvas.fillRect(6,6,221,142);
 	can.fillStyle="yellow";
 	can.fillText("Men: "+nightsWatch.countMen(),8,25);
 	var cont=0;
@@ -641,9 +644,12 @@ function mainDraw() {
 	
 	monsta.draw(canvas,camera);
 
-	canvas.globalAlpha=LightLevels[thyme.hours];
-	canvas.fillStyle="black";
-	canvas.fillRect(0,0,CANVAS_WIDTH, CANVAS_HEIGHT);
+	if(!stayDay)
+	{
+		canvas.globalAlpha=LightLevels[thyme.hours];
+		canvas.fillStyle="black";
+		canvas.fillRect(0,0,CANVAS_WIDTH, CANVAS_HEIGHT);
+	}
 
 	for(var i=0;i<lights.length;i++)
 	{

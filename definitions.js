@@ -5,6 +5,7 @@ var multiplayer=false;
 var holdInput=false;
 var customConsole=true;
 var trainTick=false;
+var stayDay=true;
 
 var graphicsLevel=3;//turn off transparency, tone down snow. less map dirties? leave map a little dirt
 //less lighting?

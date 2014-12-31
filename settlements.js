@@ -212,8 +212,9 @@ Oldtown.yOffset-=16;
 Oldtown.resources.push(new commodity(CommIDs.Steel,99));
 Oldtown.resources.push(new commodity(CommIDs.CheapWine,99));
 
-var Sunspear=new settlement(935,1425,"Sunspear",940,1432);
+var Sunspear=new settlement(935,1425,"Sunspear",936,1432);
 //Sunspear.yOffset=-60;
+Sunspear.sprite=Sprite("sunspear");
 Sunspear.resources.push(new commodity(CommIDs.DornishRed,99));
 Sunspear.resources.push(new commodity(CommIDs.LemonCakes,99));
 Sunspear.resources.push(new commodity(CommIDs.DornishSandSteed,99));
