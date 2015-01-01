@@ -30,7 +30,7 @@ var trackShip=0;
 var trackTown=0;
 var trackCaravan=0;
 
-var nightsWatch=new theWatch();
+var theWatch=new aWatch();
 
 
 lights.push(new light(7092,3748,14));
@@ -53,14 +53,15 @@ Yoren.ports.push(KingsLanding);
 Yoren.ports.push(StormsEnd);
 Yoren.ports.push(Sunspear);
 Yoren.ports.push(Oldtown);
+Yoren.ports.push(Highgarden);
 Yoren.ports.push(Lannisport);
 Yoren.ports.push(Harrenhal);
 Yoren.ports.push(Riverrun);
 Yoren.ports.push(TheTwins);
 caravans.push(Yoren);
-nightsWatch.caravans.push(Yoren);
+theWatch.caravans.push(Yoren);
 
-var farmington=new farm(nightsWatch,458,260)
+var farmington=new farm(theWatch,458,260)
 farms.push(farmington);
 
 	
@@ -149,6 +150,7 @@ ports.push(Volantis);
 ports.push(Sunspear);
 ports.push(Oldtown);
 ports.push(Ryamsport);
+ports.push(Highgarden);
 ports.push(Lannisport);
 ports.push(Faircastle);
 ports.push(TheCrag);
@@ -172,19 +174,19 @@ miles.torchHand=1;
 
 people.push(miles);
 miles.task="wandering aimlessly";
-nightsWatch.men.push(miles);
+theWatch.men.push(miles);
 	for(var i=0;i<5;i++)
 	{	var noop=new dude();
 		noop.task="Manning the Wall.";
-		nightsWatch.men.push(noop);
+		theWatch.men.push(noop);
 	}
 
-nightsWatch.farms.push(farmington);
-nightsWatch.settlements.push(CastleBlack);
-nightsWatch.settlements.push(Eastwatch);
-nightsWatch.settlements.push(ShadowTower);
+theWatch.farms.push(farmington);
+theWatch.settlements.push(CastleBlack);
+theWatch.settlements.push(Eastwatch);
+theWatch.settlements.push(ShadowTower);
 
-nightsWatch.sendMan(1,farms[0]);
+theWatch.sendMan(1,farms[0]);
 
 	
 var booop=new light(0,0,32,miles.torchPoint);//.arms[0].joint2));
@@ -195,16 +197,44 @@ lights.push(booop);
 
 
 
-var betha=new ship(Eastwatch);
-betha.ports=ports;
-//betha.ports.push(Harrenhal);
-/*betha.ports.push(Oldtown);
-betha.ports.push(Lannisport);
-betha.ports.push(Skagos)*/
-betha.watch=true;
-ships.push(betha);
-lights.push(betha.lights[0]);
-nightsWatch.ships.push(betha);
+var Blackbird=new ship(Eastwatch);
+//Blackbird.ports=ports;
+Blackbird.crewShip(1,theWatch);
+Blackbird.men[0].name="Cotter";
+Blackbird.ports.push(Highgarden);
+/*Blackbird.ports.push(Oldtown);
+Blackbird.ports.push(Lannisport);
+Blackbird.ports.push(Skagos)*/
+Blackbird.watch=true;
+Blackbird.upgrade();
+ships.push(Blackbird);
+lights.push(Blackbird.lights[0]);
+theWatch.ships.push(Blackbird);
+
+var StormCrow=new ship(Eastwatch);
+StormCrow.crewShip(1,theWatch);
+StormCrow.name="Storm Crow";
+StormCrow.upgrade();
+StormCrow.ports=ports;
+StormCrow.warpToPort(10);
+//StormCrow.ports.push(Harrenhal);
+StormCrow.watch=true;
+ships.push(StormCrow);
+lights.push(StormCrow.lights[0]);
+theWatch.ships.push(StormCrow);
+
+var Talon=new ship(Eastwatch);
+Talon.crewShip(1,theWatch);
+Talon.name="Talon";
+//Talon.ports=ports;
+Talon.ports.push(Sisterton);
+Talon.ports.push(WhiteHarbor);
+Talon.ports.push(Braavos);
+Talon.warpToPort(2);
+Talon.watch=true;
+ships.push(Talon);
+lights.push(Talon.lights[0]);
+theWatch.ships.push(Talon);
 
 /*var treasure=new ship(Pentos);
 treasure.name="Treasure";
@@ -358,16 +388,16 @@ function drawGUI(can)
 	can.fillStyle="blue";
 	canvas.fillRect(6,6,221,142);
 	can.fillStyle="yellow";
-	can.fillText("Men: "+nightsWatch.countMen(),8,25);
+	can.fillText("Men: "+theWatch.countMen(),8,25);
 	var cont=0;
-	can.fillText("Men at Wall: "+nightsWatch.men.length,8,41);
+	can.fillText("Men at Wall: "+theWatch.men.length,8,41);
 	
-	can.fillText("Men in training: "+nightsWatch.recruits.length,8,57);//+camera.x+","+camera.y,25,57);
-	can.fillText("Food: "+nightsWatch.getFood()+ " (~"+nightsWatch.timeToStarve()+" days)",8,73);
+	can.fillText("Men in training: "+theWatch.recruits.length,8,57);//+camera.x+","+camera.y,25,57);
+	can.fillText("Food: "+theWatch.getFood()+ " (~"+theWatch.timeToStarve()+" days)",8,73);
 	can.fillText(thyme.years+" AC "+thyme.days+ " days, "+thyme.hours+":"+thyme.minutes ,8,91);
-	can.fillText("Meals Per Day: "+nightsWatch.mealsPerDay,8,107);
-	can.fillText("Health: "+nightsWatch.health,8,125);
-	can.fillText("Gold: "+nightsWatch.gold,8,143);//+camera.x+","+camera.y,25,57);
+	can.fillText("Meals Per Day: "+theWatch.mealsPerDay,8,107);
+	can.fillText("Health: "+theWatch.health,8,125);
+	can.fillText("Gold: "+theWatch.gold,8,143);//+camera.x+","+camera.y,25,57);
 	//can.fillText(": "+Math.floor(miles.numJumps-miles.jumpTrack),755,55);
 	can.globalAlpha=1;
 }
@@ -707,7 +737,7 @@ function mainUpdate()
     milliseconds = timestamp.getTime();
     tick++;
 	thyme.update();
-	nightsWatch.update();
+	theWatch.update();
 
 	gamepad = navigator.getGamepads && navigator.getGamepads()[0];
 	
@@ -880,16 +910,16 @@ function mainUpdate()
 	}
 	if(logstoreskey.check())
 	{
-		nightsWatch.logStores();
+		theWatch.logStores();
 	}
 	if(logshipskey.check())
 	{
-		nightsWatch.logShips();
+		theWatch.logShips();
 	}
 	
 	if(logmenkey.check())
 	{
-		nightsWatch.logMen();
+		theWatch.logMen();
 	}
 	if(consolekey.check())
 	{

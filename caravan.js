@@ -120,7 +120,7 @@ function caravan(pt)
 				{
 					for(var i=0;i<this.cargo.length;i++)
 					{
-						nightsWatch.insertResource(this.cargo[i]);
+						theWatch.insertResource(this.cargo[i]);
 						//this.cargo.splice(i,1);
 					}
 					if(this.recruiter)
@@ -128,7 +128,7 @@ function caravan(pt)
 						for(var i=1;i<this.men.length;i++)
 						{
 							this.men[i].task="Recruits training to become men of the watch.";
-							nightsWatch.recruits.push(this.men[i]);
+							theWatch.recruits.push(this.men[i]);
 							this.men.splice(i,1);
 							i--;
 						}
@@ -143,9 +143,9 @@ function caravan(pt)
 				}
 				this.cargo=[];
 				//Take items you have for sale if you know you're going to a port that wants them. for now just take them no matter what.
-				while(nightsWatch.resources.length>0)
+				while(theWatch.resources.length>0)
 				{
-					this.resources.push(nightsWatch.resources.pop());
+					this.resources.push(theWatch.resources.pop());
 				}
 				
 				
@@ -172,14 +172,14 @@ function caravan(pt)
 							var leop=this.resources.pop();
 							if(this.watch)//todo give settlments own treasuries. 
 							{
-								nightsWatch.gold+=leop.cost*leop.amount;
+								theWatch.gold+=leop.cost*leop.amount;
 							}
 							this.ports[this.portTrack].resources.push(leop);
 						}
 			
 					if(this.watch)
 					{
-						if(nightsWatch.spend(cost))
+						if(theWatch.spend(cost))
 						{
 							var zed=new commodity(this.ports[this.portTrack].resources[goods].id,amt)
 							this.ports[this.portTrack].resources[goods].amount-=amt;

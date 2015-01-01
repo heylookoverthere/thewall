@@ -272,7 +272,7 @@ function watchman()
 	this.lName="";
 };
 
-function theWatch(){
+function aWatch(){
 	this.men=new Array(); //array!
 	this.ships=new Array();
 	this.rangerSquads=new Array();
@@ -282,6 +282,7 @@ function theWatch(){
 	this.recruits=new Array();
 	this.trainingDays=10;
 	this.gold=1500;
+	this.prestige=10;
 	this.health=100;
 	this.horses=6;
 	this.food=0;
@@ -298,7 +299,7 @@ function theWatch(){
 	
 	this.resources.push(new commodity(CommIDs.OakWood,100));
 	
-	theWatch.prototype.getFood=function() //go through stores and compute numerical value of food. do one for wood also. 
+	aWatch.prototype.getFood=function() //go through stores and compute numerical value of food. do one for wood also. 
 	{
 		var funt=0;
 		for(var i=0;i<this.stores.length;i++)
@@ -311,7 +312,7 @@ function theWatch(){
 		return funt;
 	};
 	
-	theWatch.prototype.spend=function(amt)
+	aWatch.prototype.spend=function(amt)
 	{
 		if(this.gold>amt)
 		{
@@ -323,7 +324,7 @@ function theWatch(){
 		}
 	};
 	
-	theWatch.prototype.timeToStarve=function() //go through stores and compute numerical value of food. do one for wood also. 
+	aWatch.prototype.timeToStarve=function() //go through stores and compute numerical value of food. do one for wood also. 
 	{
 		var funt=0;
 		for(var i=0;i<this.stores.length;i++)
@@ -336,7 +337,7 @@ function theWatch(){
 		return Math.floor(funt/(this.mealsPerDay*this.countMen()));
 	};
 	
-	theWatch.prototype.insertResource=function(res)
+	aWatch.prototype.insertResource=function(res)
 	{
 		//search for existing instance of res.id in stores. add to, or put at end if none found. 
 		for(var i=0;i<this.stores.length;i++)
@@ -352,7 +353,7 @@ function theWatch(){
 		}
 	};
 	
-	theWatch.prototype.logMen=function()//todo break into three lists ranger builder steward
+	aWatch.prototype.logMen=function()//todo break into three lists ranger builder steward
 	{
 		bConsoleBox.log("Men of the Watch: ("+this.countMen()+")");
 		var menses=this.getAllMen();
@@ -365,7 +366,7 @@ function theWatch(){
 	{
 		this.insertResource(new commodity(Math.floor(Math.random()*50),Math.floor(Math.random()*16+1)));
 	}
-	theWatch.prototype.logShips=function()
+	aWatch.prototype.logShips=function()
 	{
 		bConsoleBox.log("Ships of the Watch: ("+this.ships.length+")");
 		for(var i=0;i<this.ships.length;i++)
@@ -389,7 +390,7 @@ function theWatch(){
 		}
 	};
 	
-	theWatch.prototype.firstFood=function()
+	aWatch.prototype.firstFood=function()
 	{
 		var duf=null;
 		for(var i=0;i<this.stores.length;i++)
@@ -403,7 +404,7 @@ function theWatch(){
 	};
 	
 	
-	theWatch.prototype.haveMeal=function()
+	aWatch.prototype.haveMeal=function()
 	{
 		this.hunger=this.men.length;
 		while(this.hunger>0)
@@ -425,7 +426,7 @@ function theWatch(){
 		}
 	};
 	
-	theWatch.prototype.feed=function()
+	aWatch.prototype.feed=function()
 	{
 		var fed=this.firstFood();
 		
@@ -448,7 +449,7 @@ function theWatch(){
 
 	};
 	
-	theWatch.prototype.logStores=function()
+	aWatch.prototype.logStores=function()
 	{
 		bConsoleBox.log("Your supplies: ("+this.stores.length+")");
 		for(var i=0;i<this.stores.length;i++)
@@ -470,7 +471,7 @@ function theWatch(){
 		}
 	};
 	
-	theWatch.prototype.update=function()
+	aWatch.prototype.update=function()
 	{
 		
 
@@ -549,12 +550,12 @@ function theWatch(){
 		*/
 	};
 	
-	theWatch.prototype.calcFoodEaten=function()
+	aWatch.prototype.calcFoodEaten=function()
 	{
 		return men.length;
 	};
 	
-	theWatch.prototype.getAllMen=function()
+	aWatch.prototype.getAllMen=function()
 	{
 		var cont=new Array();
 		for(var i=0;i<this.men.length;i++)
@@ -597,7 +598,7 @@ function theWatch(){
 		return cont;
 	};
 	
-	theWatch.prototype.countMen=function()
+	aWatch.prototype.countMen=function()
 	{
 		var cont=this.men.length;
 		for(var i=0;i<this.ships.length;i++)
@@ -621,7 +622,7 @@ function theWatch(){
 		return cont;
 	};
 	
-	theWatch.prototype.sendMan=function(id,post)
+	aWatch.prototype.sendMan=function(id,post)
 	{
 		if(post.men.length<post.maxMen)
 		{
@@ -631,7 +632,7 @@ function theWatch(){
 		}
 	};
 	
-	theWatch.prototype.collectTribute=function()
+	aWatch.prototype.collectTribute=function()
 	{
 		//eventually randomize from various castles?
 		var gil=Math.floor(Math.random()*170)+60;

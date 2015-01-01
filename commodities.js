@@ -508,7 +508,7 @@ function commodity(id,amt)
 		this.unit=" Gallons of ";
 	}else if(id==CommIDs.CheapWine)
 	{
-		this.name="CheapWine"
+		this.name="Cheap Wine"
 		this.cost=7;
 		this.description ="Drinkable";
 		this.unit=" Gallons of ";

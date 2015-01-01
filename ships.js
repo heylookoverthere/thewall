@@ -11,7 +11,7 @@ function ship(pt)
 	this.log.push("Commissioned at "+thyme.getString());
 	this.navigateRivers=true;
 	this.class=shipClass.Small;
-	this.name="Black Betha";
+	this.name="Blackbird";
 	this.width=32;
 	this.height=32;
 	this.ports=new Array();
@@ -21,11 +21,9 @@ function ship(pt)
 	this.cargoCapacity=1000;
 	this.resources=new Array();
 	this.men=new Array();
-	var lyle=new dude();
-	lyle.task="Captaining the ship "+this.name;
 	//lyle.name="aaa";
 	//console.log(lyle);
-	this.men.push(lyle);
+	//this.men.push(lyle);
 	this.boat=true;
 	this.lastmove=0;
 	this.ports.push(pt);
@@ -47,7 +45,6 @@ function ship(pt)
 	this.alive=true;
 	this.x=this.tileX*tileSize;
 	this.y=this.tileY*tileSize;
-	this.name="Black Betha";
 	this.cargo=new Array();
 	this.speed=2;//1;
 	this.speedTrack=0;
@@ -61,6 +58,25 @@ function ship(pt)
     this.inNextTile = false;
 	this.lights.push(new light(16,18,12,this));
 	this.visRange=10;
+	this.crewShip=function(num,source)
+	{
+		
+		for(var p=0;p<num;p++)
+		{
+			var teddanson=source.men.pop(); //todo better?
+			teddanson.task="Captaining the ship "+this.name;
+			this.men.push(teddanson);
+		}
+	}
+	this.warpToPort=function(blint)
+	{
+		this.portTrack=blint;
+		this.tileX=this.ports[this.portTrack].portTileX;
+		this.tileY=this.ports[this.portTrack].portTileY;
+		this.path=null;
+		this.x=this.tileX*tileSize;
+		this.y=this.tileY*tileSize;
+	};
 	this.clearFog=function(map)
 	{
 		for(var i=this.tileX-this.visRange+2;i<this.tileX+this.visRange;i++)
@@ -146,7 +162,7 @@ function ship(pt)
 				{
 					for(var i=0;i<this.cargo.length;i++)
 					{
-						nightsWatch.insertResource(this.cargo[i]);
+						theWatch.insertResource(this.cargo[i]);
 						//this.cargo.splice(i,1);
 					}
 				}else
@@ -159,9 +175,9 @@ function ship(pt)
 				}
 				this.cargo=[];
 				//Take items you have for sale if you know you're going to a port that wants them. for now just take them no matter what.
-				while(nightsWatch.resources.length>0)
+				while(theWatch.resources.length>0)
 				{
-					this.resources.push(nightsWatch.resources.pop());
+					this.resources.push(theWatch.resources.pop());
 				}
 				
 				
@@ -188,14 +204,14 @@ function ship(pt)
 							var leop=this.resources.pop();
 							if(this.watch)//todo give settlments own treasuries. 
 							{
-								nightsWatch.gold+=leop.cost*leop.amount;
+								theWatch.gold+=leop.cost*leop.amount;
 							}
 							this.ports[this.portTrack].resources.push(leop);
 						}
 			
 					if(this.watch)
 					{
-						if(nightsWatch.spend(cost))
+						if(theWatch.spend(cost))
 						{
 							var zed=new commodity(this.ports[this.portTrack].resources[goods].id,amt)
 							this.ports[this.portTrack].resources[goods].amount-=amt;

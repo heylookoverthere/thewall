@@ -347,8 +347,8 @@ function Map(I) { //map object
         }
     }
     I.getPath = function(startX, startY, endX, endY,booat) {
-		var snerd=I.getSubMap(0,0,MAP_WIDTH,MAP_HEIGHT);//(startX,startY,endX,endY);
-        var graph = mapToGraph(snerd,booat);
+		//var snerd=I.getSubMap(0,0,MAP_WIDTH,MAP_HEIGHT);//(startX,startY,endX,endY);
+        var graph = mapToGraph(I,booat);
         return astar.search(graph.nodes, graph.nodes[startX][startY], graph.nodes[endX][endY]);
     };
 	
@@ -670,6 +670,7 @@ function Map(I) { //map object
 		  var swamprgb =[0,255,64,0];
 		  var plainsrgb =[128,64,64,0];
 		  var snowrgb =[230,230,230,0];
+		  var hillrgb =[0,75,75,0];
 		  var icergb =[210,220,235,0];
 		  var icemountainrgb=[205,205,205]
 		  var waterrgb =[0,100,255,0];
@@ -699,6 +700,8 @@ function Map(I) { //map object
 			I.setTile(xPos, yPos, TileType.Snow);
 		  }else if (closeEnough(rgba,icergb)){
 			I.setTile(xPos, yPos, TileType.Ice);
+		  }else if (closeEnough(rgba,hillrgb)){
+			I.setTile(xPos, yPos, TileType.Hills);
 		  }else if (closeEnough(rgba,bridgergb)){
 			I.setTile(xPos, yPos, TileType.Bridge);
 		  }else if (closeEnough(rgba,icemountainrgb)){
@@ -870,25 +873,27 @@ function Map(I) { //map object
 		}
         canvas.putImageData(radarBitmap,x,y);
 		//canvas.drawImage(radarCanvas,x,y);
-        
-        /*for(var i=0;i<maps[mapSelected].numTowns;i++)
+        /*
+		for(var i=0;i<settlements.length;i++) //todo this shit aint right. need to account for camx?
         {
-            canvas.fillStyle = "blue";
-            if(towns[i].team==1){ canvas.fillStyle = "#FF2C85";}
-            canvas.fillRect(x+towns[i].x, y+towns[i].y, 8, 8);
-        }
-        
-        for(var i=0;i<arm[0].numSquads;i++){
             
-            canvas.fillStyle = "#FFD700";
-            canvas.fillRect(x+arm[0].squads[i].x, y+arm[0].squads[i].y, 4, 4);
+			canvas.fillStyle = "orange";
+            //if(towns[i].team==1){ canvas.fillStyle = "#FF2C85";}
+			//IF ONCAMERA if(settlemens[i].tileX
+            canvas.fillRect(x+settlements[i].tileX-cam.tileX, y+settlements[i].tileY-cam.tileY, 4, 4);
         }
         
-        for(var i=0;i<arm[1].numSquads;i++){
+        for(var i=0;i<ships.length;i++){
+            
+            canvas.fillStyle = "pink";
+            canvas.fillRect(x+ships[i].tileX-cam.tileX, y+ships[i].tileY-cam.tileY, 4, 4);
+        }
+        
+        for(var i=0;i<caravans.length;i++){
             
             canvas.fillStyle = "red";
-            canvas.fillRect(x+arm[1].squads[i].x, y+arm[1].squads[i].y, 4, 4);
-        }*///todo
+            canvas.fillRect(x+caravans[i].tileX, y+caravans[i].tileY, 4, 4);
+       }*/
 		if(!cam.following)
 		{
 			canvas.globalAlpha = 0.35;

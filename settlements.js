@@ -168,7 +168,7 @@ var Riverrun=new settlement(317,754,"Riverrun");
 Riverrun.port=false;
 Riverrun.resources.push(new commodity(CommIDs.Steel,99));
 
-var TheEyrie=new settlement(646,692,"The Eyrie");
+var TheEyrie=new settlement(646,680,"The Eyrie");
 TheEyrie.port=false;
 TheEyrie.resources.push(new commodity(CommIDs.Steel,99));
 
@@ -176,8 +176,8 @@ var Harrenhal=new settlement(482,760,"Harrenhal",483,766);
 Harrenhal.port=true;
 Harrenhal.resources.push(new commodity(CommIDs.Steel,99));
 
-var Highgarden=new settlement(350,1106,"Highgarden");
-Highgarden.port=false;
+var Highgarden=new settlement(350,1106,"Highgarden",350,1110);
+Highgarden.port=true;
 Highgarden.resources.push(new commodity(CommIDs.Steel,99));
 
 var TheTwins=new settlement(337,675,"The Twins");
