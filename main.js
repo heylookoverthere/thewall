@@ -39,7 +39,7 @@ lights.push(new light(7208,3777,14));
 
 var Yoren=new caravan(CastleBlack);
 Yoren.men[0].name="Yoren";
-
+Yoren.upgrade();
 
 Yoren.ports.push(Winterfell);
 Yoren.ports.push(WidowsWatch);
@@ -278,7 +278,7 @@ fires.push(mlel);
 
 
 
-for(var i=0;i<2;i++)
+for(var i=0;i<12;i++)
 {
 	var giles=new dude();
 	giles.x=Math.random()*(116+326)*16;
@@ -534,6 +534,8 @@ function startGame()
 		monsta.snow(2500,8,1);
 	}
 
+	/*graphboat = mapToGraph(curMap,true);
+	graph = mapToGraph(curMap,false);*/
 
 }
 

@@ -348,8 +348,21 @@ function Map(I) { //map object
     }
     I.getPath = function(startX, startY, endX, endY,booat) {
 		//var snerd=I.getSubMap(0,0,MAP_WIDTH,MAP_HEIGHT);//(startX,startY,endX,endY);
-        var graph = mapToGraph(I,booat);
-        return astar.search(graph.nodes, graph.nodes[startX][startY], graph.nodes[endX][endY]);
+		if(booat){
+			if(true)//(graphboat==null)
+			{
+				var graphboat = mapToGraph(I,booat);
+			}
+			return astar.search(graphboat.nodes, graphboat.nodes[startX][startY], graphboat.nodes[endX][endY]);
+		}else
+		{
+			if(true)//(graph==null)
+			{
+				var graph = mapToGraph(I,booat);
+			}
+			return astar.search(graph.nodes, graph.nodes[startX][startY], graph.nodes[endX][endY]);
+		}
+        
     };
 	
 	
@@ -661,7 +674,8 @@ function Map(I) { //map object
 				mapBitmap = mapCanvas.getImageData(0, 0, MAP_WIDTH, MAP_HEIGHT);
 		for( var i=0; i<MAP_WIDTH * MAP_HEIGHT * 4; i+=4 ) {//TODO/PROBLEMMAPWIDTH?
 		  var rgba = [mapBitmap.data[i], mapBitmap.data[i+1], mapBitmap.data[i+2], mapBitmap.data[i+3]];
-		  var mountainrgb =[0,0,0,0];
+		  var mountainrgb =[60,0,0,0];
+		  var redmountainrgb =[200,60,60,0];
 		  var oceanrgb =[0,0,255,0];
 		  var forestrgb =[0,255,0,0];
 		  var sandrgb =[255,255,0,0];
@@ -680,6 +694,8 @@ function Map(I) { //map object
 		  var xPos = (i / 4) % MAP_WIDTH;
 		if(closeEnough(rgba,mountainrgb)) {
 			I.setTile(xPos, yPos, TileType.Mountains);
+		  } else if(closeEnough(rgba,redmountainrgb)) {
+			I.setTile(xPos, yPos, TileType.RedMountains);
 		  } else if (closeEnough(rgba,forestrgb)){
 			I.setTile(xPos, yPos, TileType.Forest);
 		  } else if (closeEnough(rgba,oceanrgb)){
@@ -705,7 +721,7 @@ function Map(I) { //map object
 		  }else if (closeEnough(rgba,bridgergb)){
 			I.setTile(xPos, yPos, TileType.Bridge);
 		  }else if (closeEnough(rgba,icemountainrgb)){
-			I.setTile(xPos, yPos, TileType.IceMountain);
+			I.setTile(xPos, yPos, TileType.IceMountains);
 		  }else if (closeEnough(rgba,grassrgb)) {
 			I.setTile(xPos, yPos, TileType.Grass);
 		  }else{
