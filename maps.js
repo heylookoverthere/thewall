@@ -349,14 +349,14 @@ function Map(I) { //map object
     I.getPath = function(startX, startY, endX, endY,booat) {
 		//var snerd=I.getSubMap(0,0,MAP_WIDTH,MAP_HEIGHT);//(startX,startY,endX,endY);
 		if(booat){
-			if(true)//(graphboat==null)
+			if(graphboat==null)
 			{
 				var graphboat = mapToGraph(I,booat);
 			}
 			return astar.search(graphboat.nodes, graphboat.nodes[startX][startY], graphboat.nodes[endX][endY]);
 		}else
 		{
-			if(true)//(graph==null)
+			if(graph==null)
 			{
 				var graph = mapToGraph(I,booat);
 			}
